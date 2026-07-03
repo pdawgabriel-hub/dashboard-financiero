@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import GridConsulta from '../../../componentes/Crud/GridConsulta/GridConsulta';
 import { clienteService } from '../../../servicios/ClienteService/ClienteService';
-import type { Cliente } from '../../../types/cliente/cliente';
+import type { Cliente } from '../../../types/Cliente/Cliente';
 
 export default function PaginaClientes() {
   const [clientes, setClientes] = useState<Cliente[]>([]);

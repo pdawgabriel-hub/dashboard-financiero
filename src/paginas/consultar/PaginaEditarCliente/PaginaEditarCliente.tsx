@@ -5,7 +5,7 @@ import ConfirmarEliminar from '../../../componentes/Crud/ConfirmarEliminar/Confi
 import { clienteSchema, type ClienteFormValues } from '../../../schemas/ClienteSchema/ClienteSchema';
 import { clienteService } from '../../../servicios/ClienteService/ClienteService';
 import { useToast } from '../../../contextos/ToastContext/ToastContext';
-import type { Cliente } from '../../../types/cliente/cliente';
+import type { Cliente } from '../../../types/Cliente/Cliente';
 
 // Array de configuracion
 const CAMPOS: CampoFormulario[] = [
