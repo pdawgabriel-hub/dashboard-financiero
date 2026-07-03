@@ -1,3 +1,5 @@
+// Contexto para las notificaciones
+
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
 
 type TipoToast = 'exito' | 'error';
@@ -46,6 +48,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
 export function useToast() {
   const context = useContext(ToastContext);
+  // Manejo de Excepciones
   if (!context) throw new Error('useToast debe usarse dentro de <ToastProvider>');
   return context;
 }
