@@ -66,7 +66,7 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
         <ComponenteSeleccionado />
       ) : (
         <div className="text-slate-500 font-medium p-6 bg-slate-900 border border-slate-800 rounded-2xl">
-          🚧 La vista para "{nombreComponente}" se encuentra en desarrollo.
+          La vista para "{nombreComponente}" se encuentra en desarrollo.
         </div>
       )}
     </>

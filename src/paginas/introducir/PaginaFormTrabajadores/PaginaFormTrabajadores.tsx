@@ -1,5 +1,42 @@
+import { useNavigate } from "react-router-dom"
+import FormularioCRUD, {type CampoFormulario} from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
+import {trabajadorSchema, type trabajadorFormValues } from "../../../schemas/TrabajadorSchema/TrabajadorSchema";
+import { trabajadorService } from "../../../servicios/TrabajadorService/TrabajadorService";
+import { useToast } from "../../../contextos/ToastContext/ToastContext";
+
+// Array de configuarion
+const CAMPOS: CampoFormulario[] = [
+    {nombre: 'tipo', etiqueta: 'Tipo', requerido: false},
+    {nombre: 'nombre', etiqueta: 'Nombre', requerido: true},
+    {nombre: 'apellido', etiqueta: 'Apellido', requerido: true},
+    {nombre: 'coste_hora_estandar', etiqueta: 'Coste hora estandar', tipo: 'number', requerido: true},
+];
+
 export default function PaginaFormTrabajadores() {
-    return (
-        <div className="p-4 text-amber-400 font-medium">Formulario: Nuevo Trabajador</div>
-    )
+    
+    const navigate = useNavigate();
+      const { mostrarToast } = useToast();
+    
+      function handleSubmit(datos: trabajadorFormValues) {
+        trabajadorService.create(datos);
+        mostrarToast('Trabajador creado correctamente');
+        navigate('/consultar/trabajadores');
+      }
+    
+      return (
+        <div className="flex flex-col gap-6">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-100">Nuevo trabajador</h1>
+            <p className="text-slate-400 mt-1">Rellena los datos para dar de alta un trabajador.</p>
+          </div>
+    
+          <FormularioCRUD
+            schema={trabajadorSchema}
+            campos={CAMPOS}
+            onSubmit={handleSubmit}
+            textoBoton="Crear trabajador"
+          />
+        </div>
+      );
+
 }
