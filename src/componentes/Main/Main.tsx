@@ -1,6 +1,7 @@
 import { Routes, Route, useParams, Navigate } from 'react-router-dom';
 import VistaDinamica from '../VistaDinamica/VistaDinamica';
 import { MODULOS_ERP } from '../../mocks/routesMock/routesMock';
+import PaginaEditarCliente from '../../paginas/consultar/PaginaEditarCliente/PaginaEditarCliente';
 
 export default function Main() {
   return (
@@ -10,6 +11,7 @@ export default function Main() {
         <Route path="/dashboard" element={<VistaDinamica nombreComponente="PaginaDashboard" />} />
         <Route path="/consultar" element={<Navigate to="/consultar/clientes" replace />} />
         <Route path="/introducir" element={<Navigate to="/introducir/nuevo-cliente" replace />} />
+        <Route path="/consultar/clientes/editar/:id" element={<PaginaEditarCliente />} />
         <Route path="/consultar/:seccion" element={<ContenedorDinamico moduloId="consultar" />} />
         <Route path="/introducir/:seccion" element={<ContenedorDinamico moduloId="introducir" />} />
         <Route path="*" element={<VistaDinamica nombreComponente="Home" />} />
