@@ -29,7 +29,7 @@ interface VistaDinamicaProps {
 
 export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) {
   const componentes: Record<string, React.ComponentType> = {
-    // 🏠 LAS DOS NUEVAS ADICIONES DIRECTAS
+    // LAS DOS NUEVAS ADICIONES DIRECTAS
     Home: Home,
     PaginaDashboard: PaginaDashboard,
 
