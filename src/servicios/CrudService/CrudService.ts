@@ -45,7 +45,31 @@ export function crearCrudService<T extends ConId>(
 
     create(datos: Omit<T, 'id'>): T {
       const items = leerTodo();
-      const nuevo = { ...datos, id: generarId(prefijoId) } as T;
+      const prefijoBusqueda = `${prefijoId}-`;
+
+      // 1. Buscamos el número secuencial más alto
+      const ultimoNumero = items.reduce((max, item) => {
+        // Forzamos la conversión a string por si el mock guardó un número puro
+        const idString = String(item.id); 
+        
+        if (idString.startsWith(prefijoBusqueda)) {
+          const numStr = idString.replace(prefijoBusqueda, '');
+          const num = parseInt(numStr, 10);
+          return !isNaN(num) && num > max ? num : max;
+        }
+        
+        // Si no empieza por el prefijo, intentamos extraer cualquier número que tenga el ID
+        const numeroSuelto = parseInt(idString.replace(/^\D+/g, ''), 10);
+        return !isNaN(numeroSuelto) && numeroSuelto > max ? numeroSuelto : max;
+      }, 0);
+
+      const siguienteNumero = ultimoNumero + 1;
+      const nuevoId = `${prefijoBusqueda}${String(siguienteNumero).padStart(3, '0')}`;
+
+      // Console.log para depurar
+      //console.log(`[CRUD ${claveStorage}] Último número detectado: ${ultimoNumero}. Siguiente ID: ${nuevoId}`);
+
+      const nuevo = { ...datos, id: nuevoId } as T;
       guardarTodo([...items, nuevo]);
       return nuevo;
     },
