@@ -4,6 +4,7 @@ import { clienteService } from '../../../servicios/ClienteService/ClienteService
 import type { Cliente } from '../../../types/Cliente/Cliente';
 
 export default function PaginaClientes() {
+  
   const [clientes, setClientes] = useState<Cliente[]>([]);
 
   useEffect(() => {

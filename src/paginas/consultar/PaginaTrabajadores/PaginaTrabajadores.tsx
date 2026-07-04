@@ -15,8 +15,10 @@ export default function PaginaTrabajadores() {
         titulo: `${t.nombre} ${t.apellido}`.trim(),
         textoBusqueda: `${t.id} ${t.nombre} ${t.apellido ?? ''}`,
         campos: [
-            { etiqueta: 'Tipo', valor: t.tipo },
-            { etiqueta: 'Coste Hora Estandar', valor: t.coste_hora_estandar },
+            { etiqueta: 'Tipo', valor: t.tipo || 'Sin tipo' },
+            { etiqueta: 'Nombre', valor: t.nombre },
+            { etiqueta: 'Apellido', valor: t.apellido },
+            { etiqueta: 'Coste Hora Estandar', valor: `${t.coste_hora_estandar}` },
         ],
     }))
 
