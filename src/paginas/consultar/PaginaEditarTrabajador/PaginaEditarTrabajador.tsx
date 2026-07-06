@@ -17,6 +17,7 @@ const CAMPOS: CampoFormulario[] = [
 ];
 
 export default function PaginaEditarTrabajador() {
+    
     // Captura el id de la URL
     const { id } = useParams<{ id: string}>();
     const navigate = useNavigate();

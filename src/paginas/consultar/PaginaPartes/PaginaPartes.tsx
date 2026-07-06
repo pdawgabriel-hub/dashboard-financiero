@@ -18,7 +18,7 @@ export default function PaginaPartes() {
         campos: [
           { etiqueta: 'Fecha', valor: pt.fecha},
           { etiqueta: 'Horas', valor: String(pt.horas)},
-          { etiqueta: 'Descripcion', valor: String(pt.horas || 'Sin observaciones')},
+          { etiqueta: 'Descripcion', valor: pt.descripcion},
           { etiqueta: 'Trabajador', valor: pt.trabajador_id},
           { etiqueta: 'Obra', valor: pt.obra_id},
         ],
