@@ -9,13 +9,13 @@ export const presupuestoSchema = z.object({
         .string()
         .min(1, "La fecha es obligatoria")
         .regex(/^\d{4}-\d{2}-\d{2}$/, "El formato de fecha debe ser AAAA-MM-DD"),
-    importe_total: z
-        .number()
-        .min(1, 'El campo es obligatorio'),
+    importe_total: z.union([
+        z.number(),
+        z.string().transform((val) => Number(val))
+    ]),
     estado: z
-        .string()
-        .min(1, 'Seleeciona uno'),
-    cliente: z
+        .enum(["borrador", "enviado", "aceptado", "rechazado"]),
+    cliente_id: z
         .string()
         .min(1, "Debe seleccionar una obra"),
 

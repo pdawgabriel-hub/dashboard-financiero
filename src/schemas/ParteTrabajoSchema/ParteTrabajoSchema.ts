@@ -6,9 +6,10 @@ export const parteTrabajoSchema = z.object({
         .string()
         .min(1, "La fecha es obligatoria")
         .regex(/^\d{4}-\d{2}-\d{2}$/, "El formato de fecha debe ser AAAA-MM-DD"),
-    horas: z
-        .number({message: 'Las horas deben ser un numero'})
-        .min(1, 'Lo minimo a cobrar es 1 hora'),
+    horas: z.union([
+        z.number(),
+        z.string().transform((val) => Number(val))
+    ]),
     descripcion: z
         .string()
         .optional(),
