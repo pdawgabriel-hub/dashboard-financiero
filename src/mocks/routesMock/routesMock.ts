@@ -9,7 +9,7 @@ export const MODULOS_ERP = [
   },
   {
     id: 'analisis',
-    nombre: '📊 Análisis Financiero',
+    nombre: 'Análisis Financiero',
     rutaPrincipal: '/dashboard',
     subSecciones: [
       { nombre: 'Dashboard Único', ruta: '', componente: 'PaginaDashboard' }
