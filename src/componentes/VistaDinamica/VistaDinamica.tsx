@@ -1,8 +1,6 @@
-// 📥 IMPORTA TUS DOS PÁGINAS NUEVAS (Ajusta la ruta a tus carpetas reales)
 import Home from '../../paginas/Home/Home'; 
 import PaginaDashboard from '../../paginas/PaginaDashboard/PaginaDashboard';
 
-// Las 18 importaciones que ya tenías de Consultar e Introducir...
 import PaginaClientes from '../../paginas/consultar/PaginaClientes/PaginaClientes';
 import PaginaTrabajadores from '../../paginas/consultar/PaginaTrabajadores/PaginaTrabajadores';
 import PaginaProveedores from '../../paginas/consultar/PaginaProveedores/PaginaProveedores';
@@ -29,7 +27,6 @@ interface VistaDinamicaProps {
 
 export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) {
   const componentes: Record<string, React.ComponentType> = {
-    // LAS DOS NUEVAS ADICIONES DIRECTAS
     Home: Home,
     PaginaDashboard: PaginaDashboard,
 
@@ -59,8 +56,6 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
   const ComponenteSeleccionado = componentes[nombreComponente];
 
   return (
-    // Quitamos las clases de tarjeta de fondo gris (bg-slate-900 border...) 
-    // para que tus páginas se rendericen limpias usando todo el espacio disponible.
     <>
       {ComponenteSeleccionado ? (
         <ComponenteSeleccionado />
