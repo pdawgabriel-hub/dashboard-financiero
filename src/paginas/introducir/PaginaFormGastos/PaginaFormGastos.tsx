@@ -1,5 +1,45 @@
+import { useNavigate } from 'react-router-dom';
+import FormularioCRUD, { type CampoFormulario } from '../../../componentes/Crud/FormularioCRUD/FormularioCRUD';
+import { useToast } from '../../../contextos/ToastContext/ToastContext';
+
+import { gastoSchema, type GastoFormValues } from '../../../schemas/GastoSchema/GastoSchema';
+import { gastoService } from '../../../servicios/GastoService/GastoService';
+
+const CAMPOS: CampoFormulario[] = [
+  { nombre: 'concepto', etiqueta: 'Concepto', requerido: true },
+  { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
+  { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
+  { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
+  { nombre: 'total_con_iva', etiqueta: 'Total con IVA' },
+  { nombre: 'obra_id', etiqueta: 'Obra', requerido: true },
+  { nombre: 'proveedor_id', etiqueta: 'Proveedor' },
+];
+
 export default function PaginaFormGastos() {
+    
+    const navigate = useNavigate();
+    const { mostrarToast } = useToast();
+
+    function handleSubmit(datos: GastoFormValues) {
+        gastoService.create(datos);
+        mostrarToast('Gasto creado correctamente');
+        navigate('/consultar/gastos');
+    }
+
     return (
-        <div className="p-4 text-amber-400 font-medium">Formulario: Nuevo Gasto</div>
-    )
+        <div className="flex flex-col gap-6">
+        <div>
+            <h1 className="text-2xl font-bold text-slate-100">Nuevo gasto</h1>
+            <p className="text-slate-400 mt-1">Rellena los datos para dar de alta un gasto.</p>
+        </div>
+
+        <FormularioCRUD
+            schema={gastoSchema}
+            campos={CAMPOS}
+            onSubmit={handleSubmit}
+            textoBoton="Crear gasto"
+        />
+        </div>
+    );
+
 }
