@@ -17,8 +17,8 @@ export default function PaginaPartes() {
         textoBusqueda: `${pt.fecha} ${pt.id} ${pt.trabajador_id} ${pt.obra_id}`,
         campos: [
           { etiqueta: 'Fecha', valor: pt.fecha},
-          { etiqueta: 'Horas', valor: String(pt.horas)},
-          { etiqueta: 'Descripcion', valor: pt.descripcion},
+          { etiqueta: 'Descripción', valor: p.descripcion || 'Sin descripción' },
+          { etiqueta: 'Horas', valor: p.horas?.toString() || '0' },
           { etiqueta: 'Trabajador', valor: pt.trabajador_id},
           { etiqueta: 'Obra', valor: pt.obra_id},
         ],

@@ -9,7 +9,7 @@ export interface CampoFormulario {
   etiqueta: string;
   tipo?: 'text' | 'email' | 'tel' | 'number' | 'textarea' | 'select';
   requerido?: boolean;
-  opciones?: { valor: string; etiqueta: string }[]; // Lista de opciones para el select
+  opciones?: { valor: string; etiqueta: string }[];
 }
 
 interface FormularioCRUDProps<T extends Record<string, any>> {
@@ -29,43 +29,39 @@ export default function FormularioCRUD<T extends Record<string, any>>({
   textoBoton,
   onEliminar,
 }: FormularioCRUDProps<T>) {
+  // Forzamos a <any> internamente para que useForm no pelee con el genérico T
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<T>({
+  } = useForm<any>({
     resolver: zodResolver(schema),
     defaultValues: valoresIniciales as any,
   });
 
-  // Comprobamos neto e iva en tiempo real
-  const importeNeto = watch('importe_neto' as any);
-  const ivaPorcentaje = watch('iva_porcentaje' as any);
+  const importeNeto = watch('importe_neto');
+  const ivaPorcentaje = watch('iva_porcentaje');
 
   useEffect(() => {
-    // Solo actuamos si este formulario en concreto tiene el campo 'total_con_iva'
     const tieneCampoTotal = campos.some(c => c.nombre === 'total_con_iva');
     
     if (tieneCampoTotal) {
       const totalCalculado = calcularTotalConIva({
-        importe_neto: importeNeto,
-        iva_porcentaje: ivaPorcentaje
+        importe_neto: Number(importeNeto) || 0,
+        iva_porcentaje: Number(ivaPorcentaje) || 0
       });
-      
-      // Seteamos el valor de forma reactiva en el input
-      setValue('total_con_iva' as any, totalCalculado as any);
+      setValue('total_con_iva', totalCalculado);
     }
   }, [importeNeto, ivaPorcentaje, campos, setValue]);
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((datos) => onSubmit(datos as T))} // Casteo seguro al enviar
       className="flex flex-col gap-5 max-w-xl bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full"
     >
       {campos.map((campo) => {
-        // Hacemos que el total_con_iva sea de solo lectura para que el usuario no lo pise
         const esTotal = campo.nombre === 'total_con_iva';
 
         return (
@@ -77,13 +73,13 @@ export default function FormularioCRUD<T extends Record<string, any>>({
 
             {campo.tipo === 'textarea' ? (
               <textarea
-                {...register(campo.nombre as any)}
+                {...register(campo.nombre)}
                 rows={3}
                 className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600 w-full resize-none"
               />
             ) : campo.tipo === 'select' ? (
               <select
-                {...register(campo.nombre as any)}
+                {...register(campo.nombre)}
                 className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600 w-full cursor-pointer appearance-none"
               >
                 <option value="" className="text-slate-500">Selecciona una opción...</option>
@@ -96,8 +92,8 @@ export default function FormularioCRUD<T extends Record<string, any>>({
             ) : (
               <input
                 type={campo.tipo ?? 'text'}
-                {...register(campo.nombre as any)}
-                readOnly={esTotal} // Si es el total, no se puede escribir a mano
+                {...register(campo.nombre)}
+                readOnly={esTotal}
                 className={`px-3 py-2 border rounded-lg text-sm focus:outline-none w-full
                   ${esTotal 
                     ? 'bg-slate-900 border-slate-700 text-slate-400 cursor-not-allowed font-semibold text-emerald-400' 

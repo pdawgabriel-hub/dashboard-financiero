@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import FormularioCRUD, { type CampoFormulario } from '../../../componentes/Crud/FormularioCRUD/FormularioCRUD';
 import { useToast } from '../../../contextos/ToastContext/ToastContext';
 
-import { gastoSchema, type GastoFormValues } from '../../../schemas/GastoSchema/GastoSchema';
 import { gastoService } from '../../../servicios/GastoService/GastoService';
 import { proveedorService } from '../../../servicios/ProveedorService/ProveedorService';
 import { obraService } from '../../../servicios/ObraService/ObraService';

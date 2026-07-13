@@ -20,7 +20,10 @@ export default function PaginaFormEspecialistas() {
     const { mostrarToast } = useToast();
     
     function handleSubmit(datos: EspecialistaFormValues) {
-        especialistaService.create(datos);
+        especialistaService.create({
+        ...datos,
+        especialidad: datos.especialidad || "General" // Si el usuario no escribe nada, nunca pasa undefined
+      });
         mostrarToast('Especialistas creado correctamente');
         navigate('/consultar/especialistas');
     }
