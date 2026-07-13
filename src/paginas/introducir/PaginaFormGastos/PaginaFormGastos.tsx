@@ -10,7 +10,7 @@ const CAMPOS: CampoFormulario[] = [
   { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
   { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
   { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
-  { nombre: 'total_con_iva', etiqueta: 'Total con IVA' },
+  { nombre: 'total_con_iva', etiqueta: 'Total con IVA (Auto)' },
   { nombre: 'obra_id', etiqueta: 'Obra', requerido: true },
   { nombre: 'proveedor_id', etiqueta: 'Proveedor' },
 ];
@@ -20,9 +20,16 @@ export default function PaginaFormGastos() {
     const navigate = useNavigate();
     const { mostrarToast } = useToast();
 
-    function handleSubmit(datos: GastoFormValues) {
-        gastoService.create(datos);
-        mostrarToast('Gasto creado correctamente');
+    function handleSubmit(datos: any) {
+        const datosLimpios = {
+            ...datos,
+            importe_neto: Number(datos.importe_neto),
+            iva_porcentaje: Number(datos.iva_porcentaje),
+            total_con_iva: Number(datos.total_con_iva),
+        };
+
+        gastoService.create(datosLimpios);
+        mostrarToast('Guardado correctamente');
         navigate('/consultar/gastos');
     }
 
