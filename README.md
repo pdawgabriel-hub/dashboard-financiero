@@ -15,8 +15,6 @@ Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestió
 
 ---
 
----
-
 ## Características Clave
 
 *   **Diseño 100% Responsivo:** Interfaz adaptada dinámicamente para móviles, tablets y ordenadores mediante layouts híbridos y menús deslizantes horizontales (`overflow-x-auto`) en Tailwind.
