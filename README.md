@@ -2,7 +2,7 @@
 
 Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestión de proyectos de construcción, control de presupuestos, gastos y análisis financiero en tiempo real. Desarrollado con **React**, **TypeScript** y **Tailwind CSS**.
 
-## 📌 Índice
+## Índice
 
 *   [Características Clave](#-características-clave)
 *   [Módulo de Análisis Financiero (Dashboard)](#-módulo-de-análisis-financiero-dashboard)
@@ -12,8 +12,6 @@ Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestió
 *   [Instalación y Uso Local](#-instalación-y-uso-local)
 *   [Despliegue en Producción (Vercel)](#-despliegue-en-producción-vercel)
 *   [Licencia](#-licencia)
-
----
 
 ---
 
@@ -39,7 +37,7 @@ El sistema cuenta con un panel analítico centralizado que procesa los flujos de
 
 ---
 
-## ⚙️ Optimización y Buenas Prácticas
+## Optimización y Buenas Prácticas
 
 *   **Evitamos Rerenders Innecesarios:** Uso intensivo de `useMemo` en los componentes de filtrado (`GridConsulta`) para procesar las búsquedas y cruces de datos relacionales únicamente cuando el array de elementos o el término de búsqueda cambian.
 *   **Filtros:** Normalización automática de strings (`.toLowerCase().trim()`) en las búsquedas, haciendo que los filtros por estado sean inmunes a discrepancias entre mayúsculas, minúsculas o espacios accidentales de la base de datos.
