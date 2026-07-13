@@ -6,11 +6,6 @@
 
 type ConId = { id: string };
 
-function generarId(prefijo: string): string {
-  const num = Math.floor(Math.random() * 900000 + 100000);
-  return `${prefijo}-${num}`;
-}
-
 export function crearCrudService<T extends ConId>(
   claveStorage: string,
   datosIniciales: T[],
@@ -65,9 +60,6 @@ export function crearCrudService<T extends ConId>(
 
       const siguienteNumero = ultimoNumero + 1;
       const nuevoId = `${prefijoBusqueda}${String(siguienteNumero).padStart(3, '0')}`;
-
-      // Console.log para depurar
-      //console.log(`[CRUD ${claveStorage}] Último número detectado: ${ultimoNumero}. Siguiente ID: ${nuevoId}`);
 
       const nuevo = { ...datos, id: nuevoId } as T;
       guardarTodo([...items, nuevo]);
