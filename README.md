@@ -1,75 +1,84 @@
-# React + TypeScript + Vite
+# ERP Construcción - Sistema de Gestión Modular
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestión de proyectos de construcción, control de presupuestos, gastos y análisis financiero en tiempo real. Desarrollado con **React**, **TypeScript** y **Tailwind CSS**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Características Clave
 
-## React Compiler
+*   **Diseño 100% Responsivo:** Interfaz adaptada dinámicamente para móviles, tablets y ordenadores mediante layouts híbridos y menús deslizantes horizontales (`overflow-x-auto`) en Tailwind.
+*   **Filtrado Avanzado:** Componente de consulta global (`GridConsulta`) con buscador predictivo por texto y selectores normalizados por estados del ciclo de vida del negocio.
+*   **Formularios Dinámicos:** Arquitectura basada en React Hook Form y validación estricta de esquemas en tiempo real con Zod.
+*   **Automatización de Cálculos:** Sistema integrado y reactivo para el cálculo automático de importes netos, porcentajes de IVA y totales consolidados de gastos e ingresos.
+*   **Gestión de Datos Relacionales:** Cruce automático de IDs (Clientes, Obras, Presupuestos) en la capa de presentación para mostrar información legible en lugar de códigos técnicos.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Módulo de Análisis Financiero (Dashboard)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+El sistema cuenta con un panel analítico centralizado que procesa los flujos de caja y estados de salud del negocio:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+*   **Tarjetas de Métricas (KPIs):** Visualización rápida de los principales indicadores del negocio (Total de Ingresos, Gastos Acumulados, Margen de Beneficio y Presupuestos Pendientes).
+*   **Balance de Pérdidas y Ganancias:** Cálculo reactivo del beneficio neto de la empresa aplicando la fórmula:
+    $$Beneficio = \sum Ingresos - \sum Gastos$$
+*   **Alertas de Desviación Presupuestaria:** Monitorización en tiempo real del presupuesto asignado a las obras frente a los gastos reales imputados mediante partes y facturas, detectando sobrecostes de forma temprana.
+*   **Control de Flujo de Caja (Cash Flow):** Segmentación del dinero real cobrado/pagado frente al dinero comprometido (facturas en estado *pendiente*).
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ⚙️ Optimización y Buenas Prácticas
 
-```
+*   **Evitamos Rerenders Innecesarios:** Uso intensivo de `useMemo` en los componentes de filtrado (`GridConsulta`) para procesar las búsquedas y cruces de datos relacionales únicamente cuando el array de elementos o el término de búsqueda cambian.
+*   **Filtros:** Normalización automática de strings (`.toLowerCase().trim()`) en las búsquedas, haciendo que los filtros por estado sean inmunes a discrepancias entre mayúsculas, minúsculas o espacios accidentales de la base de datos.
+*   **Tipado Estricto de Extremo a Extremo:** Cero uso de `any`. Toda la información (desde las entidades del negocio hasta las props del generador de formularios genéricos) está respaldada por tipos rigurosos de TypeScript.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Stack Tecnológico
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+*   **Frontend:** React (Hooks + `useMemo` + `useEffect`)
+*   **Lenguaje:** TypeScript (Tipado estricto)
+*   **Enrutamiento:** React Router DOM (Manejo dinámico de parámetros de sección)
+*   **Formularios & Validación:** React Hook Form + Zod + Resolvers
+*   **Estilos:** Tailwind CSS (Diseño Mobile-First adaptativo)
 
+---
+
+## Estructura del Proyecto
+
+El sistema se organiza bajo una arquitectura limpia y altamente modular basada en carpetas funcionales, separando de forma estricta la interfaz, la lógica de negocio y las páginas dinámicas.
+
+```text
+src/
+├── components/           # Componentes atómicos e independientes de la UI
+│   ├── Aside/            # Menú de navegación lateral (adaptable a móvil)
+│   ├── Main/             # Contenedor principal de vistas y enrutador
+│   ├── Menu/             # Barra de navegación superior con scroll móvil
+│   ├── VistaDinamica/    # Renderizador dinámico de componentes por string string-key
+│   ├── GraficoObras/     # Módulos visuales del Dashboard Financiero
+│   ├── TarjetasKpi/      # Tarjetas analíticas superiores de rendimiento
+│   ├── UltimosMovimientos/# Historial contable rápido en el panel de control
+│   └── Crud/             # Sub-ecosistema para operaciones CRUD globales
+│       ├── BuscadorId/      # Barra de búsqueda predictiva de texto
+│       ├── GridConsulta/    # Layout de rejilla inteligente con filtro por estado
+│       ├── TarjetaDato/     # Tarjetas individuales de datos cruzados
+│       ├── FormularioCRUD/  # Generador de formularios reactivos con React Hook Form
+│       └── ConfirmarEliminar/# Modal de seguridad para borrado de registros
+│
+├── paginas/              # Capa de vistas completas de la aplicación
+│   ├── Home/             # Pantalla de bienvenida al ERP
+│   ├── PaginaDashboard/  # Panel financiero centralizado con analíticas
+│   ├── consultar/        # Listados globales y modales de edición (18 módulos)
+│   │   ├── PaginaClientes, PaginaObras, PaginaGastos...
+│   │   └── PaginaEditarCliente, PaginaEditarObra... (Formularios de edición por ID)
+│   └── introducir/       # Formularios dedicados de inserción (9 módulos)
+│       └── PaginaFormClientes, PaginaFormObras, PaginaFormGastos...
+│
+├── contextos/            # Estados globales de React compartidos entre componentes
+├── schemas/              # Esquemas y reglas de validación estricta creados con Zod
+├── servicios/            # Servicios encargados de la lógica de negocio y persistencia
+├── types/                # Interfaces y tipos de TypeScript de extremo a extremo
+├── mocks/                # Datos simulados y rutas de testing en desarrollo
+├── App.tsx               # Orquestador de layouts e hilos de renderizado
+└── main.tsx              # Punto de entrada de la aplicación en el DOM
 ```
