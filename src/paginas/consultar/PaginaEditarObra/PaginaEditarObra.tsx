@@ -8,19 +8,47 @@ import { useToast } from "../../../contextos/ToastContext/ToastContext";
 import { obraSchema, type ObraFormValues } from "../../../schemas/ObraSchema/ObraSchema";
 import { obraService } from "../../../servicios/ObraService/ObraService";
 import type { Obra } from "../../../types/Obra/Obra";
-
-// Array de configuracion
-const CAMPOS: CampoFormulario[] = [
-  { nombre: 'nombre', etiqueta: 'Nombre', requerido: true },
-  { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
-  { nombre: 'fecha_inicio', etiqueta: 'Fecha Inicio', requerido: true },
-  { nombre: 'fecha_fin_prevista', etiqueta: 'Fecha Fin Prevista', requerido: true },
-  { nombre: 'estado', etiqueta: 'Estado' },
-  { nombre: 'cliente_id', etiqueta: 'Cliente', requerido: true },
-  { nombre: 'presupuesto_id', etiqueta: 'Teléfono', requerido: true },
-];
+import { clienteService } from "../../../servicios/ClienteService/ClienteService";
+import { presupuestoService } from "../../../servicios/PresupuestoService/PresupuestoService";
 
 export default function PaginaEditarObra() {
+
+    const clientesRegistrados = clienteService.getAll();
+    const presupuestosRegistrados = presupuestoService.getAll();
+
+    // Array de configuracion
+    const CAMPOS: CampoFormulario[] = [
+        { nombre: 'nombre', etiqueta: 'Nombre', requerido: true },
+        { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
+        { nombre: 'fecha_inicio', etiqueta: 'Fecha Inicio', requerido: true },
+        { nombre: 'fecha_fin_prevista', etiqueta: 'Fecha Fin Prevista', requerido: true },
+        { 
+            nombre: 'estado', 
+            etiqueta: 'Estado', 
+            tipo: 'select' as const,
+            opciones: [
+            { valor: 'planificada', etiqueta: 'Planificada' },
+            { valor: 'en_progreso', etiqueta: 'En Progreso' },
+            { valor: 'pausada', etiqueta: 'Pausada' },
+            { valor: 'finalizada', etiqueta: 'Finalizada' }
+            ],
+            requerido: true
+        },
+        {
+            nombre: 'cliente_id',
+            etiqueta: 'Cliente Asignado (ID)',
+            tipo: 'select' as const,
+            opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: String(c.id) })),
+            requerido: true
+        },
+        {
+            nombre: 'presupuesto_id',
+            etiqueta: 'Presupuesto Vinculado (ID)',
+            tipo: 'select' as const,
+            opciones: presupuestosRegistrados.map(p => ({ valor: p.id, etiqueta: String(p.id) })),
+            requerido: true
+        }
+    ];
 
     // Captura el id de la URL
     const { id } = useParams<{ id: string }>();

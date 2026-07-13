@@ -4,17 +4,37 @@ import { useToast } from '../../../contextos/ToastContext/ToastContext';
 
 import { presupuestoSchema, type PresupuestoFormValues } from '../../../schemas/PresupuestoSchema/PresupuestoSchema';
 import { presupuestoService } from '../../../servicios/PresupuestoService/PresupuestoService';
-
-const CAMPOS: CampoFormulario[] = [
-    { nombre: 'titulo', etiqueta: 'Titulo', requerido: true },
-    { nombre: 'fecha_emision', etiqueta: 'Fecha Emision', requerido: true },
-    { nombre: 'importe_total', etiqueta: 'Importe Total', requerido: true },
-    { nombre: 'estado', etiqueta: 'Estado', requerido: true },
-    { nombre: 'cliente_id', etiqueta: 'Cliente', requerido: true },
-];
+import { clienteService } from '../../../servicios/ClienteService/ClienteService';
 
 export default function PaginaFormPresupuestos() {
+    
+    const clientesRegistrados = clienteService.getAll();
 
+    const CAMPOS: CampoFormulario[] = [
+        { nombre: 'titulo', etiqueta: 'Titulo', requerido: true },
+        { nombre: 'fecha_emision', etiqueta: 'Fecha Emision', requerido: true },
+        { nombre: 'importe_total', etiqueta: 'Importe Total', requerido: true },
+        { 
+          nombre: 'estado', 
+          etiqueta: 'Estado', 
+          tipo: 'select' as const,
+          opciones: [
+            { valor: 'borrador', etiqueta: 'Borrador' },
+            { valor: 'enviado', etiqueta: 'Enviado' },
+            { valor: 'aceptado', etiqueta: 'Aceptado' },
+            { valor: 'rechazado', etiqueta: 'Rechazado' }
+          ],
+          requerido: true
+        },
+        {
+          nombre: 'cliente_id',
+          etiqueta: 'Cliente (ID)',
+          tipo: 'select' as const,
+          opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: String(c.id) })),
+          requerido: true
+        }
+    ];
+    
     const navigate = useNavigate();
     const { mostrarToast } = useToast();
 

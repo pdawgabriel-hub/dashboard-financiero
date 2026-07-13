@@ -4,19 +4,41 @@ import { useToast } from '../../../contextos/ToastContext/ToastContext';
 
 import { gastoSchema, type GastoFormValues } from '../../../schemas/GastoSchema/GastoSchema';
 import { gastoService } from '../../../servicios/GastoService/GastoService';
-
-const CAMPOS: CampoFormulario[] = [
-  { nombre: 'concepto', etiqueta: 'Concepto', requerido: true },
-  { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
-  { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
-  { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
-  { nombre: 'total_con_iva', etiqueta: 'Total con IVA (Auto)' },
-  { nombre: 'obra_id', etiqueta: 'Obra', requerido: true },
-  { nombre: 'proveedor_id', etiqueta: 'Proveedor' },
-];
+import { proveedorService } from '../../../servicios/ProveedorService/ProveedorService';
+import { obraService } from '../../../servicios/ObraService/ObraService';
 
 export default function PaginaFormGastos() {
     
+    const proveedoresRegistrados = proveedorService.getAll();
+    const obrasRegistradas = obraService.getAll();
+
+    const CAMPOS: CampoFormulario[] = [
+    { nombre: 'concepto', etiqueta: 'Concepto', requerido: true },
+    { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
+    { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
+    { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
+    { 
+        nombre: 'total_con_iva', 
+        etiqueta: 'Total con IVA (€)', 
+        tipo: 'number' as const, 
+        requerido: true
+    },
+    {
+        nombre: 'proveedor_id',
+        etiqueta: 'Proveedor Asignado (ID)',
+        tipo: 'select' as const,
+        opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: String(p.id) })),
+        requerido: true
+    },
+    {
+        nombre: 'obra_id',
+        etiqueta: 'Obra Vinculada (ID)',
+        tipo: 'select' as const,
+        opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: String(o.id) })),
+        requerido: true
+    }
+    ];
+
     const navigate = useNavigate();
     const { mostrarToast } = useToast();
 

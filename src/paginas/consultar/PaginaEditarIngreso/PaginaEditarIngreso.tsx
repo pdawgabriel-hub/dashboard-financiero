@@ -8,19 +8,64 @@ import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/Confi
 import { ingresoSchema, type IngresoFormValues } from "../../../schemas/IngresoSchema/IngresoSchema";
 import { ingresoService } from "../../../servicios/IngresoService/IngresoService";
 import type { Ingreso } from "../../../types/Ingreso/Ingreso";
-
-// Array de configuracion
-const CAMPOS: CampoFormulario[] = [
-  { nombre: 'numero_factura', etiqueta: 'Numero Factura', requerido: true },
-  { nombre: 'fecha_emision', etiqueta: 'Fecha Emision', requerido: true },
-  { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
-  { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
-  { nombre: 'estado_pago', etiqueta: 'Estado' },
-  { nombre: 'obra_id', etiqueta: 'Obra', requerido: true },
-  { nombre: 'cliente_id', etiqueta: 'Cliente', requerido: true },
-];
+import { obraService } from "../../../servicios/ObraService/ObraService"; 
+import { clienteService } from "../../../servicios/ClienteService/ClienteService";
 
 export default function PaginaEditarIngreso() {
+
+    // Extraemos los datos reales del localStorage
+    const obrasRegistradas = obraService.getAll();
+    const clientesRegistrados = clienteService.getAll();
+
+    // Transformamos los datos al formato { valor, etiqueta } que pide el select
+    const opcionesObras = obrasRegistradas.map(o => ({ 
+        valor: o.id, 
+        etiqueta: String(o.id)
+    }));
+
+    const opcionesClientes = clientesRegistrados.map(c => ({ 
+        valor: c.id, 
+        etiqueta: String(c.id)
+    }));
+
+    // Definimos los CAMPOS dentro del componente para que puedan usar las variables de arriba
+    const CAMPOS: CampoFormulario[] = [
+        { nombre: 'numero_factura', etiqueta: 'Número Factura', requerido: true },
+        { nombre: 'fecha_emision', etiqueta: 'Fecha Emisión', requerido: true },
+        { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
+        { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
+        { nombre: 'total_con_iva', etiqueta: 'Total con IVA (Auto)' },
+        
+        // Desplegable fijo para Estados (como pedías)
+        { 
+            nombre: 'estado_pago', 
+            etiqueta: 'Estado de Pago', 
+            tipo: 'select', 
+            opciones: [
+                { valor: 'pendiente', etiqueta: 'Pendiente' },
+                { valor: 'cobrado', etiqueta: 'Cobrado' }
+            ],
+            requerido: true
+        },
+        
+        // Desplegable dinámico relacional (Obras)
+        { 
+            nombre: 'obra_id', 
+            etiqueta: 'Obra Asignada', 
+            tipo: 'select', 
+            opciones: opcionesObras,
+            requerido: true 
+        },
+        
+        // Desplegable dinámico relacional (Clientes)
+        { 
+            nombre: 'cliente_id', 
+            etiqueta: 'Cliente', 
+            tipo: 'select', 
+            opciones: opcionesClientes,
+            requerido: true 
+        },
+    ];
 
     // Captura el id de la URL
     const { id } = useParams<{ id: string }>();
