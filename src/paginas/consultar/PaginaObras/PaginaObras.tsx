@@ -12,8 +12,10 @@ export default function PaginaObras() {
     }, []);
 
     const items  = obras.map((o) => ({
+        
         id: o.id,
         titulo: o.nombre,
+        estado: o.estado,
         textoBusqueda: `${o.id} ${o.nombre} ${o.direccion} ${o.cliente_id} ${o.presupuesto_id}`,
         campos: [
             {etiqueta: 'Nombre', valor: o.nombre},
@@ -37,6 +39,7 @@ export default function PaginaObras() {
                 items={items}
                 rutaBaseEdicion="/consultar/obras/editar"
                 nombreVacio="No hay obras que coincidan con la búsqueda."
+                tipoEstado="obra"
             />
         </div>
     );

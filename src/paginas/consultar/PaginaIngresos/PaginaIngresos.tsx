@@ -14,6 +14,7 @@ export default function PaginaIngresos() {
     const items = ingresos.map((i) => ({
         id: i.id,
         titulo: i.numero_factura,
+        estado: i.estado_pago,
         textoBusqueda: `${i.id} ${i.numero_factura} ${i.fecha_emision}`,
         campos: [
             {etiqueta: 'Numero Factura', valor: i.numero_factura},
@@ -30,15 +31,16 @@ export default function PaginaIngresos() {
     return (
         <div className="flex flex-col gap-6">
             <div>
-            <h1 className="text-2xl font-bold text-slate-100">Ingresos</h1>
-            <p className="text-slate-400 mt-1">Consulta y gestiona tus ingresos.</p>
-          </div>
+                <h1 className="text-2xl font-bold text-slate-100">Ingresos</h1>
+                <p className="text-slate-400 mt-1">Consulta y gestiona tus ingresos.</p>
+            </div>
         
-        <GridConsulta
-            items={items}
-            rutaBaseEdicion="/consultar/ingresos/editar"
-            nombreVacio="No hay ingresos que coincidan con la búsqueda."
-              />
+            <GridConsulta
+                items={items}
+                rutaBaseEdicion="/consultar/ingresos/editar"
+                nombreVacio="No hay ingresos que coincidan con la búsqueda."
+                tipoEstado="pago"
+            />
         </div> 
     );
 }

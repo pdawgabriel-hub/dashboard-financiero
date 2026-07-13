@@ -14,6 +14,7 @@ export default function PaginaPresupuestos() {
     const items = presupuestos.map((p) => ({
         id: p.id,
         titulo: p.titulo,
+        estado: p.estado,
         textoBusqueda: `${p.estado} ${p.id} ${p.cliente_id} ${p.fecha_emision}`,
         campos: [
             {etiqueta: 'Titulo', valor: p.titulo},
@@ -35,6 +36,7 @@ export default function PaginaPresupuestos() {
             items={items}
             rutaBaseEdicion="/consultar/presupuestos/editar"
             nombreVacio="No hay presupuestos que coincidan con la búsqueda."
+            tipoEstado="presupuesto"
           />
         </div>
     )
