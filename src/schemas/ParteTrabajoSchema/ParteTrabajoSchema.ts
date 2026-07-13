@@ -15,10 +15,10 @@ export const parteTrabajoSchema = z.object({
         .optional(),
     trabajador_id: z
         .string()
-        .min(1, "Debe seleccionar un trabajador"),
+        .min(1, "Debe seleccionar un parte de trabajo"),
     obra_id: z
         .string()
-        .min(1, "Debe seleccionar una obra"),
+        .min(1, "Debe seleccionar un parte de trabajo"),
 
 });
 

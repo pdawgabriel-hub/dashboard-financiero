@@ -22,7 +22,7 @@ export default function PaginaFormIngresos() {
     
     function handleSubmit(datos: IngresoFormValues) {
       ingresoService.create(datos);
-        mostrarToast('Ingreso creado correctamente');
+      mostrarToast('Ingreso creado correctamente');
       navigate('/consultar/ingresos');
     }
     

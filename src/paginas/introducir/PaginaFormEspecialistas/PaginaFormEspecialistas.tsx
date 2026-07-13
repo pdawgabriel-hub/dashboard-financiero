@@ -28,7 +28,7 @@ export default function PaginaFormEspecialistas() {
     return (
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-100">Nuevo cliente</h1>
+            <h1 className="text-2xl font-bold text-slate-100">Nuevo ingreso</h1>
             <p className="text-slate-400 mt-1">Rellena los datos para dar de alta un especialista.</p>
           </div>
     
