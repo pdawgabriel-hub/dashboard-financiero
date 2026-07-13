@@ -9,7 +9,6 @@ Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestió
 *   [Optimización y Buenas Prácticas](#️-optimización-y-buenas-prácticas)
 *   [Stack Tecnológico](#️-stack-tecnológico)
 *   [Estructura del Proyecto](#-estructura-del-proyecto)
-*   [Instalación y Uso Local](#-instalación-y-uso-local)
 *   [Despliegue en Producción (Vercel)](#-despliegue-en-producción-vercel)
 *   [Licencia](#-licencia)
 
@@ -34,6 +33,42 @@ El sistema cuenta con un panel analítico centralizado que procesa los flujos de
     $$Beneficio = \sum Ingresos - \sum Gastos$$
 *   **Alertas de Desviación Presupuestaria:** Monitorización en tiempo real del presupuesto asignado a las obras frente a los gastos reales imputados mediante partes y facturas, detectando sobrecostes de forma temprana.
 *   **Control de Flujo de Caja (Cash Flow):** Segmentación del dinero real cobrado/pagado frente al dinero comprometido (facturas en estado *pendiente*).
+
+---
+
+## Sistema de Notificaciones (useToast)
+
+Para mantener una experiencia de usuario fluida y reactiva, el proyecto integra un **Contexto de Notificaciones Personalizado manejado a través del hook `useToast`**. Este ecosistema permite lanzar alertas visuales temporales y flotantes desde cualquier componente o página de forma muy sencilla.
+
+### Cómo usarlo en tus vistas o componentes:
+
+1. **Importar el hook personalizado** `useToast` en el archivo donde lo necesites.
+2. **Extraer la función** `mostrarToast`.
+3. **Invocar la función** pasándole el mensaje de texto deseado tras realizar acciones como crear, editar o eliminar registros.
+
+### Ejemplo práctico de implementación:
+
+```tsx
+import { useToast } from "../../../contextos/ToastContext/ToastContext";
+
+export default function MiComponente() {
+  // 1. Instanciamos el hook que consume el contexto de notificaciones
+  const { mostrarToast } = useToast();
+
+  const handleAccion = () => {
+    // ... lógica del negocio (ej. guardar datos) ...
+
+    // 2. Lanzamos la notificación visual flotante
+    mostrarToast("¡Operación completada con éxito!");
+  };
+
+  return (
+    <button onClick={handleAccion} className="bg-emerald-600 text-white p-2 rounded">
+      Guardar Registro
+    </button>
+  );
+}
+```
 
 ---
 
@@ -85,7 +120,7 @@ src/
 │   └── introducir/       # Formularios dedicados de inserción (9 módulos)
 │       └── PaginaFormClientes, PaginaFormObras, PaginaFormGastos...
 │
-├── contextos/            # Estados globales de React compartidos entre componentes
+├── contextos/            # Estados globales de React compartidos entre componentes, usado para el ToastContext (useToast)
 ├── schemas/              # Esquemas y reglas de validación estricta creados con Zod
 ├── servicios/            # Servicios encargados de la lógica de negocio y persistencia
 ├── types/                # Interfaces y tipos de TypeScript de extremo a extremo
@@ -96,6 +131,14 @@ src/
 
 ---
 
-## 📄 Licencia
+## Despliegue en Producción (Vercel)
+
+Este proyecto está completamente optimizado y configurado para compilarse de forma automática al hacer un push a la rama principal.
+
+Ver despliegue [despliegue en Vercel](https://dashboard-financiero-kappa-blue.vercel.app/).
+
+---
+
+## Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
