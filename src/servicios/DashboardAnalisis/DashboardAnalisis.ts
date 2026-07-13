@@ -95,11 +95,12 @@ export function obtenerMovimientosRecientes(): MovimientoReciente[] {
     total: Number(ing.total_con_iva) || 0
   }));
 
+  // Corregidas las propiedades para usar las reales del objeto Gasto (concepto y fecha)
   const listaGastos: MovimientoReciente[] = gastos.map(gas => ({
     id: gas.id || Math.random().toString(),
     tipo: 'gasto',
-    concepto: gas.numero_factura ? `Gasto/Factura ${gas.numero_factura}` : 'Gasto General',
-    fecha: gas.fecha_emision || '',
+    concepto: gas.concepto ? `Gasto: ${gas.concepto}` : 'Gasto General',
+    fecha: gas.fecha || '',
     total: Number(gas.total_con_iva) || 0
   }));
 
