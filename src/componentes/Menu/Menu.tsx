@@ -55,7 +55,7 @@ export default function Menu() {
 
       {/* Bloque de Usuario Derecho: Solo se muestra en ordenadores (md:) */}
       <div className="hidden md:flex items-center gap-4 text-sm text-slate-400">
-        <span>Julio 2026</span>
+        <span>Gabriel I.V</span>
         <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold">
           G
         </div>
