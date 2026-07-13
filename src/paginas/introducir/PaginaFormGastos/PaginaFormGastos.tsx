@@ -5,37 +5,37 @@ import { useToast } from '../../../contextos/ToastContext/ToastContext';
 import { gastoService } from '../../../servicios/GastoService/GastoService';
 import { proveedorService } from '../../../servicios/ProveedorService/ProveedorService';
 import { obraService } from '../../../servicios/ObraService/ObraService';
+import { gastoSchema } from '../../../schemas/GastoSchema/GastoSchema';
 
 export default function PaginaFormGastos() {
-    
     const proveedoresRegistrados = proveedorService.getAll();
     const obrasRegistradas = obraService.getAll();
 
     const CAMPOS: CampoFormulario[] = [
-    { nombre: 'concepto', etiqueta: 'Concepto', requerido: true },
-    { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
-    { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
-    { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
-    { 
-        nombre: 'total_con_iva', 
-        etiqueta: 'Total con IVA (€)', 
-        tipo: 'number' as const, 
-        requerido: true
-    },
-    {
-        nombre: 'proveedor_id',
-        etiqueta: 'Proveedor Asignado (ID)',
-        tipo: 'select' as const,
-        opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: String(p.id) })),
-        requerido: true
-    },
-    {
-        nombre: 'obra_id',
-        etiqueta: 'Obra Vinculada (ID)',
-        tipo: 'select' as const,
-        opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: String(o.id) })),
-        requerido: true
-    }
+        { nombre: 'concepto', etiqueta: 'Concepto', requerido: true },
+        { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
+        { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
+        { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
+        { 
+            nombre: 'total_con_iva', 
+            etiqueta: 'Total con IVA (€)', 
+            tipo: 'number' as const, 
+            requerido: true
+        },
+        {
+            nombre: 'proveedor_id',
+            etiqueta: 'Proveedor Asignado (ID)',
+            tipo: 'select' as const,
+            opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: String(p.id) })),
+            requerido: true
+        },
+        {
+            nombre: 'obra_id',
+            etiqueta: 'Obra Vinculada (ID)',
+            tipo: 'select' as const,
+            opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: String(o.id) })),
+            requerido: true
+        }
     ];
 
     const navigate = useNavigate();
@@ -56,18 +56,17 @@ export default function PaginaFormGastos() {
 
     return (
         <div className="flex flex-col gap-6">
-        <div>
-            <h1 className="text-2xl font-bold text-slate-100">Nuevo gasto</h1>
-            <p className="text-slate-400 mt-1">Rellena los datos para dar de alta un gasto.</p>
-        </div>
+            <div>
+                <h1 className="text-2xl font-bold text-slate-100">Nuevo gasto</h1>
+                <p className="text-slate-400 mt-1">Rellena los datos para dar de alta un gasto.</p>
+            </div>
 
-        <FormularioCRUD
-            schema={gastoSchema}
-            campos={CAMPOS}
-            onSubmit={handleSubmit}
-            textoBoton="Crear gasto"
-        />
+            <FormularioCRUD
+                schema={gastoSchema}
+                campos={CAMPOS}
+                onSubmit={handleSubmit}
+                textoBoton="Crear gasto"
+            />
         </div>
     );
-
 }

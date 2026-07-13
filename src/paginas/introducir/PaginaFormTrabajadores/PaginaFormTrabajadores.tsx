@@ -4,7 +4,6 @@ import {trabajadorSchema, type trabajadorFormValues } from "../../../schemas/Tra
 import { trabajadorService } from "../../../servicios/TrabajadorService/TrabajadorService";
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
 
-// Array de configuarion
 const CAMPOS: CampoFormulario[] = [
     {nombre: 'tipo', etiqueta: 'Tipo', requerido: false},
     {nombre: 'nombre', etiqueta: 'Nombre', requerido: true},
@@ -13,17 +12,22 @@ const CAMPOS: CampoFormulario[] = [
 ];
 
 export default function PaginaFormTrabajadores() {
-    
     const navigate = useNavigate();
-      const { mostrarToast } = useToast();
+    const { mostrarToast } = useToast();
     
-      function handleSubmit(datos: trabajadorFormValues) {
-        trabajadorService.create(datos);
+    function handleSubmit(datos: trabajadorFormValues) {
+        // Garantizamos que los valores opcionales nunca sean undefined
+        const datosSaneados = {
+            ...datos,
+            tipo: datos.tipo || '',
+            apellido: datos.apellido || ''
+        };
+        trabajadorService.create(datosSaneados);
         mostrarToast('Trabajador creado correctamente');
         navigate('/consultar/trabajadores');
-      }
+    }
     
-      return (
+    return (
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-2xl font-bold text-slate-100">Nuevo trabajador</h1>
@@ -37,6 +41,5 @@ export default function PaginaFormTrabajadores() {
             textoBoton="Crear trabajador"
           />
         </div>
-      );
-
+    );
 }

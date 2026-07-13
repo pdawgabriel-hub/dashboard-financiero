@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { ZodType } from 'zod';
 import { useEffect } from 'react';
 import { calcularTotalConIva } from '../../../servicios/GastoService/GastoService';
 
@@ -13,7 +12,7 @@ export interface CampoFormulario {
 }
 
 interface FormularioCRUDProps<T extends Record<string, any>> {
-  schema: ZodType<T>;
+  schema: any; // Cambiado a any para evitar conflictos estrictos con el zodResolver externo
   campos: CampoFormulario[];
   valoresIniciales?: Partial<T>;
   onSubmit: (datos: T) => void;
@@ -29,7 +28,7 @@ export default function FormularioCRUD<T extends Record<string, any>>({
   textoBoton,
   onEliminar,
 }: FormularioCRUDProps<T>) {
-  // Forzamos a <any> internamente para que useForm no pelee con el genérico T
+  
   const {
     register,
     handleSubmit,
@@ -58,7 +57,7 @@ export default function FormularioCRUD<T extends Record<string, any>>({
 
   return (
     <form
-      onSubmit={handleSubmit((datos) => onSubmit(datos as T))} // Casteo seguro al enviar
+      onSubmit={handleSubmit((datos) => onSubmit(datos as T))}
       className="flex flex-col gap-5 max-w-xl bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full"
     >
       {campos.map((campo) => {

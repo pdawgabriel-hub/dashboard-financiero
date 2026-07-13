@@ -12,12 +12,9 @@ import { obraService } from "../../../servicios/ObraService/ObraService";
 import { clienteService } from "../../../servicios/ClienteService/ClienteService";
 
 export default function PaginaEditarIngreso() {
-
-    // Extraemos los datos reales del localStorage
     const obrasRegistradas = obraService.getAll();
     const clientesRegistrados = clienteService.getAll();
 
-    // Transformamos los datos al formato { valor, etiqueta } que pide el select
     const opcionesObras = obrasRegistradas.map(o => ({ 
         valor: o.id, 
         etiqueta: String(o.id)
@@ -28,15 +25,12 @@ export default function PaginaEditarIngreso() {
         etiqueta: String(c.id)
     }));
 
-    // Definimos los CAMPOS dentro del componente para que puedan usar las variables de arriba
     const CAMPOS: CampoFormulario[] = [
         { nombre: 'numero_factura', etiqueta: 'Número Factura', requerido: true },
         { nombre: 'fecha_emision', etiqueta: 'Fecha Emisión', requerido: true },
         { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
         { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
         { nombre: 'total_con_iva', etiqueta: 'Total con IVA (Auto)' },
-        
-        // Desplegable fijo para Estados (como pedías)
         { 
             nombre: 'estado_pago', 
             etiqueta: 'Estado de Pago', 
@@ -47,8 +41,6 @@ export default function PaginaEditarIngreso() {
             ],
             requerido: true
         },
-        
-        // Desplegable dinámico relacional (Obras)
         { 
             nombre: 'obra_id', 
             etiqueta: 'Obra Asignada', 
@@ -56,8 +48,6 @@ export default function PaginaEditarIngreso() {
             opciones: opcionesObras,
             requerido: true 
         },
-        
-        // Desplegable dinámico relacional (Clientes)
         { 
             nombre: 'cliente_id', 
             etiqueta: 'Cliente', 
@@ -67,7 +57,6 @@ export default function PaginaEditarIngreso() {
         },
     ];
 
-    // Captura el id de la URL
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const { mostrarToast } = useToast();
@@ -83,7 +72,12 @@ export default function PaginaEditarIngreso() {
 
     function handleSubmit(datos: IngresoFormValues) {
         if (!id) return;
-        ingresoService.update(id, datos);
+        // Casteo explícito seguro del estado_pago para acoplarlo al tipo estricto de Ingreso
+        const datosActualizados = {
+            ...datos,
+            estado_pago: datos.estado_pago as "pendiente" | "cobrado"
+        };
+        ingresoService.update(id, datosActualizados);
         mostrarToast('Cambios guardados correctamente');
         navigate('/consultar/ingresos');
     }
@@ -105,27 +99,26 @@ export default function PaginaEditarIngreso() {
 
     return (
         <div className="flex flex-col gap-6">
-        <div>
-            <h1 className="text-2xl font-bold text-slate-100">Editar ingreso</h1>
-            <p className="text-slate-400 mt-1">{ingreso.id}</p>
-        </div>
+            <div>
+                <h1 className="text-2xl font-bold text-slate-100">Editar ingreso</h1>
+                <p className="text-slate-400 mt-1">{ingreso.id}</p>
+            </div>
 
-        <FormularioCRUD
-            schema={ingresoSchema}
-            campos={CAMPOS}
-            valoresIniciales={ingreso}
-            onSubmit={handleSubmit}
-            textoBoton="Guardar cambios"
-            onEliminar={() => setMostrarConfirmar(true)}
-        />
+            <FormularioCRUD
+                schema={ingresoSchema}
+                campos={CAMPOS}
+                valoresIniciales={ingreso}
+                onSubmit={handleSubmit}
+                textoBoton="Guardar cambios"
+                onEliminar={() => setMostrarConfirmar(true)}
+            />
 
-        <ConfirmarEliminar
-            abierto={mostrarConfirmar}
-            nombre={`${ingreso.numero_factura}`.trim()}
-            onCancelar={() => setMostrarConfirmar(false)}
-            onConfirmar={handleEliminar}
-        />
+            <ConfirmarEliminar
+                abierto={mostrarConfirmar}
+                nombre={`${ingreso.numero_factura}`.trim()}
+                onCancelar={() => setMostrarConfirmar(false)}
+                onConfirmar={handleEliminar}
+            />
         </div>
     );
-  
 }

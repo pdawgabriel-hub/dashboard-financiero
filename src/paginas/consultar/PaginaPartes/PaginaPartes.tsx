@@ -4,7 +4,6 @@ import { parteTrabajoService } from "../../../servicios/ParteTrabajoService/Part
 import type { ParteTrabajo } from "../../../types/ParteTrabajo/ParteTrabajo";
 
 export default function PaginaPartes() {
-
     const [partesTrabajo, setPartesTrabajo] = useState<ParteTrabajo[]>([]);
 
     useEffect(() => {
@@ -17,8 +16,8 @@ export default function PaginaPartes() {
         textoBusqueda: `${pt.fecha} ${pt.id} ${pt.trabajador_id} ${pt.obra_id}`,
         campos: [
           { etiqueta: 'Fecha', valor: pt.fecha},
-          { etiqueta: 'Descripción', valor: p.descripcion || 'Sin descripción' },
-          { etiqueta: 'Horas', valor: p.horas?.toString() || '0' },
+          { etiqueta: 'Descripción', valor: pt.descripcion || 'Sin descripción' },
+          { etiqueta: 'Horas', valor: pt.horas?.toString() || '0' },
           { etiqueta: 'Trabajador', valor: pt.trabajador_id},
           { etiqueta: 'Obra', valor: pt.obra_id},
         ],
@@ -38,5 +37,4 @@ export default function PaginaPartes() {
           />
         </div>
     );
-
 }
