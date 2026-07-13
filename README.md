@@ -2,6 +2,19 @@
 
 Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestión de proyectos de construcción, control de presupuestos, gastos y análisis financiero en tiempo real. Desarrollado con **React**, **TypeScript** y **Tailwind CSS**.
 
+## 📌 Índice
+
+*   [Características Clave](#-características-clave)
+*   [Módulo de Análisis Financiero (Dashboard)](#-módulo-de-análisis-financiero-dashboard)
+*   [Optimización y Buenas Prácticas](#️-optimización-y-buenas-prácticas)
+*   [Stack Tecnológico](#️-stack-tecnológico)
+*   [Estructura del Proyecto](#-estructura-del-proyecto)
+*   [Instalación y Uso Local](#-instalación-y-uso-local)
+*   [Despliegue en Producción (Vercel)](#-despliegue-en-producción-vercel)
+*   [Licencia](#-licencia)
+
+---
+
 ---
 
 ## Características Clave
@@ -82,3 +95,9 @@ src/
 ├── App.tsx               # Orquestador de layouts e hilos de renderizado
 └── main.tsx              # Punto de entrada de la aplicación en el DOM
 ```
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
