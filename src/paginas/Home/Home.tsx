@@ -39,7 +39,6 @@ export default function Home() {
 
       {/* NOTA DE PERSISTENCIA Y MOCKS */}
       <div className="border border-amber-500/20 bg-amber-500/5 rounded-2xl p-5 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-        <div className="text-2xl">💾</div>
         <div>
           <h4 className="text-amber-400 font-bold text-sm">Persistencia Local y Datos de Prueba</h4>
           <p className="text-xs text-slate-400 mt-1 leading-relaxed">
