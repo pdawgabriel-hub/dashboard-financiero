@@ -1,6 +1,5 @@
-// src/paginas/Dashboard/componentes/UltimosMovimientos.tsx
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
-import { obtenerMovimientosRecientes } from '../../servicios/DashboardAnalisis/DashboardAnalisis';
+import { obtenerMovimientosRecientes } from '../../../servicios/DashboardAnalisis/DashboardAnalisis';
 
 export default function UltimosMovimientos() {
   const movimientos = obtenerMovimientosRecientes();

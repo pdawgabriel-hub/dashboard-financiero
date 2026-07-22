@@ -1,15 +1,23 @@
-// src/paginas/Dashboard/componentes/TarjetasKpi.tsx
 import { ArrowUpRight, ArrowDownRight, DollarSign, Percent } from 'lucide-react';
-import { obtenerTotalesFinancieros } from '../../servicios/DashboardAnalisis/DashboardAnalisis';
 
-export default function TarjetasKpi() {
-  const { totalIngresos, totalGastos, beneficioNeto, margenBeneficio } = obtenerTotalesFinancieros();
+interface TarjetasKpiProps {
+  totalIngresos: number;
+  totalGastos: number;
+  beneficioNeto: number;
+  margenBeneficio: number;
+}
 
+export default function TarjetasKpi({ 
+  totalIngresos, 
+  totalGastos, 
+  beneficioNeto, 
+  margenBeneficio 
+}: TarjetasKpiProps) {
   const esPositivo = beneficioNeto >= 0;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {/* Tarjeta Ingresos */}
+      {/* Total Ingresos */}
       <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center justify-between">
         <div>
           <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Ingresos</p>
@@ -20,7 +28,7 @@ export default function TarjetasKpi() {
         </div>
       </div>
 
-      {/* Tarjeta Gastos */}
+      {/* Total Gastos */}
       <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center justify-between">
         <div>
           <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Gastos</p>
@@ -31,7 +39,7 @@ export default function TarjetasKpi() {
         </div>
       </div>
 
-      {/* Tarjeta Margen Neto */}
+      {/* Resultado Neto */}
       <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center justify-between">
         <div>
           <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Resultado Neto</p>
@@ -44,7 +52,7 @@ export default function TarjetasKpi() {
         </div>
       </div>
 
-      {/* Tarjeta Rendimiento % */}
+      {/* Margen de Utilidad */}
       <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center justify-between">
         <div>
           <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Margen de Utilidad</p>
