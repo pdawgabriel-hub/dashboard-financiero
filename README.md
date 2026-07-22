@@ -8,6 +8,7 @@ Este proyecto está enfocado puramente en el **Desarrollo Frontend**, demostrand
 
 *   [Características Clave](#-características-clave)
 *   [Módulo de Análisis Financiero (Dashboard)](#-módulo-de-análisis-financiero-dashboard)
+*   [Sistema de Notificaciones (useToast)](#sistema-de-notificaciones-usetoast)
 *   [Optimización y Buenas Prácticas](#️-optimización-y-buenas-prácticas)
 *   [Stack Tecnológico](#️-stack-tecnológico)
 *   [Estructura del Proyecto](#-estructura-del-proyecto)
@@ -30,11 +31,15 @@ Este proyecto está enfocado puramente en el **Desarrollo Frontend**, demostrand
 
 El sistema cuenta con un panel analítico centralizado que procesa los flujos de caja y estados de salud del negocio:
 
-*   **Tarjetas de Métricas (KPIs):** Visualización rápida de los principales indicadores del negocio (Total de Ingresos, Gastos Acumulados, Margen de Beneficio y Presupuestos Pendientes).
-*   **Balance de Pérdidas y Ganancias:** Cálculo reactivo del beneficio neto de la empresa aplicando la fórmula:
+* **Tarjetas de Métricas (KPIs):** Visualización rápida de los principales indicadores del negocio (Total de Ingresos, Gastos Acumulados, Margen de Beneficio y Presupuestos Pendientes).
+* **Balance de Pérdidas y Ganancias:** Cálculo reactivo del beneficio neto de la empresa aplicando la fórmula:
     $$Beneficio = \sum Ingresos - \sum Gastos$$
-*   **Alertas de Desviación Presupuestaria:** Monitorización en tiempo real del presupuesto asignado a las obras frente a los gastos reales imputados mediante partes y facturas, detectando sobrecostes de forma temprana.
-*   **Control de Flujo de Caja (Cash Flow):** Segmentación del dinero real cobrado/pagado frente al dinero comprometido (facturas en estado *pendiente*).
+* **Alertas de Desviación Presupuestaria:** Monitorización en tiempo real del presupuesto asignado a las obras frente a los gastos reales imputados mediante partes y facturas, detectando sobrecostes de forma temprana.
+* **Control de Flujo de Caja (Cash Flow):** Segmentación del dinero real cobrado/pagado frente al dinero comprometido (facturas en estado *pendiente*).
+* **Gráficos Interactivos y Visualización Avanzada:**
+  * **Gráfico de Barras (`GraficoBarras`):** Comparativa de ingresos y costes imputados por cada obra en ejecución.
+  * **Gráfico de Línea (`GraficoLineaGastos`):** Evolución temporal del volumen de gastos e inversiones a lo largo del tiempo.
+  * **Gráfico de Pastel (`GraficoPastelEstado`):** Distribución porcentual del estado de las obras y presupuestos del sistema.
 
 ---
 
@@ -98,14 +103,19 @@ El sistema se organiza bajo una arquitectura limpia y altamente modular basada e
 
 ```text
 src/
-├── components/           # Componentes atómicos e independientes de la UI
+├── componentes/          # Componentes atómicos e independientes de la UI
 │   ├── Aside/            # Menú de navegación lateral (adaptable a móvil)
 │   ├── Main/             # Contenedor principal de vistas y enrutador
 │   ├── Menu/             # Barra de navegación superior con scroll móvil
-│   ├── VistaDinamica/    # Renderizador dinámico de componentes por string string-key
-│   ├── GraficoObras/     # Módulos visuales del Dashboard Financiero
-│   ├── TarjetasKpi/      # Tarjetas analíticas superiores de rendimiento
-│   ├── UltimosMovimientos/# Historial contable rápido en el panel de control
+│   ├── VistaDinamica/    # Renderizador dinámico de componentes por string-key
+│   │
+│   ├── Dashboard/        # Ecosistema analítico centralizado del Dashboard
+│   │   ├── GraficoBarras/          # Comparativa de Ingresos vs. Gastos por Obra
+│   │   ├── GraficoLineaGastos/     # Evolución temporal y tendencia de costes
+│   │   ├── GraficoPastelEstado/    # Distribución porcentual por estados de obras
+│   │   ├── TarjetasKpi/            # Indicadores financieros de alto nivel (KPIs)
+│   │   └── UltimosMovimientos/     # Registro contable y transacciones recientes
+│   │
 │   └── Crud/             # Sub-ecosistema para operaciones CRUD globales
 │       ├── BuscadorId/      # Barra de búsqueda predictiva de texto
 │       ├── GridConsulta/    # Layout de rejilla inteligente con filtro por estado
@@ -126,7 +136,7 @@ src/
 ├── schemas/              # Esquemas y reglas de validación estricta creados con Zod
 ├── servicios/            # Servicios encargados de la lógica de negocio y persistencia
 ├── types/                # Interfaces y tipos de TypeScript de extremo a extremo
-├── mocks/                # Datos simulados y rutas de testing en desarrollo
+├── mocks/                # Datos simulados y rutas de testing en desarrollo (Obra, Presupuesto, Gasto)
 ├── App.tsx               # Orquestador de layouts e hilos de renderizado
 └── main.tsx              # Punto de entrada de la aplicación en el DOM
 ```
