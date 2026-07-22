@@ -39,7 +39,7 @@ export const OBRAS_MOCK: Obra[] = [
     direccion: "Calle Real 22, Dos Hermanas", 
     fecha_inicio: "2026-06-01", 
     fecha_fin_prevista: "2026-07-15", 
-    estado: "finalizada" 
+    estado: "en_progreso" 
   },
   { 
     id: "OBRA-005", 
@@ -69,7 +69,7 @@ export const OBRAS_MOCK: Obra[] = [
     direccion: "Calle San Fernando 8, Alcalá de Guadaíra", 
     fecha_inicio: "2026-04-15", 
     fecha_fin_prevista: "2026-05-10", 
-    estado: "finalizada" 
+    estado: "en_progreso" 
   },
   { 
     id: "OBRA-008", 

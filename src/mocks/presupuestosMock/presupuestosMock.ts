@@ -4,7 +4,7 @@ export const PRESUPUESTOS_MOCK: Presupuesto[] = [
   { 
     id: "PRES-0001", 
     cliente_id: "CLI-0001", 
-    titulo: "Reforma Integral de Vivienda Unifamiliar", 
+    titulo: "Estructura Vivienda Unifamiliar Llanes", 
     fecha_emision: "2026-05-10", 
     importe_total: 45000, 
     estado: "aceptado" 
@@ -12,15 +12,15 @@ export const PRESUPUESTOS_MOCK: Presupuesto[] = [
   { 
     id: "PRES-0002", 
     cliente_id: "CLI-0002", 
-    titulo: "Instalación Eléctrica Nave Industrial", 
+    titulo: "Reforma Integral Ático Sevilla", 
     fecha_emision: "2026-06-01", 
     importe_total: 18500, 
-    estado: "enviado" 
+    estado: "aceptado" 
   },
   { 
     id: "PRES-0003", 
     cliente_id: "CLI-0003", 
-    titulo: "Acondicionamiento y Climatización Local Comercial", 
+    titulo: "Acondicionamiento Local Comercial Carmona", 
     fecha_emision: "2026-04-20", 
     importe_total: 28900, 
     estado: "aceptado" 
@@ -28,7 +28,7 @@ export const PRESUPUESTOS_MOCK: Presupuesto[] = [
   { 
     id: "PRES-0004", 
     cliente_id: "CLI-0004", 
-    titulo: "Excavación y Construcción de Piscina de Obra", 
+    titulo: "Construcción Piscina y Porche Dos Hermanas", 
     fecha_emision: "2026-05-02", 
     importe_total: 14200, 
     estado: "aceptado" 
@@ -36,15 +36,15 @@ export const PRESUPUESTOS_MOCK: Presupuesto[] = [
   { 
     id: "PRES-0005", 
     cliente_id: "CLI-0005", 
-    titulo: "Rehabilitación de Fachada y Aislamiento Térmico", 
+    titulo: "Rehabilitación Fachada Edificio Delicias", 
     fecha_emision: "2026-06-15", 
     importe_total: 32000, 
-    estado: "enviado" 
+    estado: "aceptado" 
   },
   { 
     id: "PRES-0006", 
     cliente_id: "CLI-0006", 
-    titulo: "Instalación de Sistema Solar Fotovoltaico Autoconsumo", 
+    titulo: "Instalación Placas Solares Chalet Utrera", 
     fecha_emision: "2026-06-22", 
     importe_total: 8400, 
     estado: "aceptado" 
@@ -52,7 +52,7 @@ export const PRESUPUESTOS_MOCK: Presupuesto[] = [
   { 
     id: "PRES-0007", 
     cliente_id: "CLI-0007", 
-    titulo: "Saneamiento de Muros e Impermeabilización de Humedades", 
+    titulo: "Saneamiento de Humedades Alcalá", 
     fecha_emision: "2026-03-28", 
     importe_total: 3900, 
     estado: "aceptado" 
@@ -60,10 +60,10 @@ export const PRESUPUESTOS_MOCK: Presupuesto[] = [
   { 
     id: "PRES-0008", 
     cliente_id: "CLI-0008", 
-    titulo: "Montaje de Falsos Techos y Tabiquería de Yeso Laminado", 
+    titulo: "Pladur y Aislamiento Acústico Oficina Camas", 
     fecha_emision: "2026-07-01", 
     importe_total: 6100, 
-    estado: "enviado" 
+    estado: "aceptado" 
   },
   { 
     id: "PRES-0009", 
@@ -79,6 +79,6 @@ export const PRESUPUESTOS_MOCK: Presupuesto[] = [
     titulo: "Renovación de Cocina, Fontanería y Alicatados", 
     fecha_emision: "2026-07-05", 
     importe_total: 16800, 
-    estado: "enviado" 
+    estado: "aceptado" 
   }
 ];
