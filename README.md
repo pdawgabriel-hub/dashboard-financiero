@@ -1,19 +1,22 @@
+<a id="inicio"></a>
+
 # ERP Construcción - Sistema de Gestión Modular
 
 Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestión de proyectos de construcción, control de presupuestos, gastos y análisis financiero en tiempo real. Desarrollado con **React**, **TypeScript** y **Tailwind CSS**.
 
 Este proyecto está enfocado puramente en el **Desarrollo Frontend**, demostrando buenas prácticas de renderizado rápido, interfaces reactivas y un control de estado riguroso. Para facilitar su portabilidad y testeo ágil, **la aplicación prescinde de una base de datos física o un backend tradicional**; toda la persistencia de datos se gestiona localmente en el navegador a través de **localStorage**, apoyándose en un ecosistema de **datos simulados (mocks)** preestablecidos para una experiencia de usuario fluida desde el primer segundo.
 
+
 ## Índice
 
-*   [Características Clave](#-características-clave)
-*   [Módulo de Análisis Financiero (Dashboard)](#-módulo-de-análisis-financiero-dashboard)
+*   [Características Clave](#características-clave)
+*   [Módulo de Análisis Financiero (Dashboard)](#módulo-de-análisis-financiero-dashboard)
 *   [Sistema de Notificaciones (useToast)](#sistema-de-notificaciones-usetoast)
-*   [Optimización y Buenas Prácticas](#️-optimización-y-buenas-prácticas)
-*   [Stack Tecnológico](#️-stack-tecnológico)
-*   [Estructura del Proyecto](#-estructura-del-proyecto)
-*   [Despliegue en Producción (Vercel)](#-despliegue-en-producción-vercel)
-*   [Licencia](#-licencia)
+*   [Optimización y Buenas Prácticas](#optimización-y-buenas-prácticas)
+*   [Stack Tecnológico](#stack-tecnológico)
+*   [Estructura del Proyecto](#estructura-del-proyecto)
+*   [Despliegue en Producción (Vercel)](#despliegue-en-producción-vercel)
+*   [Licencia](#licencia)
 
 ---
 
@@ -28,6 +31,7 @@ Este proyecto está enfocado puramente en el **Desarrollo Frontend**, demostrand
 ---
 
 ## Módulo de Análisis Financiero (Dashboard)
+[⬆ Volver arriba](#inicio)
 
 El sistema cuenta con un panel analítico centralizado que procesa los flujos de caja y estados de salud del negocio:
 
@@ -44,6 +48,7 @@ El sistema cuenta con un panel analítico centralizado que procesa los flujos de
 ---
 
 ## Sistema de Notificaciones (useToast)
+[⬆ Volver arriba](#inicio)
 
 Para mantener una experiencia de usuario fluida y reactiva, el proyecto integra un **Contexto de Notificaciones Personalizado manejado a través del hook `useToast`**. Este ecosistema permite lanzar alertas visuales temporales y flotantes desde cualquier componente o página de forma muy sencilla.
 
@@ -80,6 +85,7 @@ export default function MiComponente() {
 ---
 
 ## Optimización y Buenas Prácticas
+[⬆ Volver arriba](#inicio)
 
 *   **Evitamos Rerenders Innecesarios:** Uso intensivo de `useMemo` en los componentes de filtrado (`GridConsulta`) para procesar las búsquedas y cruces de datos relacionales únicamente cuando el array de elementos o el término de búsqueda cambian.
 *   **Filtros:** Normalización automática de strings (`.toLowerCase().trim()`) en las búsquedas, haciendo que los filtros por estado sean inmunes a discrepancias entre mayúsculas, minúsculas o espacios accidentales de la base de datos.
@@ -88,6 +94,7 @@ export default function MiComponente() {
 ---
 
 ## Stack Tecnológico
+[⬆ Volver arriba](#inicio)
 
 *   **Frontend:** React (Hooks + `useMemo` + `useEffect`)
 *   **Lenguaje:** TypeScript (Tipado estricto)
@@ -98,6 +105,7 @@ export default function MiComponente() {
 ---
 
 ## Estructura del Proyecto
+[⬆ Volver arriba](#inicio)
 
 El sistema se organiza bajo una arquitectura limpia y altamente modular basada en carpetas funcionales, separando de forma estricta la interfaz, la lógica de negocio y las páginas dinámicas.
 
@@ -144,6 +152,7 @@ src/
 ---
 
 ## Despliegue en Producción (Vercel)
+[⬆ Volver arriba](#inicio)
 
 Este proyecto está completamente optimizado y configurado para compilarse de forma automática al hacer un push a la rama principal.
 
@@ -152,5 +161,6 @@ Ver despliegue [despliegue en Vercel](https://dashboard-financiero-kappa-blue.ve
 ---
 
 ## Licencia
+[⬆ Volver arriba](#inicio)
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
