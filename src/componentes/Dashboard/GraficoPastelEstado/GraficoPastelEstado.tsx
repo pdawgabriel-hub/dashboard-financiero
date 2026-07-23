@@ -50,6 +50,7 @@ export default function GraficoPastelEstados({ data }: GraficoPastelEstadosProps
             contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px' }}
             itemStyle={{ color: '#f1f5f9' }}
             formatter={(value: any) => [`${Number(value || 0).toLocaleString()} €`, '']}
+            separator=""
           />
 
           {/* Formateador de las etiquetas de la leyenda abajo */}

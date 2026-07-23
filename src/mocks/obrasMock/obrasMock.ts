@@ -49,7 +49,7 @@ export const OBRAS_MOCK: Obra[] = [
     direccion: "Paseo de las Delicias 45, Sevilla", 
     fecha_inicio: "2026-08-01", 
     fecha_fin_prevista: "2026-11-30", 
-    estado: "en_progreso" 
+    estado: "finalizada" 
   },
   { 
     id: "OBRA-006", 
@@ -79,7 +79,7 @@ export const OBRAS_MOCK: Obra[] = [
     direccion: "Barriada la Paz bl. 4, Camas", 
     fecha_inicio: "2026-09-01", 
     fecha_fin_prevista: "2026-09-20", 
-    estado: "en_progreso" 
+    estado: "finalizada" 
   },
   { 
     id: "OBRA-009", 
@@ -89,7 +89,7 @@ export const OBRAS_MOCK: Obra[] = [
     direccion: "Calle Betis 89, Sevilla", 
     fecha_inicio: "2026-07-05", 
     fecha_fin_prevista: "2026-07-30", 
-    estado: "en_progreso" 
+    estado: "finalizada" 
   },
   { 
     id: "OBRA-010", 
