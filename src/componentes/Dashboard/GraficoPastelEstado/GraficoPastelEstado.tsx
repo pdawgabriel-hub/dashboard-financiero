@@ -49,7 +49,7 @@ export default function GraficoPastelEstados({ data }: GraficoPastelEstadosProps
           <Tooltip
             contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px' }}
             itemStyle={{ color: '#f1f5f9' }}
-            formatter={(value: number, name: string) => [value, formatearTextoEstado(name)]}
+            formatter={(value: any) => [`${Number(value || 0).toLocaleString()} €`, '']}
           />
 
           {/* Formateador de las etiquetas de la leyenda abajo */}

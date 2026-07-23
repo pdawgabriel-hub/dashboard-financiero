@@ -19,19 +19,19 @@ export default function UltimosMovimientos() {
             <div key={mov.id} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-lg border ${
-                  mov.tipo === 'ingreso' 
+                  (mov.tipo as string) === 'ingreso' 
                     ? 'bg-emerald-950/40 border-emerald-900/60 text-emerald-400' 
                     : 'bg-rose-950/40 border-rose-900/60 text-rose-400'
                 }`}>
-                  {mov.tipo === 'ingreso' ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownRight className="w-4 h-4" />}
+                  {(mov.tipo as string) === 'ingreso' ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownRight className="w-4 h-4" />}
                 </div>
                 <div>
                   <p className="text-sm font-medium text-slate-200">{mov.concepto}</p>
                   <p className="text-xs text-slate-500 mt-0.5">{mov.fecha}</p>
                 </div>
               </div>
-              <span className={`text-sm font-semibold ${mov.tipo === 'ingreso' ? 'text-emerald-400' : 'text-slate-300'}`}>
-                {mov.tipo === 'ingreso' ? '+' : '-'}{mov.total.toLocaleString('es-ES')} €
+              <span className={`text-sm font-semibold ${(mov.tipo as string) === 'ingreso' ? 'text-emerald-400' : 'text-slate-300'}`}>
+                {(mov.tipo as string) === 'ingreso' ? '+' : '-'}{mov.total.toLocaleString('es-ES')} €
               </span>
             </div>
           ))

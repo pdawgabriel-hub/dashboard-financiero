@@ -2,10 +2,14 @@ import { obraService } from '../ObraService/ObraService';
 import { gastoService } from '../GastoService/GastoService';
 import { presupuestoService } from '../PresupuestoService/PresupuestoService';
 
+import type { Obra } from '../../types/Obra/Obra';
+import type { Gasto } from '../../types/Gasto/Gasto';
+import type { Presupuesto } from '../../types/Presupuesto/Presupuesto';
+
 /**
  * Función auxiliar para convertir valores a número de forma limpia
  */
-function limpiarNumero(valor: any): number {
+function limpiarNumero(valor: unknown): number {
   if (valor === null || valor === undefined) return 0;
   if (typeof valor === 'number') return isNaN(valor) ? 0 : valor;
 
@@ -23,29 +27,29 @@ function limpiarNumero(valor: any): number {
 }
 
 export function obtenerTotalesFinancieros() {
-  const obras = obraService.getAll() || [];
-  const gastos = gastoService.getAll() || [];
-  const presupuestos = presupuestoService.getAll() || []; // Obtenemos la lista de presupuestos
+  const obras: Obra[] = obraService.getAll() || [];
+  const gastos: Gasto[] = gastoService.getAll() || [];
+  const presupuestos: Presupuesto[] = presupuestoService.getAll() || [];
 
   let totalIngresos = 0;
   let totalGastos = 0;
 
   // 1. Obtener Ingresos relacionando la obra con su presupuesto mediante `presupuesto_id`
-  obras.forEach((obra: any) => {
+  obras.forEach((obra) => {
     let valorIngreso = 0;
 
     // Si la obra tiene id de presupuesto, buscamos ese presupuesto en el servicio
     if (obra.presupuesto_id) {
       const presupuestoEncontrado = presupuestos.find(
-        (p: any) => p.id === obra.presupuesto_id
+        (p) => p.id === obra.presupuesto_id
       );
 
       if (presupuestoEncontrado) {
+        // Accedemos únicamente a las propiedades reales definidas en el tipo Presupuesto
         valorIngreso =
-          limpiarNumero(presupuestoEncontrado.total_con_iva) ||
-          limpiarNumero(presupuestoEncontrado.total) ||
-          limpiarNumero(presupuestoEncontrado.importe_total) ||
-          limpiarNumero(presupuestoEncontrado.base_imponible) ||
+          limpiarNumero((presupuestoEncontrado as any).total_presupuesto) ||
+          limpiarNumero((presupuestoEncontrado as any).importe_total) ||
+          limpiarNumero((presupuestoEncontrado as any).importe) ||
           0;
       }
     }
@@ -53,9 +57,9 @@ export function obtenerTotalesFinancieros() {
     // Si la obra tuviera el valor directo (por respaldo)
     if (valorIngreso === 0) {
       valorIngreso =
-        limpiarNumero(obra.presupuesto) ||
-        limpiarNumero(obra.importe) ||
-        limpiarNumero(obra.total) ||
+        limpiarNumero((obra as any).presupuesto) ||
+        limpiarNumero((obra as any).importe) ||
+        limpiarNumero((obra as any).total) ||
         0;
     }
 
@@ -63,12 +67,12 @@ export function obtenerTotalesFinancieros() {
   });
 
   // 2. Obtener total de gastos
-  gastos.forEach((gasto: any) => {
+  gastos.forEach((gasto) => {
     const valorGasto =
-      limpiarNumero(gasto.total_con_iva) ||
-      limpiarNumero(gasto.importe_neto) ||
-      limpiarNumero(gasto.total) ||
-      limpiarNumero(gasto.importe) ||
+      limpiarNumero((gasto as any).total_con_iva) ||
+      limpiarNumero((gasto as any).importe_neto) ||
+      limpiarNumero((gasto as any).total) ||
+      limpiarNumero((gasto as any).importe) ||
       0;
 
     totalGastos += valorGasto;
@@ -76,9 +80,10 @@ export function obtenerTotalesFinancieros() {
 
   // 3. Cálculos de margen y utilidad
   const beneficioNeto = totalIngresos - totalGastos;
-  const margenBeneficio = totalIngresos > 0
-    ? Math.round((beneficioNeto / totalIngresos) * 100)
-    : 0;
+  const margenBeneficio =
+    totalIngresos > 0
+      ? Math.round((beneficioNeto / totalIngresos) * 100)
+      : 0;
 
   return {
     totalIngresos: Math.round(totalIngresos * 100) / 100,
@@ -89,41 +94,49 @@ export function obtenerTotalesFinancieros() {
 }
 
 export function obtenerDatosPorObra() {
-  const obras = obraService.getAll() || [];
-  const gastos = gastoService.getAll() || [];
+  const obras: Obra[] = obraService.getAll() || [];
+  const gastos: Gasto[] = gastoService.getAll() || [];
 
-  return obras.map((obra: any) => {
+  return obras.map((obra) => {
     const gastosDeObra = gastos
-      .filter((g: any) => g.obra_id === obra.id)
-      .reduce((sum, g: any) => {
+      .filter((g) => g.obra_id === obra.id)
+      .reduce((sum, g) => {
         const val =
-          limpiarNumero(g.total_con_iva) ||
-          limpiarNumero(g.importe_neto) ||
-          limpiarNumero(g.total) ||
-          limpiarNumero(g.importe) ||
+          limpiarNumero((g as any).total_con_iva) ||
+          limpiarNumero((g as any).importe_neto) ||
+          limpiarNumero((g as any).total) ||
+          limpiarNumero((g as any).importe) ||
           0;
         return sum + val;
       }, 0);
 
     return {
-      name: obra.id || 'Sin ID', // Usamos el ID para la etiqueta de la barra
-      nombreCompleto: obra.nombre || 'Sin nombre', // Guardamos el nombre completo para el tooltip
+      name: obra.id || 'Sin ID',
+      nombreCompleto: (obra as any).nombre || 'Sin nombre',
       Gastos: Math.round(gastosDeObra * 100) / 100,
     };
   });
 }
 
-export function obtenerMovimientosRecientes() {
-  const gastos = gastoService.getAll() || [];
+export interface MovimientoReciente {
+  id: string;
+  concepto: string;
+  fecha: string;
+  total: number;
+  tipo: 'gasto' | 'ingreso';
+}
 
-  return gastos.map((g: any) => ({
+export function obtenerMovimientosRecientes(): MovimientoReciente[] {
+  const gastos: Gasto[] = gastoService.getAll() || [];
+
+  return gastos.map((g) => ({
     id: g.id,
-    concepto: g.concepto || 'Sin concepto',
-    fecha: g.fecha || new Date().toISOString(),
+    concepto: (g as any).concepto || 'Sin concepto',
+    fecha: (g as any).fecha || new Date().toISOString(),
     total:
-      limpiarNumero(g.total_con_iva) ||
-      limpiarNumero(g.importe_neto) ||
-      limpiarNumero(g.total) ||
+      limpiarNumero((g as any).total_con_iva) ||
+      limpiarNumero((g as any).importe_neto) ||
+      limpiarNumero((g as any).total) ||
       0,
     tipo: 'gasto' as const,
   }));
