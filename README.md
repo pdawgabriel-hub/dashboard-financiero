@@ -6,9 +6,32 @@ Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestió
 
 Este proyecto está enfocado puramente en el **Desarrollo Frontend**, demostrando buenas prácticas de renderizado rápido, interfaces reactivas y un control de estado riguroso. Para facilitar su portabilidad y testeo ágil, **la aplicación prescinde de una base de datos física o un backend tradicional**; toda la persistencia de datos se gestiona localmente en el navegador a través de **localStorage**, apoyándose en un ecosistema de **datos simulados (mocks)** preestablecidos para una experiencia de usuario fluida desde el primer segundo.
 
+**[Ver demo en vivo](https://dashboard-financiero-kappa-blue.vercel.app/)**
+
+## Capturas
+[⬆ Volver arriba](#inicio)
+
+<table>
+  <tr>
+    <td align="center"><b>Dashboard financiero</b></td>
+    <td align="center"><b>Gestión CRUD</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/dashboard.png" width="420"/></td>
+    <td><img src="docs/screenshots/crud.png" width="420"/></td>
+  </tr>
+</table>
+
+<details>
+<summary>Formulario</summary>
+
+<img src="docs/screenshots/formulario.png" width="420"/>
+
+</details>
 
 ## Índice
 
+*   [Capturas](#capturas)
 *   [Características Clave](#características-clave)
 *   [Módulo de Análisis Financiero (Dashboard)](#módulo-de-análisis-financiero-dashboard)
 *   [Sistema de Notificaciones (useToast)](#sistema-de-notificaciones-usetoast)
