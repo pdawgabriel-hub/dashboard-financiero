@@ -26,6 +26,7 @@ export const MODULOS_ERP = [
       { nombre: 'Especialistas', ruta: 'especialistas', componente: 'TablaEspecialistas' },
       { nombre: 'Presupuestos', ruta: 'presupuestos', componente: 'TablaPresupuestos' },
       { nombre: 'Obras', ruta: 'obras', componente: 'TablaObras' },
+      { nombre: 'Gastos', ruta: 'gastos', componente: 'TablaGastos' },
       { nombre: 'Partes de Proveedor', ruta: 'partes-proveedor', componente: 'TablaPartesProveedor' },
       { nombre: 'Ingresos', ruta: 'ingresos', componente: 'TablaIngresos' },
       { nombre: 'Partes de Trabajo', ruta: 'partes', componente: 'TablaPartes' }

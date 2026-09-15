@@ -31,6 +31,10 @@ const DICCIONARIO_ESTADOS: Record<string, { valor: string; etiqueta: string }[]>
     { valor: 'pendiente', etiqueta: 'Pendiente' },
     { valor: 'cobrado', etiqueta: 'Cobrado' },
     { valor: 'pagado', etiqueta: 'Pagado' }
+  ],
+  gasto: [
+    { valor: 'proceso', etiqueta: 'En proceso' },
+    { valor: 'finalizado', etiqueta: 'Finalizado' },
   ]
 };
 
@@ -38,7 +42,7 @@ interface GridConsultaProps {
   items: ItemGrid[];
   rutaBaseEdicion: string;
   nombreVacio?: string;
-  tipoEstado?: 'obra' | 'presupuesto' | 'pago';
+  tipoEstado?: 'obra' | 'presupuesto' | 'pago' | 'gasto';
 }
 
 export default function GridConsulta({ items, rutaBaseEdicion, nombreVacio, tipoEstado }: GridConsultaProps) {

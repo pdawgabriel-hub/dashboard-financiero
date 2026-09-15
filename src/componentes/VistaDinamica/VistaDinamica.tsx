@@ -7,6 +7,7 @@ import PaginaProveedores from '../../paginas/consultar/PaginaProveedores/PaginaP
 import PaginaEspecialistas from '../../paginas/consultar/PaginaEspecialistas/PaginaEspecialistas';
 import PaginaPresupuestos from '../../paginas/consultar/PaginaPresupuestos/PaginaPresupuestos';
 import PaginaObras from '../../paginas/consultar/PaginaObras/PaginaObras';
+import PaginaGastos from '../../paginas/consultar/PaginaGastos/PaginaGastos';
 import PaginaPartesProveedor from '../../paginas/consultar/PaginaPartesProveedor/PaginaPartesProveedor';
 import PaginaIngresos from '../../paginas/consultar/PaginaIngresos/PaginaIngresos';
 import PaginaPartes from '../../paginas/consultar/PaginaPartes/PaginaPartes';
@@ -37,6 +38,7 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
     TablaEspecialistas: PaginaEspecialistas,
     TablaPresupuestos: PaginaPresupuestos,
     TablaObras: PaginaObras,
+    TablaGastos: PaginaGastos,
     TablaPartesProveedor: PaginaPartesProveedor,
     TablaIngresos: PaginaIngresos,
     TablaPartes: PaginaPartes,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import FormularioCRUD, { type CampoFormulario } from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
@@ -84,6 +84,9 @@ export default function PaginaEditarObra() {
             <p className="text-slate-400 mt-1">
                 {obra.id} · Total: {getObraTotal(obra).toFixed(2)}€ · Horas: {getObraHorasTotales(obra)}h · Pago: {getObraEstadoPago(obra)}
             </p>
+            <Link to={`/consultar/gastos/editar/${obra.id}`} className="text-sm text-emerald-400 hover:text-emerald-300 mt-1 inline-block">
+                Ver seguimiento financiero →
+            </Link>
         </div>
 
         <FormularioCRUD

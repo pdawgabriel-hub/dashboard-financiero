@@ -8,6 +8,7 @@ import PaginaEditarProveedor from '../../paginas/consultar/PaginaEditarProveedor
 import PaginaEditarEspecialista from '../../paginas/consultar/PaginaEditarEspecialista/PaginaEditarEspecialista';
 import PaginaEditarPresupuesto from '../../paginas/consultar/PaginaEditarPresupuesto/PaginaEditarPresupuesto';
 import PaginaEditarObra from '../../paginas/consultar/PaginaEditarObra/PaginaEditarObra';
+import PaginaEditarGasto from '../../paginas/consultar/PaginaEditarGasto/PaginaEditarGasto';
 import PaginaEditarIngreso from '../../paginas/consultar/PaginaEditarIngreso/PaginaEditarIngreso';
 import PaginaEditarParteProveedor from '../../paginas/consultar/PaginaEditarParteProveedor/PaginaEditarParteProveedor';
 
@@ -28,6 +29,7 @@ export default function Main() {
         <Route path="/consultar/especialistas/editar/:id" element={<PaginaEditarEspecialista />} />
         <Route path="/consultar/presupuestos/editar/:id" element={<PaginaEditarPresupuesto />} />
         <Route path="/consultar/obras/editar/:id" element={<PaginaEditarObra />} />
+        <Route path="/consultar/gastos/editar/:id" element={<PaginaEditarGasto />} />
         <Route path="/consultar/ingresos/editar/:id" element={<PaginaEditarIngreso />} />
         <Route path="/consultar/partes-proveedor/editar/:id" element={<PaginaEditarParteProveedor />} />
         <Route path="/consultar/:seccion" element={<ContenedorDinamico moduloId="consultar" />} />
