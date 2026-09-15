@@ -3,7 +3,7 @@ import FormularioCRUD, { type CampoFormulario } from '../../../componentes/Crud/
 import { useToast } from '../../../contextos/ToastContext/ToastContext';
 
 import { gastoService } from '../../../servicios/GastoService/GastoService';
-import { proveedorService } from '../../../servicios/ProveedorService/ProveedorService';
+import { proveedorService, getProveedorDisplayName } from '../../../servicios/ProveedorService/ProveedorService';
 import { obraService } from '../../../servicios/ObraService/ObraService';
 import { gastoSchema } from '../../../schemas/GastoSchema/GastoSchema';
 
@@ -26,7 +26,7 @@ export default function PaginaFormGastos() {
             nombre: 'proveedor_id',
             etiqueta: 'Proveedor Asignado (ID)',
             tipo: 'select' as const,
-            opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: String(p.id) })),
+            opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: getProveedorDisplayName(p) })),
             requerido: true
         },
         {

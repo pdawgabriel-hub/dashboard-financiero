@@ -4,19 +4,35 @@ export const proveedorSchema = z.object({
 
     nombre: z
         .string()
-        .min(1, "Este campo es obligatoria"),
-    cif: z
+        .min(1, "Este campo es obligatorio"),
+    direccion: z
         .string()
-        .min(1, "Este campo es obligatoria"),
-    telefono: z
+        .optional(),
+    telf: z
         .string()
-        .min(1, "Este campo es obligatoria"),
-    email: z
+        .optional(),
+    correo: z
         .string()
-        .min(1, "Este campo es obligatoria"),
-    sector: z
+        .optional(),
+    tipo: z
         .string()
-        .min(1, "Este campo es obligatoria"),
+        .optional(),
+    ref: z
+        .string()
+        .optional(),
+    documento: z
+        .string()
+        .optional(),
+    numDocumento: z
+        .string()
+        .optional(),
+    base: z
+        .coerce.number()
+        .min(0, "La base no puede ser negativa"),
+    iva: z
+        .coerce.number()
+        .min(0, "El IVA no puede ser negativo")
+        .max(100, "El IVA no puede superar el 100%"),
 
 });
 

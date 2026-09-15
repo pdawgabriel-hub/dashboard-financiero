@@ -7,10 +7,15 @@ import { proveedorService } from '../../../servicios/ProveedorService/ProveedorS
 
 const CAMPOS: CampoFormulario[] = [
     { nombre: 'nombre', etiqueta: 'Nombre', requerido: true},
-    { nombre: 'cif', etiqueta: 'CIF', requerido: true },
-    { nombre: 'telefono', etiqueta: 'Telefono', requerido: true },
-    { nombre: 'email', etiqueta: 'Email', requerido: true },
-    { nombre: 'sector', etiqueta: 'Sector', requerido: true },
+    { nombre: 'tipo', etiqueta: 'Tipo', requerido: false },
+    { nombre: 'direccion', etiqueta: 'Dirección', requerido: false },
+    { nombre: 'telf', etiqueta: 'Teléfono', tipo: 'tel', requerido: false },
+    { nombre: 'correo', etiqueta: 'Correo', tipo: 'email', requerido: false },
+    { nombre: 'ref', etiqueta: 'Referencia', requerido: false },
+    { nombre: 'documento', etiqueta: 'Documento', requerido: false },
+    { nombre: 'numDocumento', etiqueta: 'Nº Documento', requerido: false },
+    { nombre: 'base', etiqueta: 'Base', tipo: 'number', requerido: true },
+    { nombre: 'iva', etiqueta: 'IVA (%)', tipo: 'number', requerido: true },
 ];
 
 export default function PaginaFormProveedores() { 

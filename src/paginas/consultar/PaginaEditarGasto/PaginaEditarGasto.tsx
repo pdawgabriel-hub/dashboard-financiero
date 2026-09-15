@@ -8,7 +8,7 @@ import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/Confi
 import { gastoSchema, type GastoFormValues } from "../../../schemas/GastoSchema/GastoSchema";
 import { gastoService } from "../../../servicios/GastoService/GastoService";
 import type { Gasto } from "../../../types/Gasto/Gasto";
-import { proveedorService } from "../../../servicios/ProveedorService/ProveedorService";
+import { proveedorService, getProveedorDisplayName } from "../../../servicios/ProveedorService/ProveedorService";
 import { obraService } from "../../../servicios/ObraService/ObraService";
 
 export default function PaginaEditarGasto() {
@@ -32,7 +32,7 @@ export default function PaginaEditarGasto() {
       nombre: 'proveedor_id',
       etiqueta: 'Proveedor Asignado (ID)',
       tipo: 'select' as const,
-      opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: String(p.id) })),
+      opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: getProveedorDisplayName(p) })),
       requerido: true
     },
     {

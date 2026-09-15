@@ -14,13 +14,15 @@ export default function PaginaProveedores() {
     const items = proveedores.map((p) => ({
         id: p.id,
         titulo: p.nombre,
-        textoBusqueda: `${p.nombre} ${p.id} ${p.cif} ${p.telefono} ${p.email} ${p.sector}`,
+        textoBusqueda: `${p.nombre} ${p.id} ${p.tipo ?? ''} ${p.telf ?? ''} ${p.correo ?? ''}`,
         campos: [
-            {etiqueta: 'Nombre', valor: p.nombre},
-            {etiqueta: 'CIF', valor: p.cif},
-            {etiqueta: 'Telefono', valor: p.telefono},
-            {etiqueta: 'Email', valor: p.email},
-            {etiqueta: 'Sector', valor: p.sector},
+            {etiqueta: 'Tipo', valor: p.tipo || 'Sin tipo'},
+            {etiqueta: 'Teléfono', valor: p.telf || 'Sin teléfono'},
+            {etiqueta: 'Correo', valor: p.correo || 'Sin correo'},
+            {etiqueta: 'Dirección', valor: p.direccion || 'Sin dirección'},
+            {etiqueta: 'Base', valor: `${p.base}€`},
+            {etiqueta: 'IVA', valor: `${p.iva}%`},
+            {etiqueta: 'Total', valor: `${p.total.toFixed(2)}€`},
         ],
     }));
     
