@@ -1,7 +1,8 @@
 import { crearCrudService } from "../CrudService/CrudService";
 import { GASTOS_MOCK } from "../../mocks/gastosMock/gastosMock";
 import type { Gasto } from "../../types/Gasto/Gasto";
-import { obraService, getObraHorasTotales, getObraCosteMoo, getObraPendienteCobro } from "../ObraService/ObraService";
+import type { Obra } from "../../types/Obra/Obra";
+import { obraService, getObraHorasTotales, getObraCosteMoo, getObraPendienteCobro, getObraEstadoPago } from "../ObraService/ObraService";
 import { parteProveedorService } from "../ParteProveedorService/ParteProveedorService";
 import { parteEspecialistaService } from "../ParteEspecialistaService/ParteEspecialistaService";
 import { getTotalIngresosDeObra } from "../IngresoService/IngresoService";
@@ -103,6 +104,18 @@ function getPresupuestosDeLaObra(obraId: string) {
   return presupuestoService.getAll().filter((p) => p.obra_id === obraId);
 }
 
+/**
+ * Equivalente a _compute_salud_obra de gestion.obras: vive aquí (y no en
+ * ObraService) porque depende de beneficio_real, que sale de la ficha de
+ * Gastos; ObraService no puede importar GastoService sin crear un ciclo
+ * (GastoService ya depende de ObraService).
+ */
+function getSaludObra(obra: Obra): 'verde' | 'ambar' | 'rojo' {
+  const beneficio = getBeneficioReal(obtenerOCrearFicha(obra.id));
+  if (beneficio < 0) return 'rojo';
+  return getObraEstadoPago(obra) === 'pagado' ? 'verde' : 'ambar';
+}
+
 export const gastoService = {
   ...crud,
   obtenerOCrearFicha,
@@ -118,4 +131,5 @@ export const gastoService = {
   getDebe,
   getEstado,
   getPresupuestosDeLaObra,
+  getSaludObra,
 };

@@ -15,18 +15,6 @@ export default function PaginaFormObras() {
         { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
         { nombre: 'fecha_inicio', etiqueta: 'Fecha Inicio', requerido: true },
         { nombre: 'fecha_fin_prevista', etiqueta: 'Fecha Fin Prevista', requerido: true },
-        { 
-            nombre: 'estado', 
-            etiqueta: 'Estado', 
-            tipo: 'select' as const,
-            opciones: [
-            { valor: 'planificada', etiqueta: 'Planificada' },
-            { valor: 'en_progreso', etiqueta: 'En Progreso' },
-            { valor: 'pausada', etiqueta: 'Pausada' },
-            { valor: 'finalizada', etiqueta: 'Finalizada' }
-            ],
-            requerido: true
-        },
         {
             nombre: 'cliente_id',
             etiqueta: 'Cliente Asignado (ID)',

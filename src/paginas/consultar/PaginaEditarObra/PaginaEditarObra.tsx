@@ -7,8 +7,15 @@ import { useToast } from "../../../contextos/ToastContext/ToastContext";
 
 import { obraSchema, type ObraFormValues } from "../../../schemas/ObraSchema/ObraSchema";
 import { obraService, getObraTotal, getObraHorasTotales, getObraEstadoPago } from "../../../servicios/ObraService/ObraService";
+import { gastoService } from "../../../servicios/GastoService/GastoService";
 import type { Obra } from "../../../types/Obra/Obra";
 import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
+
+const COLOR_SALUD: Record<'verde' | 'ambar' | 'rojo', string> = {
+    verde: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+    ambar: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+    rojo: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
+};
 
 export default function PaginaEditarObra() {
 
@@ -20,18 +27,6 @@ export default function PaginaEditarObra() {
         { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
         { nombre: 'fecha_inicio', etiqueta: 'Fecha Inicio', requerido: true },
         { nombre: 'fecha_fin_prevista', etiqueta: 'Fecha Fin Prevista', requerido: true },
-        { 
-            nombre: 'estado', 
-            etiqueta: 'Estado', 
-            tipo: 'select' as const,
-            opciones: [
-            { valor: 'planificada', etiqueta: 'Planificada' },
-            { valor: 'en_progreso', etiqueta: 'En Progreso' },
-            { valor: 'pausada', etiqueta: 'Pausada' },
-            { valor: 'finalizada', etiqueta: 'Finalizada' }
-            ],
-            requerido: true
-        },
         {
             nombre: 'cliente_id',
             etiqueta: 'Cliente Asignado (ID)',
@@ -81,8 +76,11 @@ export default function PaginaEditarObra() {
         <div className="flex flex-col gap-6">
         <div>
             <h1 className="text-2xl font-bold text-slate-100">Editar obra</h1>
-            <p className="text-slate-400 mt-1">
-                {obra.id} · Total: {getObraTotal(obra).toFixed(2)}€ · Horas: {getObraHorasTotales(obra)}h · Pago: {getObraEstadoPago(obra)}
+            <p className="text-slate-400 mt-1 flex items-center gap-2 flex-wrap">
+                <span>{obra.id} · Total: {getObraTotal(obra).toFixed(2)}€ · Horas: {getObraHorasTotales(obra)}h · Pago: {getObraEstadoPago(obra)}</span>
+                <span className={`text-[10px] px-2.5 py-1 rounded-full font-semibold border uppercase tracking-wider ${COLOR_SALUD[gastoService.getSaludObra(obra)]}`}>
+                    {gastoService.getSaludObra(obra)}
+                </span>
             </p>
             <Link to={`/consultar/gastos/editar/${obra.id}`} className="text-sm text-emerald-400 hover:text-emerald-300 mt-1 inline-block">
                 Ver seguimiento financiero →

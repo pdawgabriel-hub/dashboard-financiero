@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { obraService } from '../../servicios/ObraService/ObraService';
+import { gastoService } from '../../servicios/GastoService/GastoService';
 import { presupuestoService } from '../../servicios/PresupuestoService/PresupuestoService';
 import {
   obtenerTotalesFinancieros,
@@ -69,13 +70,14 @@ export default function PaginaDashboard() {
     //    Partes de Proveedor + Partes de Especialista de cada obra.
     setDatosBarras(obtenerDatosPorObra());
 
-    // 4. Distribución por Estado (Gráfico de Pastel)
-    const estadosPosibles: Obra['estado'][] = ['planificada', 'en_progreso', 'pausada', 'finalizada'];
-    const conteoEstados: DatosPastelEstado[] = estadosPosibles.map(estado => ({
-      name: estado,
-      value: todasLasObras.filter(o => o.estado === estado).length
+    // 4. Distribución por Salud de la Obra (Gráfico de Pastel): equivalente a
+    //    salud_obra (verde/ámbar/rojo), no a un estado manual (no existe en Odoo).
+    const saludesPosibles: Array<'verde' | 'ambar' | 'rojo'> = ['verde', 'ambar', 'rojo'];
+    const conteoSalud: DatosPastelEstado[] = saludesPosibles.map(salud => ({
+      name: salud,
+      value: todasLasObras.filter(o => gastoService.getSaludObra(o) === salud).length
     })).filter(item => item.value > 0);
-    setDatosPastel(conteoEstados);
+    setDatosPastel(conteoSalud);
 
     // 5. Tendencia Temporal Mensual de Gastos
     setDatosTendencia(obtenerTendenciaMensualGastos());
@@ -85,20 +87,13 @@ export default function PaginaDashboard() {
 
   }, []);
 
-  const getBadgeColor = (estado: Obra['estado']) => {
-    switch (estado) {
-      case 'en_progreso': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-      case 'planificada': return 'bg-sky-500/10 text-sky-400 border-sky-500/20';
-      case 'pausada': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-      case 'finalizada': return 'bg-slate-500/10 text-slate-400 border-slate-500/20';
+  const getBadgeColor = (salud: 'verde' | 'ambar' | 'rojo') => {
+    switch (salud) {
+      case 'verde': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+      case 'ambar': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+      case 'rojo': return 'bg-rose-500/10 text-rose-400 border-rose-500/20';
       default: return 'bg-slate-500/10 text-slate-400 border-slate-500/20';
     }
-  };
-
-  const formatearTextoEstado = (texto: string) => {
-    if (!texto) return '';
-    const formateado = texto.replace(/_/g, ' ');
-    return formateado.charAt(0).toUpperCase() + formateado.slice(1);
   };
 
   return (
@@ -124,7 +119,7 @@ export default function PaginaDashboard() {
         </div>
 
         <div className="border border-slate-800 bg-slate-900/40 rounded-xl p-6 flex flex-col justify-between">
-          <h2 className="text-lg font-semibold text-slate-200 mb-4">Estado de la Cartera</h2>
+          <h2 className="text-lg font-semibold text-slate-200 mb-4">Salud de la Cartera</h2>
           <GraficoPastelEstados data={datosPastel} />
         </div>
       </div>
@@ -168,11 +163,12 @@ export default function PaginaDashboard() {
             {obras.length === 0 ? (
               <p className="text-sm text-slate-500 py-4 text-center">No hay obras dadas de alta.</p>
             ) : (
-              obras.map((obra: any) => {
+              obras.map((obra: Obra) => {
                 // Presupuestos aprobados vinculados a esta obra (Presupuesto.obra_id -> Obra)
                 const importeObra = presupuestos
                   .filter((p: any) => p.obra_id === obra.id && p.estado === 'aprobado')
                   .reduce((suma: number, p: any) => suma + limpiarNumero(p.total), 0);
+                const salud = gastoService.getSaludObra(obra);
 
                 return (
                   <div key={obra.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
@@ -181,8 +177,8 @@ export default function PaginaDashboard() {
                       <span className="text-xs text-slate-500">{obra.direccion}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className={`text-[10px] px-2.5 py-1 rounded-full font-semibold border uppercase tracking-wider ${getBadgeColor(obra.estado)}`}>
-                        {formatearTextoEstado(obra.estado || '')}
+                      <span className={`text-[10px] px-2.5 py-1 rounded-full font-semibold border uppercase tracking-wider ${getBadgeColor(salud)}`}>
+                        {salud}
                       </span>
                       <span className="text-sm font-bold text-slate-300">
                         {importeObra.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}

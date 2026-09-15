@@ -12,7 +12,7 @@ interface ItemGrid {
   titulo: string;
   campos: CampoTarjeta[];
   textoBusqueda: string;
-  estado?: string; // Guardará el valor plano del schema (ej: 'en_progreso', 'pendiente')
+  estado?: string; // Guardará el valor plano del schema (ej: 'verde', 'pendiente')
   rutaEdicion?: string; // Ruta completa opcional: sustituye a `${rutaBaseEdicion}/${id}`
   // (necesario en listados con orígenes mixtos, como el Calendario de Eventos)
 }
@@ -20,10 +20,9 @@ interface ItemGrid {
 // Centralizamos todos los estados del ERP en un único diccionario dentro del componente
 const DICCIONARIO_ESTADOS: Record<string, { valor: string; etiqueta: string }[]> = {
   obra: [
-    { valor: "planificada", etiqueta: "Planificada" },
-    { valor: "en_progreso", etiqueta: "En Progreso" },
-    { valor: "pausada", etiqueta: "Pausada" },
-    { valor: "finalizada", etiqueta: "Finalizada" },
+    { valor: "verde", etiqueta: "Verde (pagada)" },
+    { valor: "ambar", etiqueta: "Ámbar (en curso)" },
+    { valor: "rojo", etiqueta: "Rojo (pérdidas)" },
   ],
   presupuesto: [
     { valor: 'no_aprobado', etiqueta: 'No aprobado' },

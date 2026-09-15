@@ -10,10 +10,9 @@ interface GraficoPastelEstadosProps {
 }
 
 const COLORES_ESTADOS: { [key: string]: string } = {
-  'planificada': '#38bdf8',
-  'en_progreso': '#10b981',
-  'pausada': '#f59e0b',
-  'finalizada': '#64748b',
+  'verde': '#10b981',
+  'ambar': '#f59e0b',
+  'rojo': '#f43f5e',
 };
 
 // Función auxiliar para quitar guiones bajos y poner la primera letra en mayúscula
@@ -49,7 +48,7 @@ export default function GraficoPastelEstados({ data }: GraficoPastelEstadosProps
           <Tooltip
             contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px' }}
             itemStyle={{ color: '#f1f5f9' }}
-            formatter={(value: any) => [`${Number(value || 0).toLocaleString()} €`, '']}
+            formatter={(value: any) => [`${Number(value || 0).toLocaleString()} obra(s)`, '']}
             separator=""
           />
 
