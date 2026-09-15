@@ -13,6 +13,7 @@ import PaginaPartesProveedor from '../../paginas/consultar/PaginaPartesProveedor
 import PaginaPartesEspecialista from '../../paginas/consultar/PaginaPartesEspecialista/PaginaPartesEspecialista';
 import PaginaIngresos from '../../paginas/consultar/PaginaIngresos/PaginaIngresos';
 import PaginaPartes from '../../paginas/consultar/PaginaPartes/PaginaPartes';
+import PaginaCalendario from '../../paginas/consultar/PaginaCalendario/PaginaCalendario';
 
 import PaginaFormClientes from '../../paginas/introducir/PaginaFormClientes/PaginaFormClientes';
 import PaginaFormTrabajadores from '../../paginas/introducir/PaginaFormTrabajadores/PaginaFormTrabajadores';
@@ -48,7 +49,8 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
     TablaPartesEspecialista: PaginaPartesEspecialista,
     TablaIngresos: PaginaIngresos,
     TablaPartes: PaginaPartes,
-    
+    TablaCalendario: PaginaCalendario,
+
     // Formularios
     FormCliente: PaginaFormClientes,
     FormTrabajador: PaginaFormTrabajadores,

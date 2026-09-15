@@ -13,6 +13,8 @@ interface ItemGrid {
   campos: CampoTarjeta[];
   textoBusqueda: string;
   estado?: string; // Guardará el valor plano del schema (ej: 'en_progreso', 'pendiente')
+  rutaEdicion?: string; // Ruta completa opcional: sustituye a `${rutaBaseEdicion}/${id}`
+  // (necesario en listados con orígenes mixtos, como el Calendario de Eventos)
 }
 
 // Centralizamos todos los estados del ERP en un único diccionario dentro del componente
@@ -35,14 +37,21 @@ const DICCIONARIO_ESTADOS: Record<string, { valor: string; etiqueta: string }[]>
   gasto: [
     { valor: 'proceso', etiqueta: 'En proceso' },
     { valor: 'finalizado', etiqueta: 'Finalizado' },
+  ],
+  evento: [
+    { valor: 'presupuesto', etiqueta: 'Presupuesto' },
+    { valor: 'ingreso', etiqueta: 'Ingreso' },
+    { valor: 'parte_trabajo', etiqueta: 'Parte de trabajo' },
+    { valor: 'parte_proveedor', etiqueta: 'Parte de proveedor' },
+    { valor: 'parte_especialista', etiqueta: 'Parte de especialista' },
   ]
 };
 
 interface GridConsultaProps {
   items: ItemGrid[];
-  rutaBaseEdicion: string;
+  rutaBaseEdicion?: string;
   nombreVacio?: string;
-  tipoEstado?: 'obra' | 'presupuesto' | 'pago' | 'gasto';
+  tipoEstado?: 'obra' | 'presupuesto' | 'pago' | 'gasto' | 'evento';
 }
 
 export default function GridConsulta({ items, rutaBaseEdicion, nombreVacio, tipoEstado }: GridConsultaProps) {
@@ -105,7 +114,7 @@ export default function GridConsulta({ items, rutaBaseEdicion, nombreVacio, tipo
               id={item.id}
               titulo={item.titulo}
               campos={item.campos}
-              rutaEdicion={`${rutaBaseEdicion}/${item.id}`}
+              rutaEdicion={item.rutaEdicion ?? `${rutaBaseEdicion}/${item.id}`}
             />
           ))}
         </div>
