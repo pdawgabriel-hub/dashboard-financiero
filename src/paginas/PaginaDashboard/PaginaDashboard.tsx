@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 
 import { obraService } from '../../servicios/ObraService/ObraService';
-import { gastoService } from '../../servicios/GastoService/GastoService';
+import { parteProveedorService } from '../../servicios/ParteProveedorService/ParteProveedorService';
 import { presupuestoService } from '../../servicios/PresupuestoService/PresupuestoService';
 import { obtenerTotalesFinancieros } from '../../servicios/DashboardAnalisis/DashboardAnalisis';
 
 import type { Obra } from '../../types/Obra/Obra';
-import type { Gasto } from '../../types/Gasto/Gasto';
+import type { ParteProveedor } from '../../types/ParteProveedor/ParteProveedor';
 
 import TarjetasKPI from '../../componentes/Dashboard/TarjetasKpi/TarjetasKpi';
 import GraficoBarras, { type DatosGraficoObra } from '../../componentes/Dashboard/GraficoBarras/GraficoBarras';
@@ -47,14 +47,14 @@ export default function PaginaDashboard() {
 
   const [obras, setObras] = useState<Obra[]>([]);
   const [presupuestos, setPresupuestos] = useState<any[]>([]);
-  const [ultimosGastos, setUltimosGastos] = useState<Gasto[]>([]);
+  const [ultimosGastos, setUltimosGastos] = useState<ParteProveedor[]>([]);
 
   useEffect(() => {
     // 1. Cargar colecciones de datos
     const todasLasObras: Obra[] = obraService.getAll() || [];
-    const todosLosGastos: Gasto[] = gastoService.getAll() || [];
+    const todosLosPartesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
     const todosLosPresupuestos = presupuestoService.getAll() || [];
-    
+
     setObras(todasLasObras);
     setPresupuestos(todosLosPresupuestos);
 
@@ -64,9 +64,9 @@ export default function PaginaDashboard() {
 
     // 3. Gastos acumulados por Obra (Gráfico de Barras con ID corto)
     const balanceObras: DatosGraficoObra[] = todasLasObras.map((obra: any) => {
-      const gastosObra = todosLosGastos
-        .filter((g: any) => g.obra_id === obra.id)
-        .reduce((sum, g: any) => sum + (limpiarNumero(g.total_con_iva) || limpiarNumero(g.importe_neto) || 0), 0);
+      const gastosObra = todosLosPartesProveedor
+        .filter((p) => p.obra_id === obra.id)
+        .reduce((suma, p) => suma + (limpiarNumero(p.importe) || 0), 0);
 
       return {
         name: obra.id || 'Sin ID',
@@ -89,10 +89,10 @@ export default function PaginaDashboard() {
     const agrupadoPorMes: { [key: number]: number } = {};
     for (let i = 0; i < 12; i++) agrupadoPorMes[i] = 0;
 
-    todosLosGastos.forEach((g: any) => {
-      const fechaGasto = new Date(g.fecha);
+    todosLosPartesProveedor.forEach((p) => {
+      const fechaGasto = new Date(p.fecha);
       if (!isNaN(fechaGasto.getTime())) {
-        agrupadoPorMes[fechaGasto.getMonth()] += limpiarNumero(g.total_con_iva) || limpiarNumero(g.importe_neto) || 0;
+        agrupadoPorMes[fechaGasto.getMonth()] += limpiarNumero(p.importe) || 0;
       }
     });
 
@@ -103,7 +103,7 @@ export default function PaginaDashboard() {
     setDatosTendencia(datosLinea);
 
     // 6. Últimos movimientos
-    const ultimos = [...todosLosGastos]
+    const ultimos = [...todosLosPartesProveedor]
       .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
       .slice(0, 4);
     setUltimosGastos(ultimos);
@@ -169,13 +169,13 @@ export default function PaginaDashboard() {
             {ultimosGastos.length === 0 ? (
               <p className="text-sm text-slate-500 py-4 text-center">No hay transacciones registradas.</p>
             ) : (
-              ultimosGastos.map((gasto: any) => {
-                const totalMonto = limpiarNumero(gasto.total_con_iva) || limpiarNumero(gasto.importe_neto) || 0;
+              ultimosGastos.map((parte) => {
+                const totalMonto = limpiarNumero(parte.importe) || 0;
                 return (
-                  <div key={gasto.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
+                  <div key={parte.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-slate-200">{gasto.concepto}</span>
-                      <span className="text-xs text-slate-500">{new Date(gasto.fecha).toLocaleDateString('es-ES')}</span>
+                      <span className="text-sm font-medium text-slate-200">{parte.descripcion || 'Sin descripción'}</span>
+                      <span className="text-xs text-slate-500">{new Date(parte.fecha).toLocaleDateString('es-ES')}</span>
                     </div>
                     <span className="text-sm font-semibold text-rose-400">
                       -{totalMonto.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}

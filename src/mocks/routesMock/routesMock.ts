@@ -26,7 +26,7 @@ export const MODULOS_ERP = [
       { nombre: 'Especialistas', ruta: 'especialistas', componente: 'TablaEspecialistas' },
       { nombre: 'Presupuestos', ruta: 'presupuestos', componente: 'TablaPresupuestos' },
       { nombre: 'Obras', ruta: 'obras', componente: 'TablaObras' },
-      { nombre: 'Gastos', ruta: 'gastos', componente: 'TablaGastos' },
+      { nombre: 'Partes de Proveedor', ruta: 'partes-proveedor', componente: 'TablaPartesProveedor' },
       { nombre: 'Ingresos', ruta: 'ingresos', componente: 'TablaIngresos' },
       { nombre: 'Partes de Trabajo', ruta: 'partes', componente: 'TablaPartes' }
     ]
@@ -42,7 +42,7 @@ export const MODULOS_ERP = [
       { nombre: 'Nuevo Especialista', ruta: 'nuevo-especialista', componente: 'FormEspecialista' },
       { nombre: 'Nuevo Presupuesto', ruta: 'nuevo-presupuesto', componente: 'FormPresupuesto' },
       { nombre: 'Nueva Obra', ruta: 'nueva-obra', componente: 'FormObra' },
-      { nombre: 'Nuevo Gasto', ruta: 'nuevo-gasto', componente: 'FormGasto' },
+      { nombre: 'Nuevo Parte de Proveedor', ruta: 'nuevo-parte-proveedor', componente: 'FormParteProveedor' },
       { nombre: 'Nuevo Ingreso', ruta: 'nuevo-ingreso', componente: 'FormIngreso' },
       { nombre: 'Nuevo Parte de Trabajo', ruta: 'nuevo-parte', componente: 'FormParte' }
     ]

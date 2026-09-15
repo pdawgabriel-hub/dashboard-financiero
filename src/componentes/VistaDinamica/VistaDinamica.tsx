@@ -7,7 +7,7 @@ import PaginaProveedores from '../../paginas/consultar/PaginaProveedores/PaginaP
 import PaginaEspecialistas from '../../paginas/consultar/PaginaEspecialistas/PaginaEspecialistas';
 import PaginaPresupuestos from '../../paginas/consultar/PaginaPresupuestos/PaginaPresupuestos';
 import PaginaObras from '../../paginas/consultar/PaginaObras/PaginaObras';
-import PaginaGastos from '../../paginas/consultar/PaginaGastos/PaginaGastos';
+import PaginaPartesProveedor from '../../paginas/consultar/PaginaPartesProveedor/PaginaPartesProveedor';
 import PaginaIngresos from '../../paginas/consultar/PaginaIngresos/PaginaIngresos';
 import PaginaPartes from '../../paginas/consultar/PaginaPartes/PaginaPartes';
 
@@ -17,7 +17,7 @@ import PaginaFormProveedores from '../../paginas/introducir/PaginaFormProveedore
 import PaginaFormEspecialistas from '../../paginas/introducir/PaginaFormEspecialistas/PaginaFormEspecialistas';
 import PaginaFormPresupuestos from '../../paginas/introducir/PaginaFormPresupuestos/PaginaFormPresupuestos';
 import PaginaFormObras from '../../paginas/introducir/PaginaFormObras/PaginaFormObras';
-import PaginaFormGastos from '../../paginas/introducir/PaginaFormGastos/PaginaFormGastos';
+import PaginaFormPartesProveedor from '../../paginas/introducir/PaginaFormPartesProveedor/PaginaFormPartesProveedor';
 import PaginaFormIngresos from '../../paginas/introducir/PaginaFormIngresos/PaginaFormIngresos';
 import PaginaFormPartes from '../../paginas/introducir/PaginaFormPartes/PaginaFormPartes';
 
@@ -37,7 +37,7 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
     TablaEspecialistas: PaginaEspecialistas,
     TablaPresupuestos: PaginaPresupuestos,
     TablaObras: PaginaObras,
-    TablaGastos: PaginaGastos,
+    TablaPartesProveedor: PaginaPartesProveedor,
     TablaIngresos: PaginaIngresos,
     TablaPartes: PaginaPartes,
     
@@ -48,7 +48,7 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
     FormEspecialista: PaginaFormEspecialistas,
     FormPresupuesto: PaginaFormPresupuestos,
     FormObra: PaginaFormObras,
-    FormGasto: PaginaFormGastos,
+    FormParteProveedor: PaginaFormPartesProveedor,
     FormIngreso: PaginaFormIngresos,
     FormParte: PaginaFormPartes,
   };

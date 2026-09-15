@@ -5,39 +5,43 @@ import { useToast } from "../../../contextos/ToastContext/ToastContext";
 import FormularioCRUD, { type CampoFormulario } from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
 
-import { gastoSchema, type GastoFormValues } from "../../../schemas/GastoSchema/GastoSchema";
-import { gastoService } from "../../../servicios/GastoService/GastoService";
-import type { Gasto } from "../../../types/Gasto/Gasto";
+import { parteProveedorSchema, type ParteProveedorFormValues } from "../../../schemas/ParteProveedorSchema/ParteProveedorSchema";
+import { parteProveedorService } from "../../../servicios/ParteProveedorService/ParteProveedorService";
+import type { ParteProveedor } from "../../../types/ParteProveedor/ParteProveedor";
 import { proveedorService, getProveedorDisplayName } from "../../../servicios/ProveedorService/ProveedorService";
 import { obraService, getObraDisplayName } from "../../../servicios/ObraService/ObraService";
 
-export default function PaginaEditarGasto() {
+export default function PaginaEditarParteProveedor() {
 
   const proveedoresRegistrados = proveedorService.getAll();
   const obrasRegistradas = obraService.getAll();
 
   // Array de configuracion
   const CAMPOS: CampoFormulario[] = [
-    { nombre: 'concepto', etiqueta: 'Concepto', requerido: true },
     { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
-    { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
-    { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
-    { 
-      nombre: 'total_con_iva', 
-      etiqueta: 'Total con IVA (€)', 
-      tipo: 'number' as const, 
+    { nombre: 'descripcion', etiqueta: 'Descripción', tipo: 'textarea', requerido: false },
+    { nombre: 'documento', etiqueta: 'Documento (factura/albarán)', requerido: false },
+    { nombre: 'importe', etiqueta: 'Importe (€)', tipo: 'number', requerido: true },
+    {
+      nombre: 'estado_pago',
+      etiqueta: 'Estado de Pago',
+      tipo: 'select' as const,
+      opciones: [
+        { valor: 'pendiente', etiqueta: 'Pendiente' },
+        { valor: 'pagado', etiqueta: 'Pagado' },
+      ],
       requerido: true
     },
     {
       nombre: 'proveedor_id',
-      etiqueta: 'Proveedor Asignado (ID)',
+      etiqueta: 'Proveedor Asignado',
       tipo: 'select' as const,
       opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: getProveedorDisplayName(p) })),
       requerido: true
     },
     {
       nombre: 'obra_id',
-      etiqueta: 'Obra Vinculada (ID)',
+      etiqueta: 'Obra Vinculada',
       tipo: 'select' as const,
       opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
       requerido: true
@@ -49,48 +53,48 @@ export default function PaginaEditarGasto() {
   const navigate = useNavigate();
   const { mostrarToast } = useToast();
 
-  const [gasto, setGasto] = useState<Gasto | null | undefined>(undefined);
+  const [parte, setParte] = useState<ParteProveedor | null | undefined>(undefined);
   const [mostrarConfirmar, setMostrarConfirmar] = useState(false);
 
   useEffect(() => {
     if (!id) return;
-    const encontrado = gastoService.getById(id);
-    setGasto(encontrado ?? null);
+    const encontrado = parteProveedorService.getById(id);
+    setParte(encontrado ?? null);
   }, [id]);
 
-  function handleSubmit(datos: GastoFormValues) {
+  function handleSubmit(datos: ParteProveedorFormValues) {
     if (!id) return;
-    gastoService.update(id, datos);
+    parteProveedorService.update(id, datos);
     mostrarToast('Cambios guardados correctamente');
-    navigate('/consultar/gastos');
+    navigate('/consultar/partes-proveedor');
   }
 
   function handleEliminar() {
     if (!id) return;
-    gastoService.remove(id);
-    mostrarToast('Gasto eliminado');
-    navigate('/consultar/gastos');
+    parteProveedorService.remove(id);
+    mostrarToast('Parte de proveedor eliminado');
+    navigate('/consultar/partes-proveedor');
   }
 
-  if (gasto === undefined) {
+  if (parte === undefined) {
     return <p className="text-slate-500">Cargando...</p>;
   }
 
-  if (gasto === null) {
-    return <p className="text-slate-500">No se encontró el gasto solicitado.</p>;
+  if (parte === null) {
+    return <p className="text-slate-500">No se encontró el parte de proveedor solicitado.</p>;
   }
 
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-100">Editar gasto</h1>
-        <p className="text-slate-400 mt-1">{gasto.id}</p>
+        <h1 className="text-2xl font-bold text-slate-100">Editar parte de proveedor</h1>
+        <p className="text-slate-400 mt-1">{parte.id}</p>
       </div>
 
       <FormularioCRUD
-        schema={gastoSchema}
+        schema={parteProveedorSchema}
         campos={CAMPOS}
-        valoresIniciales={gasto}
+        valoresIniciales={parte}
         onSubmit={handleSubmit}
         textoBoton="Guardar cambios"
         onEliminar={() => setMostrarConfirmar(true)}
@@ -98,11 +102,11 @@ export default function PaginaEditarGasto() {
 
       <ConfirmarEliminar
         abierto={mostrarConfirmar}
-        nombre={`${gasto.concepto}`.trim()}
+        nombre={`${parte.descripcion ?? parte.id}`.trim()}
         onCancelar={() => setMostrarConfirmar(false)}
         onConfirmar={handleEliminar}
       />
     </div>
   );
-  
+
 }

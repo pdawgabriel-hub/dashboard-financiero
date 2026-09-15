@@ -1,9 +1,9 @@
 import { obraService } from '../ObraService/ObraService';
-import { gastoService } from '../GastoService/GastoService';
+import { parteProveedorService } from '../ParteProveedorService/ParteProveedorService';
 import { presupuestoService } from '../PresupuestoService/PresupuestoService';
 
 import type { Obra } from '../../types/Obra/Obra';
-import type { Gasto } from '../../types/Gasto/Gasto';
+import type { ParteProveedor } from '../../types/ParteProveedor/ParteProveedor';
 import type { Presupuesto } from '../../types/Presupuesto/Presupuesto';
 
 /**
@@ -28,11 +28,10 @@ function limpiarNumero(valor: unknown): number {
 
 export function obtenerTotalesFinancieros() {
   const obras: Obra[] = obraService.getAll() || [];
-  const gastos: Gasto[] = gastoService.getAll() || [];
+  const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
   const presupuestos: Presupuesto[] = presupuestoService.getAll() || [];
 
   let totalIngresos = 0;
-  let totalGastos = 0;
 
   // 1. Obtener Ingresos sumando los presupuestos aceptados vinculados a cada obra
   //    (la relación ahora va Presupuesto.obra_id -> Obra, no al revés)
@@ -44,17 +43,10 @@ export function obtenerTotalesFinancieros() {
     totalIngresos += valorIngreso;
   });
 
-  // 2. Obtener total de gastos
-  gastos.forEach((gasto) => {
-    const valorGasto =
-      limpiarNumero((gasto as any).total_con_iva) ||
-      limpiarNumero((gasto as any).importe_neto) ||
-      limpiarNumero((gasto as any).total) ||
-      limpiarNumero((gasto as any).importe) ||
-      0;
-
-    totalGastos += valorGasto;
-  });
+  // 2. Total de gastos. De momento solo refleja los Partes de Proveedor: cuando
+  //    exista Partes de Especialista y el coste de mano de obra se sume aquí,
+  //    esta cifra se ampliará (ver ficha de Gastos, informe §3.7).
+  const totalGastos = partesProveedor.reduce((suma, parte) => suma + limpiarNumero(parte.importe), 0);
 
   // 3. Cálculos de margen y utilidad
   const beneficioNeto = totalIngresos - totalGastos;
@@ -73,20 +65,12 @@ export function obtenerTotalesFinancieros() {
 
 export function obtenerDatosPorObra() {
   const obras: Obra[] = obraService.getAll() || [];
-  const gastos: Gasto[] = gastoService.getAll() || [];
+  const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
 
   return obras.map((obra) => {
-    const gastosDeObra = gastos
-      .filter((g) => g.obra_id === obra.id)
-      .reduce((sum, g) => {
-        const val =
-          limpiarNumero((g as any).total_con_iva) ||
-          limpiarNumero((g as any).importe_neto) ||
-          limpiarNumero((g as any).total) ||
-          limpiarNumero((g as any).importe) ||
-          0;
-        return sum + val;
-      }, 0);
+    const gastosDeObra = partesProveedor
+      .filter((p) => p.obra_id === obra.id)
+      .reduce((suma, p) => suma + limpiarNumero(p.importe), 0);
 
     return {
       name: obra.id || 'Sin ID',
@@ -105,17 +89,13 @@ export interface MovimientoReciente {
 }
 
 export function obtenerMovimientosRecientes(): MovimientoReciente[] {
-  const gastos: Gasto[] = gastoService.getAll() || [];
+  const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
 
-  return gastos.map((g) => ({
-    id: g.id,
-    concepto: (g as any).concepto || 'Sin concepto',
-    fecha: (g as any).fecha || new Date().toISOString(),
-    total:
-      limpiarNumero((g as any).total_con_iva) ||
-      limpiarNumero((g as any).importe_neto) ||
-      limpiarNumero((g as any).total) ||
-      0,
+  return partesProveedor.map((p) => ({
+    id: p.id,
+    concepto: p.descripcion || 'Sin concepto',
+    fecha: p.fecha || new Date().toISOString(),
+    total: limpiarNumero(p.importe),
     tipo: 'gasto' as const,
   }));
 }

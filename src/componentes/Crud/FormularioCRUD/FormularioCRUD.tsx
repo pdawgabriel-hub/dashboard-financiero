@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { calcularTotalConIva } from '../../../servicios/GastoService/GastoService';
+import { calcularTotalConIva } from '../../../servicios/IngresoService/IngresoService';
 
 export interface CampoFormulario {
   nombre: string;       
