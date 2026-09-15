@@ -7,31 +7,30 @@ import { especialistaService } from "../../../servicios/EspecialistaService/Espe
 
 const CAMPOS: CampoFormulario[] = [
     { nombre: 'nombre', etiqueta: 'Nombre', requerido: true },
-    { nombre: 'empresa_autonomo', etiqueta: 'Empresa / Autonomo', requerido: true },
-    { nombre: 'cif_dni', etiqueta: 'CIF / DNI', requerido: true },
-    { nombre: 'telefono', etiqueta: 'Telefono', requerido: true },
-    { nombre: 'especialidad', etiqueta: 'Especialidad' },
-    { nombre: 'precio_hora_subcontrata', etiqueta: 'Precio x Hora', tipo: 'tel', requerido: true },
+    { nombre: 'tipo', etiqueta: 'Tipo', requerido: false },
+    { nombre: 'ref', etiqueta: 'Referencia', requerido: false },
+    { nombre: 'telf', etiqueta: 'Teléfono', tipo: 'tel', requerido: false },
+    { nombre: 'correo', etiqueta: 'Correo', tipo: 'email', requerido: false },
+    { nombre: 'comunicacionParte', etiqueta: 'Comunicación del parte', requerido: false },
+    { nombre: 'importe', etiqueta: 'Importe', tipo: 'number', requerido: false },
+    { nombre: 'observaciones', etiqueta: 'Observaciones', tipo: 'textarea', requerido: false },
 ];
 
 export default function PaginaFormEspecialistas() {
-    
+
     const navigate = useNavigate();
     const { mostrarToast } = useToast();
-    
+
     function handleSubmit(datos: EspecialistaFormValues) {
-        especialistaService.create({
-        ...datos,
-        especialidad: datos.especialidad || "General" // Si el usuario no escribe nada, nunca pasa undefined
-      });
-        mostrarToast('Especialistas creado correctamente');
+        especialistaService.create(datos);
+        mostrarToast('Especialista creado correctamente');
         navigate('/consultar/especialistas');
     }
-    
+
     return (
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-100">Nuevo ingreso</h1>
+            <h1 className="text-2xl font-bold text-slate-100">Nuevo especialista</h1>
             <p className="text-slate-400 mt-1">Rellena los datos para dar de alta un especialista.</p>
           </div>
     

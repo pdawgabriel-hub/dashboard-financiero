@@ -9,11 +9,13 @@ import type { Especialista } from "../../../types/Especialista/Especialista";
 
 const CAMPOS: CampoFormulario[] = [
   { nombre: 'nombre', etiqueta: 'Nombre', requerido: true },
-  { nombre: 'empresa_autonomo', etiqueta: 'Empresa / Autonomo', requerido: true },
-  { nombre: 'cif_dni', etiqueta: 'CIF / DNI', requerido: true },
-  { nombre: 'telefono', etiqueta: 'Telefono', requerido: true },
-  { nombre: 'especialidad', etiqueta: 'Especialidad' },
-  { nombre: 'precio_hora_subcontrata', etiqueta: 'Precio x Hora', tipo: 'tel', requerido: true },
+  { nombre: 'tipo', etiqueta: 'Tipo', requerido: false },
+  { nombre: 'ref', etiqueta: 'Referencia', requerido: false },
+  { nombre: 'telf', etiqueta: 'Teléfono', tipo: 'tel', requerido: false },
+  { nombre: 'correo', etiqueta: 'Correo', tipo: 'email', requerido: false },
+  { nombre: 'comunicacionParte', etiqueta: 'Comunicación del parte', requerido: false },
+  { nombre: 'importe', etiqueta: 'Importe', tipo: 'number', requerido: false },
+  { nombre: 'observaciones', etiqueta: 'Observaciones', tipo: 'textarea', requerido: false },
 ];
 
 export default function PaginaEditarEspecialista() {

@@ -1,9 +1,14 @@
 export interface Especialista {
-  id: string; // ESP-001
-  nombre: string;
-  empresa_autonomo: string; // Nombre comercial o personal
-  cif_dni: string;
-  telefono: string;
-  especialidad: string; // Ej: Electricista, Fontanero, Estructurista
-  precio_hora_subcontrata: number;
+  id: string; // especialista_id
+  tipo?: string; // Ej: Arquitecto, Fontanero, Electricista...
+  ref?: string;
+  comunicacionParte?: string;
+  nombre: string; // obligatorio
+  observaciones?: string;
+  telf?: string;
+  correo?: string;
+  importe?: number;
 }
+
+// Tipo para crear: sin id, lo genera el servicio
+export type EspecialistaInput = Omit<Especialista, 'id'>;

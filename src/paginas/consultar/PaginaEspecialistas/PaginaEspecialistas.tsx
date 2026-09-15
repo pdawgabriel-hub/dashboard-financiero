@@ -13,16 +13,15 @@ export default function PaginaEspecialistas() {
 
     const items = especialistas.map((e) => ({
         id: e.id,
-        titulo: e.empresa_autonomo,
-        textoBusqueda: `${e.id} ${e.especialidad} ${e.empresa_autonomo} ${e.nombre} ${e.telefono} `,
+        titulo: e.nombre,
+        textoBusqueda: `${e.id} ${e.tipo ?? ''} ${e.nombre} ${e.telf ?? ''} ${e.correo ?? ''}`,
         campos: [
-            {etiqueta: 'Nombre', valor: e.nombre},
-            {etiqueta: 'Empresa / Autonomo', valor: e.empresa_autonomo},
-            {etiqueta: 'CIF / DNI', valor: e.cif_dni},
-            {etiqueta: 'Telefono', valor: e.telefono},
-            {etiqueta: 'Especialidad', valor: e.especialidad},
-            {etiqueta: 'Precio hora', valor: `${e.precio_hora_subcontrata}€`},
-        ],     
+            {etiqueta: 'Tipo', valor: e.tipo || 'Sin tipo'},
+            {etiqueta: 'Teléfono', valor: e.telf || 'Sin teléfono'},
+            {etiqueta: 'Correo', valor: e.correo || 'Sin correo'},
+            {etiqueta: 'Referencia', valor: e.ref || 'Sin referencia'},
+            {etiqueta: 'Importe', valor: e.importe != null ? `${e.importe}€` : 'Sin importe'},
+        ],
     }));
 
     return (
