@@ -3,6 +3,7 @@ import VistaDinamica from '../VistaDinamica/VistaDinamica';
 import { MODULOS_ERP } from '../../mocks/routesMock/routesMock';
 import PaginaEditarCliente from '../../paginas/consultar/PaginaEditarCliente/PaginaEditarCliente';
 import PaginaEditarTrabajador from '../../paginas/consultar/PaginaEditarTrabajador/PaginaEditarTrabajador';
+import PaginaEditarFalta from '../../paginas/consultar/PaginaEditarFalta/PaginaEditarFalta';
 import PaginaEditarParte from '../../paginas/consultar/PaginaEditarParte/PaginaEditarParte';
 import PaginaEditarProveedor from '../../paginas/consultar/PaginaEditarProveedor/PaginaEditarProveedor';
 import PaginaEditarEspecialista from '../../paginas/consultar/PaginaEditarEspecialista/PaginaEditarEspecialista';
@@ -25,6 +26,7 @@ export default function Main() {
         <Route path="/introducir" element={<Navigate to="/introducir/nuevo-cliente" replace />} />
         <Route path="/consultar/clientes/editar/:id" element={<PaginaEditarCliente />} />
         <Route path="/consultar/trabajadores/editar/:id" element={<PaginaEditarTrabajador />} />
+        <Route path="/consultar/faltas/editar/:id" element={<PaginaEditarFalta />} />
         <Route path="/consultar/partes-trabajo/editar/:id" element={<PaginaEditarParte />} />
         <Route path="/consultar/proveedores/editar/:id" element={<PaginaEditarProveedor />} />
         <Route path="/consultar/especialistas/editar/:id" element={<PaginaEditarEspecialista />} />

@@ -22,6 +22,7 @@ export const MODULOS_ERP = [
     subSecciones: [
       { nombre: 'Clientes', ruta: 'clientes', componente: 'TablaClientes' },
       { nombre: 'Trabajadores', ruta: 'trabajadores', componente: 'TablaTrabajadores' },
+      { nombre: 'Faltas de Trabajador', ruta: 'faltas', componente: 'TablaFaltas' },
       { nombre: 'Proveedores', ruta: 'proveedores', componente: 'TablaProveedores' },
       { nombre: 'Especialistas', ruta: 'especialistas', componente: 'TablaEspecialistas' },
       { nombre: 'Presupuestos', ruta: 'presupuestos', componente: 'TablaPresupuestos' },
@@ -40,6 +41,7 @@ export const MODULOS_ERP = [
     subSecciones: [
       { nombre: 'Nuevo Cliente', ruta: 'nuevo-cliente', componente: 'FormCliente' },
       { nombre: 'Nuevo Trabajador', ruta: 'nuevo-trabajador', componente: 'FormTrabajador' },
+      { nombre: 'Nueva Falta', ruta: 'nueva-falta', componente: 'FormFalta' },
       { nombre: 'Nuevo Proveedor', ruta: 'nuevo-proveedor', componente: 'FormProveedor' },
       { nombre: 'Nuevo Especialista', ruta: 'nuevo-especialista', componente: 'FormEspecialista' },
       { nombre: 'Nuevo Presupuesto', ruta: 'nuevo-presupuesto', componente: 'FormPresupuesto' },

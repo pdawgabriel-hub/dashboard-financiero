@@ -3,6 +3,7 @@ import PaginaDashboard from '../../paginas/PaginaDashboard/PaginaDashboard';
 
 import PaginaClientes from '../../paginas/consultar/PaginaClientes/PaginaClientes';
 import PaginaTrabajadores from '../../paginas/consultar/PaginaTrabajadores/PaginaTrabajadores';
+import PaginaFaltas from '../../paginas/consultar/PaginaFaltas/PaginaFaltas';
 import PaginaProveedores from '../../paginas/consultar/PaginaProveedores/PaginaProveedores';
 import PaginaEspecialistas from '../../paginas/consultar/PaginaEspecialistas/PaginaEspecialistas';
 import PaginaPresupuestos from '../../paginas/consultar/PaginaPresupuestos/PaginaPresupuestos';
@@ -15,6 +16,7 @@ import PaginaPartes from '../../paginas/consultar/PaginaPartes/PaginaPartes';
 
 import PaginaFormClientes from '../../paginas/introducir/PaginaFormClientes/PaginaFormClientes';
 import PaginaFormTrabajadores from '../../paginas/introducir/PaginaFormTrabajadores/PaginaFormTrabajadores';
+import PaginaFormFaltas from '../../paginas/introducir/PaginaFormFaltas/PaginaFormFaltas';
 import PaginaFormProveedores from '../../paginas/introducir/PaginaFormProveedores/PaginaFormProveedores';
 import PaginaFormEspecialistas from '../../paginas/introducir/PaginaFormEspecialistas/PaginaFormEspecialistas';
 import PaginaFormPresupuestos from '../../paginas/introducir/PaginaFormPresupuestos/PaginaFormPresupuestos';
@@ -36,6 +38,7 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
     // Consultas
     TablaClientes: PaginaClientes,
     TablaTrabajadores: PaginaTrabajadores,
+    TablaFaltas: PaginaFaltas,
     TablaProveedores: PaginaProveedores,
     TablaEspecialistas: PaginaEspecialistas,
     TablaPresupuestos: PaginaPresupuestos,
@@ -49,6 +52,7 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
     // Formularios
     FormCliente: PaginaFormClientes,
     FormTrabajador: PaginaFormTrabajadores,
+    FormFalta: PaginaFormFaltas,
     FormProveedor: PaginaFormProveedores,
     FormEspecialista: PaginaFormEspecialistas,
     FormPresupuesto: PaginaFormPresupuestos,
