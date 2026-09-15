@@ -1,7 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
-import { calcularTotalConIva } from '../../../servicios/IngresoService/IngresoService';
 
 export interface CampoFormulario {
   nombre: string;       
@@ -32,28 +30,11 @@ export default function FormularioCRUD<T extends Record<string, any>>({
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
     formState: { errors, isSubmitting },
   } = useForm<any>({
     resolver: zodResolver(schema),
     defaultValues: valoresIniciales as any,
   });
-
-  const importeNeto = watch('importe_neto');
-  const ivaPorcentaje = watch('iva_porcentaje');
-
-  useEffect(() => {
-    const tieneCampoTotal = campos.some(c => c.nombre === 'total_con_iva');
-    
-    if (tieneCampoTotal) {
-      const totalCalculado = calcularTotalConIva({
-        importe_neto: Number(importeNeto) || 0,
-        iva_porcentaje: Number(ivaPorcentaje) || 0
-      });
-      setValue('total_con_iva', totalCalculado);
-    }
-  }, [importeNeto, ivaPorcentaje, campos, setValue]);
 
   return (
     <form
@@ -61,8 +42,6 @@ export default function FormularioCRUD<T extends Record<string, any>>({
       className="flex flex-col gap-5 max-w-xl bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full"
     >
       {campos.map((campo) => {
-        const esTotal = campo.nombre === 'total_con_iva';
-
         return (
           <div key={campo.nombre} className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-slate-300">
@@ -92,12 +71,7 @@ export default function FormularioCRUD<T extends Record<string, any>>({
               <input
                 type={campo.tipo ?? 'text'}
                 {...register(campo.nombre)}
-                readOnly={esTotal}
-                className={`px-3 py-2 border rounded-lg text-sm focus:outline-none w-full
-                  ${esTotal 
-                    ? 'bg-slate-900 border-slate-700 text-slate-400 cursor-not-allowed font-semibold text-emerald-400' 
-                    : 'bg-slate-950 border-slate-800 text-slate-200 focus:border-emerald-600'
-                  }`}
+                className="px-3 py-2 border rounded-lg text-sm focus:outline-none w-full bg-slate-950 border-slate-800 text-slate-200 focus:border-emerald-600"
               />
             )}
 

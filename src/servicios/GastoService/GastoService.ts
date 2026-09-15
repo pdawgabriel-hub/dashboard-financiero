@@ -1,9 +1,9 @@
 import { crearCrudService } from "../CrudService/CrudService";
 import { GASTOS_MOCK } from "../../mocks/gastosMock/gastosMock";
 import type { Gasto } from "../../types/Gasto/Gasto";
-import { obraService, getObraHorasTotales, getObraCosteMoo, getObraTotal } from "../ObraService/ObraService";
+import { obraService, getObraHorasTotales, getObraCosteMoo, getObraPendienteCobro } from "../ObraService/ObraService";
 import { parteProveedorService } from "../ParteProveedorService/ParteProveedorService";
-import { ingresoService } from "../IngresoService/IngresoService";
+import { getTotalIngresosDeObra } from "../IngresoService/IngresoService";
 import { presupuestoService } from "../PresupuestoService/PresupuestoService";
 import { clienteService } from "../ClienteService/ClienteService";
 
@@ -72,32 +72,28 @@ function getGastosTotales(gasto: Gasto): number {
   return getCosteProveedores(gasto) + getCosteEspecialistas() + getCosteMoo(gasto);
 }
 
-// Equivalente a "ingresos": suma de obra_id.ingresos_ids.importe.
-// Ingreso en el front distingue pendiente/cobrado (no existe en Odoo); para que
-// esta cifra represente caja real se suman solo los ya cobrados.
-function getIngresosCobrados(gasto: Gasto): number {
-  return ingresoService
-    .getAll()
-    .filter((i) => i.obra_id === gasto.obra_id && i.estado_pago === 'cobrado')
-    .reduce((suma, i) => suma + (i.total_con_iva || 0), 0);
+// Equivalente a "ingresos": suma de obra_id.ingresos_ids.importe. Cada Ingreso
+// del front (igual que en Odoo) representa ya un cobro recibido, no una
+// factura pendiente, así que se suman todos.
+function getIngresos(gasto: Gasto): number {
+  return getTotalIngresosDeObra(gasto.obra_id);
 }
 
 // Equivalente a beneficio_real: ingresos - gastos (caja real, nunca presupuesto - gastos)
 function getBeneficioReal(gasto: Gasto): number {
-  return getIngresosCobrados(gasto) - getGastosTotales(gasto);
+  return getIngresos(gasto) - getGastosTotales(gasto);
 }
 
 // Equivalente a debe (no guardado): obra_id.total - ingresos
 function getDebe(gasto: Gasto): number {
   const obra = obraService.getById(gasto.obra_id);
-  const total = obra ? getObraTotal(obra) : 0;
-  return Math.round((total - getIngresosCobrados(gasto)) * 100) / 100;
+  return obra ? getObraPendienteCobro(obra) : 0;
 }
 
 // Equivalente a estado: "finalizado" cuando no queda nada por cobrar y ya se ha
 // cobrado algo; "proceso" en cualquier otro caso.
 function getEstado(gasto: Gasto): 'proceso' | 'finalizado' {
-  const ingresos = getIngresosCobrados(gasto);
+  const ingresos = getIngresos(gasto);
   return getDebe(gasto) <= 0 && ingresos > 0 ? 'finalizado' : 'proceso';
 }
 
@@ -116,7 +112,7 @@ export const gastoService = {
   getCosteProveedores,
   getCosteEspecialistas,
   getGastosTotales,
-  getIngresosCobrados,
+  getIngresos,
   getBeneficioReal,
   getDebe,
   getEstado,

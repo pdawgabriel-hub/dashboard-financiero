@@ -4,7 +4,7 @@ import type { Obra } from "../../types/Obra/Obra";
 import { presupuestoService } from "../PresupuestoService/PresupuestoService";
 import { parteTrabajoService } from "../ParteTrabajoService/ParteTrabajoService";
 import { trabajadorService } from "../TrabajadorService/TrabajadorService";
-import { ingresoService } from "../IngresoService/IngresoService";
+import { getTotalIngresosDeObra } from "../IngresoService/IngresoService";
 
 export const obraService = crearCrudService<Obra>('obras', OBRAS_MOCK, 'OBRA');
 
@@ -55,14 +55,18 @@ export function getObraCosteMoo(obra: Obra): number {
 }
 
 /**
+ * Equivalente a "debe" (obra_id.total - ingresos): lo que queda pendiente de cobro.
+ */
+export function getObraPendienteCobro(obra: Obra): number {
+  return Math.round((getObraTotal(obra) - getTotalIngresosDeObra(obra.id)) * 100) / 100;
+}
+
+/**
  * Equivalente a _compute_estado_pago de gestion.obras.
  */
 export function getObraEstadoPago(obra: Obra): 'pendiente' | 'parcial' | 'pagado' {
   const total = getObraTotal(obra);
-  const cobrado = ingresoService
-    .getAll()
-    .filter((i) => i.obra_id === obra.id && i.estado_pago === 'cobrado')
-    .reduce((suma, i) => suma + (i.total_con_iva || 0), 0);
+  const cobrado = getTotalIngresosDeObra(obra.id);
 
   if (cobrado <= 0) return 'pendiente';
   if (cobrado < total) return 'parcial';

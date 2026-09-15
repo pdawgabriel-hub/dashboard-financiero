@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import FormularioCRUD, { type CampoFormulario } from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
-import { ingresoSchema } from "../../../schemas/IngresoSchema/IngresoSchema";
+import { ingresoSchema, type IngresoFormValues } from "../../../schemas/IngresoSchema/IngresoSchema";
 import { ingresoService } from "../../../servicios/IngresoService/IngresoService";
 // Importamos los servicios de donde queremos sacar las opciones relacionales
 import { obraService, getObraDisplayName } from "../../../servicios/ObraService/ObraService";
@@ -26,54 +26,36 @@ export default function PaginaFormIngresos() {
 
     // Definimos los CAMPOS dentro del componente para que puedan usar las variables de arriba
     const CAMPOS: CampoFormulario[] = [
-        { nombre: 'numero_factura', etiqueta: 'Número Factura', requerido: true },
-        { nombre: 'fecha_emision', etiqueta: 'Fecha Emisión', requerido: true },
-        { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
-        { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
-        { nombre: 'total_con_iva', etiqueta: 'Total con IVA (Auto)' },
-        
-        // Desplegable fijo para Estados (como pedías)
-        { 
-            nombre: 'estado_pago', 
-            etiqueta: 'Estado de Pago', 
-            tipo: 'select', 
-            opciones: [
-                { valor: 'pendiente', etiqueta: 'Pendiente' },
-                { valor: 'cobrado', etiqueta: 'Cobrado' }
-            ],
-            requerido: true
-        },
-        
+        { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
+        { nombre: 'tipo', etiqueta: 'Tipo (Transferencia, Cheque...)', requerido: false },
+        { nombre: 'documento', etiqueta: 'Documento', requerido: false },
+        { nombre: 'num_documento', etiqueta: 'Nº Documento', requerido: false },
+        { nombre: 'importe', etiqueta: 'Importe (€)', tipo: 'number', requerido: true },
+
         // Desplegable dinámico relacional (Obras)
-        { 
-            nombre: 'obra_id', 
-            etiqueta: 'Obra Asignada', 
-            tipo: 'select', 
+        {
+            nombre: 'obra_id',
+            etiqueta: 'Obra Asignada (opcional)',
+            tipo: 'select',
             opciones: opcionesObras,
-            requerido: true 
+            requerido: false
         },
-        
+
         // Desplegable dinámico relacional (Clientes)
-        { 
-            nombre: 'cliente_id', 
-            etiqueta: 'Cliente', 
-            tipo: 'select', 
+        {
+            nombre: 'cliente_id',
+            etiqueta: 'Cliente (opcional)',
+            tipo: 'select',
             opciones: opcionesClientes,
-            requerido: true 
+            requerido: false
         },
     ];
 
     const navigate = useNavigate();
     const { mostrarToast } = useToast();
 
-    function handleSubmit(datos: any) {
-        const datosLimpios = {
-            ...datos,
-            importe_neto: Number(datos.importe_neto),
-            iva_porcentaje: Number(datos.iva_porcentaje),
-            total_con_iva: Number(datos.total_con_iva),
-        };
-        ingresoService.create(datosLimpios);
+    function handleSubmit(datos: IngresoFormValues) {
+        ingresoService.create(datos);
         mostrarToast('Ingreso registrado correctamente');
         navigate('/consultar/ingresos');
     }
@@ -82,7 +64,7 @@ export default function PaginaFormIngresos() {
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-2xl font-bold text-slate-100">Nuevo Ingreso</h1>
-            <p className="text-slate-400 mt-1">Registra una factura emitida vinculada a una obra.</p>
+            <p className="text-slate-400 mt-1">Registra un cobro recibido, opcionalmente vinculado a una obra.</p>
           </div>
 
           <FormularioCRUD

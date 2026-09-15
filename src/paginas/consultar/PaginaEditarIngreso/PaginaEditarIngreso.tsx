@@ -26,34 +26,24 @@ export default function PaginaEditarIngreso() {
     }));
 
     const CAMPOS: CampoFormulario[] = [
-        { nombre: 'numero_factura', etiqueta: 'Número Factura', requerido: true },
-        { nombre: 'fecha_emision', etiqueta: 'Fecha Emisión', requerido: true },
-        { nombre: 'importe_neto', etiqueta: 'Importe Neto', requerido: true },
-        { nombre: 'iva_porcentaje', etiqueta: 'Porcentaje IVA', requerido: true },
-        { nombre: 'total_con_iva', etiqueta: 'Total con IVA (Auto)' },
-        { 
-            nombre: 'estado_pago', 
-            etiqueta: 'Estado de Pago', 
-            tipo: 'select', 
-            opciones: [
-                { valor: 'pendiente', etiqueta: 'Pendiente' },
-                { valor: 'cobrado', etiqueta: 'Cobrado' }
-            ],
-            requerido: true
-        },
-        { 
-            nombre: 'obra_id', 
-            etiqueta: 'Obra Asignada', 
-            tipo: 'select', 
+        { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
+        { nombre: 'tipo', etiqueta: 'Tipo (Transferencia, Cheque...)', requerido: false },
+        { nombre: 'documento', etiqueta: 'Documento', requerido: false },
+        { nombre: 'num_documento', etiqueta: 'Nº Documento', requerido: false },
+        { nombre: 'importe', etiqueta: 'Importe (€)', tipo: 'number', requerido: true },
+        {
+            nombre: 'obra_id',
+            etiqueta: 'Obra Asignada (opcional)',
+            tipo: 'select',
             opciones: opcionesObras,
-            requerido: true 
+            requerido: false
         },
-        { 
-            nombre: 'cliente_id', 
-            etiqueta: 'Cliente', 
-            tipo: 'select', 
+        {
+            nombre: 'cliente_id',
+            etiqueta: 'Cliente (opcional)',
+            tipo: 'select',
             opciones: opcionesClientes,
-            requerido: true 
+            requerido: false
         },
     ];
 
@@ -72,12 +62,7 @@ export default function PaginaEditarIngreso() {
 
     function handleSubmit(datos: IngresoFormValues) {
         if (!id) return;
-        // Casteo explícito seguro del estado_pago para acoplarlo al tipo estricto de Ingreso
-        const datosActualizados = {
-            ...datos,
-            estado_pago: datos.estado_pago as "pendiente" | "cobrado"
-        };
-        ingresoService.update(id, datosActualizados);
+        ingresoService.update(id, datos);
         mostrarToast('Cambios guardados correctamente');
         navigate('/consultar/ingresos');
     }
@@ -115,7 +100,7 @@ export default function PaginaEditarIngreso() {
 
             <ConfirmarEliminar
                 abierto={mostrarConfirmar}
-                nombre={`${ingreso.numero_factura}`.trim()}
+                nombre={ingreso.num_documento ?? ingreso.id}
                 onCancelar={() => setMostrarConfirmar(false)}
                 onConfirmar={handleEliminar}
             />

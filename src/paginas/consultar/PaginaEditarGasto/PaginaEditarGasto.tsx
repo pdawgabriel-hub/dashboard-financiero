@@ -74,7 +74,7 @@ export default function PaginaEditarGasto() {
   const costeProveedores = gastoService.getCosteProveedores(gasto!);
   const costeEspecialistas = gastoService.getCosteEspecialistas();
   const gastosTotales = gastoService.getGastosTotales(gasto!);
-  const ingresos = gastoService.getIngresosCobrados(gasto!);
+  const ingresos = gastoService.getIngresos(gasto!);
   const beneficioReal = gastoService.getBeneficioReal(gasto!);
   const debe = gastoService.getDebe(gasto!);
   const estado = gastoService.getEstado(gasto!);

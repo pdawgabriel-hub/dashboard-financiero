@@ -4,22 +4,15 @@ import type { Ingreso } from "../../types/Ingreso/Ingreso";
 
 export const ingresoService = crearCrudService<Ingreso>('ingresos', INGRESOS_MOCK, 'INGR');
 
-export interface ValoresCalculo {
-  importe_neto: string | number;
-  iva_porcentaje: string | number;
+// Equivalente a _compute_anio de gestion.ingresos.
+export function getIngresoAnio(ingreso: Ingreso): number | null {
+  return ingreso.fecha ? new Date(ingreso.fecha).getFullYear() : null;
 }
 
-/**
- * Recibe el neto y el % de IVA, y devuelve el total calculado.
- */
-export function calcularTotalConIva(valores: ValoresCalculo): number {
-
-  const neto = Number(valores.importe_neto) || 0;
-  const porcentaje = Number(valores.iva_porcentaje) || 0;
-
-  const importeIva = neto * (porcentaje / 100);
-  const total = neto + importeIva;
-
-  // Redondeamos a 2 decimales
-  return Math.round(total * 100) / 100;
+// Equivalente a total_ingresos: suma de todos los ingresos de la misma obra.
+export function getTotalIngresosDeObra(obraId: string): number {
+  return ingresoService
+    .getAll()
+    .filter((i) => i.obra_id === obraId)
+    .reduce((suma, i) => suma + (i.importe || 0), 0);
 }

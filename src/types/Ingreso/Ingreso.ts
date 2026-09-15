@@ -1,11 +1,13 @@
 export interface Ingreso {
-  id: string; // INGR-001
-  numero_factura: string; // Ej: FACT-2026-001
-  fecha_emision: string; // YYYY-MM-DD
-  importe_neto: number;
-  iva_porcentaje: number; // Ej: 21
-  total_con_iva: number;
-  estado_pago: 'pendiente' | 'cobrado';
-  obra_id: string; // FK
-  cliente_id: string; // FK
+  id: string; // ingreso_id
+  obra_id?: string; // FK opcional
+  cliente_id?: string; // FK opcional
+  tipo?: string; // Ej: Transferencia, Cheque, Efectivo
+  fecha: string; // YYYY-MM-DD, por defecto hoy
+  documento?: string;
+  num_documento?: string;
+  importe: number; // obligatorio: un cobro ya recibido (no una factura pendiente)
 }
+
+// Tipo para crear: sin id, lo genera el servicio
+export type IngresoInput = Omit<Ingreso, 'id'>;

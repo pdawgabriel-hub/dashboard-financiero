@@ -16,7 +16,7 @@ export default function PaginaGastos() {
     // (o se crea) su ficha, en vez de listar registros sueltos de gastoService.
     const items = obras.map((obra) => {
         const gasto = gastoService.obtenerOCrearFicha(obra.id);
-        const ingresos = gastoService.getIngresosCobrados(gasto);
+        const ingresos = gastoService.getIngresos(gasto);
         const gastos = gastoService.getGastosTotales(gasto);
         const beneficio = gastoService.getBeneficioReal(gasto);
         const debe = gastoService.getDebe(gasto);
