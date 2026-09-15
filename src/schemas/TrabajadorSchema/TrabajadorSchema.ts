@@ -10,10 +10,13 @@ export const trabajadorSchema = z.object({
         .min(1, 'El nombre es obligatorio'),
     apellido: z
         .string()
+        .min(1, 'El apellido es obligatorio'),
+    telf: z
+        .string()
         .optional(),
     coste_hora_estandar: z
         .coerce.number()
-        .positive('El coste debe ser mayor que 0')
+        .min(0, 'El coste hora no puede ser negativo')
 });
 
 // Evita duplicar interfaces en los formularios

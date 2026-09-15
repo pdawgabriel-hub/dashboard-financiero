@@ -18,6 +18,7 @@ export default function PaginaTrabajadores() {
             { etiqueta: 'Tipo', valor: t.tipo || 'Sin tipo' },
             { etiqueta: 'Nombre', valor: t.nombre },
             { etiqueta: 'Apellido', valor: t.apellido },
+            { etiqueta: 'Teléfono', valor: t.telf || 'Sin teléfono' },
             { etiqueta: 'Coste Hora Estandar', valor: `${t.coste_hora_estandar}` },
         ],
     }))

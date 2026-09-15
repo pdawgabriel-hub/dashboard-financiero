@@ -13,6 +13,7 @@ const CAMPOS: CampoFormulario[] = [
     {nombre: 'tipo', etiqueta: 'Tipo', requerido: false},
     {nombre: 'nombre', etiqueta: 'Nombre', requerido: true},
     {nombre: 'apellido', etiqueta: 'Apellido', requerido: true},
+    {nombre: 'telf', etiqueta: 'Teléfono', tipo: 'tel', requerido: false},
     {nombre: 'coste_hora_estandar', etiqueta: 'Coste hora estandar', tipo: 'number', requerido: true},
 ];
 

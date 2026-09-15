@@ -8,7 +8,7 @@ import { useToast } from "../../../contextos/ToastContext/ToastContext";
 import { parteTrabajoSchema, type ParteTrabajoFormValues } from "../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema";
 import { parteTrabajoService } from "../../../servicios/ParteTrabajoService/ParteTrabajoService";
 import type { ParteTrabajo } from "../../../types/ParteTrabajo/ParteTrabajo";
-import { trabajadorService } from '../../../servicios/TrabajadorService/TrabajadorService';
+import { trabajadorService, getTrabajadorDisplayName } from '../../../servicios/TrabajadorService/TrabajadorService';
 import { obraService } from '../../../servicios/ObraService/ObraService';
 
 export default function PaginaEditarParte() {
@@ -24,7 +24,7 @@ export default function PaginaEditarParte() {
           nombre: 'trabajador_id',
           etiqueta: 'Trabajador Asignado (ID)',
           tipo: 'select' as const,
-          opciones: trabajadoresRegistrados.map(t => ({ valor: t.id, etiqueta: String(t.id) })),
+          opciones: trabajadoresRegistrados.map(t => ({ valor: t.id, etiqueta: getTrabajadorDisplayName(t) })),
           requerido: true
         },
         {
