@@ -5,6 +5,24 @@ import { parteProveedorService } from "../ParteProveedorService/ParteProveedorSe
 import { parteEspecialistaService } from "../ParteEspecialistaService/ParteEspecialistaService";
 import type { CalendarioEvento } from "../../types/CalendarioEvento/CalendarioEvento";
 
+export const ETIQUETAS_TIPO_EVENTO: Record<CalendarioEvento['tipo'], string> = {
+  presupuesto: 'Presupuesto',
+  ingreso: 'Ingreso',
+  parte_trabajo: 'Parte de trabajo',
+  parte_proveedor: 'Parte de proveedor',
+  parte_especialista: 'Parte de especialista',
+};
+
+// Un color por tipo, usado como fondo de las píldoras en la vista Mes y como
+// punto de color en la lista.
+export const COLOR_TIPO_EVENTO: Record<CalendarioEvento['tipo'], string> = {
+  presupuesto: 'bg-sky-600',
+  ingreso: 'bg-emerald-600',
+  parte_trabajo: 'bg-amber-600',
+  parte_proveedor: 'bg-rose-600',
+  parte_especialista: 'bg-violet-600',
+};
+
 /**
  * Equivalente al init() de gestion.calendario.evento: en Odoo esta unión la
  * construye una VIEW SQL sobre 5 modelos; aquí se recalcula en el momento a
