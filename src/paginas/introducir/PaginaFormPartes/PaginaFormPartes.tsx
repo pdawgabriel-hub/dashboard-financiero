@@ -1,36 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import FormularioCRUD, { type CampoFormulario } from '../../../componentes/Crud/FormularioCRUD/FormularioCRUD';
+import FormularioParteTrabajo from '../../../componentes/Crud/FormularioParteTrabajo/FormularioParteTrabajo';
 import { useToast } from '../../../contextos/ToastContext/ToastContext';
 
-import { parteTrabajoSchema, type ParteTrabajoFormValues } from '../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema';
+import type { ParteTrabajoFormValues } from '../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema';
 import { parteTrabajoService } from '../../../servicios/ParteTrabajoService/ParteTrabajoService';
-import { trabajadorService, getTrabajadorDisplayName } from '../../../servicios/TrabajadorService/TrabajadorService';
-import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
 
 export default function PaginaFormPartes() {
-
-    const trabajadoresRegistrados = trabajadorService.getAll();
-    const obrasRegistradas = obraService.getAll();
-
-    const CAMPOS: CampoFormulario[] = [
-        { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
-        { nombre: 'horas', etiqueta: 'Horas', requerido: true },
-        { nombre: 'descripcion', etiqueta: 'Descripcion', requerido: false },
-        {
-          nombre: 'trabajador_id',
-          etiqueta: 'Trabajador Asignado (ID)',
-          tipo: 'select' as const,
-          opciones: trabajadoresRegistrados.map(t => ({ valor: t.id, etiqueta: getTrabajadorDisplayName(t) })),
-          requerido: true
-        },
-        {
-          nombre: 'obra_id',
-          etiqueta: 'Obra Destino (ID)',
-          tipo: 'select' as const,
-          opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
-          requerido: true
-        }
-    ];
 
     const navigate = useNavigate();
     const { mostrarToast } = useToast();
@@ -38,7 +13,7 @@ export default function PaginaFormPartes() {
     function handleSubmit(datos: ParteTrabajoFormValues) {
       parteTrabajoService.create(datos);
       mostrarToast('Parte de Trabajo creado correctamente');
-      navigate('/consultar/partes-trabajo');
+      navigate('/consultar/partes');
     }
 
     return (
@@ -48,9 +23,7 @@ export default function PaginaFormPartes() {
           <p className="text-slate-400 mt-1">Rellena los datos para dar de alta un parte de trabajo.</p>
         </div>
 
-        <FormularioCRUD
-          schema={parteTrabajoSchema}
-          campos={CAMPOS}
+        <FormularioParteTrabajo
           onSubmit={handleSubmit}
           textoBoton="Crear parte de trabajo"
         />

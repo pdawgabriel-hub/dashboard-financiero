@@ -1,40 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import FormularioCRUD, { type CampoFormulario } from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
+import FormularioParteTrabajo from "../../../componentes/Crud/FormularioParteTrabajo/FormularioParteTrabajo";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
 
-import { parteTrabajoSchema, type ParteTrabajoFormValues } from "../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema";
+import type { ParteTrabajoFormValues } from "../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema";
 import { parteTrabajoService } from "../../../servicios/ParteTrabajoService/ParteTrabajoService";
 import type { ParteTrabajo } from "../../../types/ParteTrabajo/ParteTrabajo";
-import { trabajadorService, getTrabajadorDisplayName } from '../../../servicios/TrabajadorService/TrabajadorService';
-import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
 
 export default function PaginaEditarParte() {
-
-    const trabajadoresRegistrados = trabajadorService.getAll();
-    const obrasRegistradas = obraService.getAll();
-
-    const CAMPOS: CampoFormulario[] = [
-        { nombre: 'fecha', etiqueta: 'Fecha', requerido: true },
-        { nombre: 'horas', etiqueta: 'Horas', requerido: true },
-        { nombre: 'descripcion', etiqueta: 'Descripcion', requerido: false },
-        {
-          nombre: 'trabajador_id',
-          etiqueta: 'Trabajador Asignado (ID)',
-          tipo: 'select' as const,
-          opciones: trabajadoresRegistrados.map(t => ({ valor: t.id, etiqueta: getTrabajadorDisplayName(t) })),
-          requerido: true
-        },
-        {
-          nombre: 'obra_id',
-          etiqueta: 'Obra Destino (ID)',
-          tipo: 'select' as const,
-          opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
-          requerido: true
-        }
-    ];
 
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -75,13 +50,14 @@ export default function PaginaEditarParte() {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-100">Editar parte de trabajo</h1>
-        <p className="text-slate-400 mt-1">{parteTrabajo.id}</p>
+        <p className="text-slate-400 mt-1">{parteTrabajo.id} · {parteTrabajo.horas_totales}h · {parteTrabajo.coste_total_parte.toFixed(2)}€</p>
       </div>
 
-      <FormularioCRUD
-        schema={parteTrabajoSchema}
-        campos={CAMPOS}
-        valoresIniciales={parteTrabajo}
+      <FormularioParteTrabajo
+        valoresIniciales={{
+            ...parteTrabajo,
+            lineas: parteTrabajo.lineas.map(({ trabajador_id, horas, coste_hora }) => ({ trabajador_id, horas, coste_hora })),
+        }}
         onSubmit={handleSubmit}
         textoBoton="Guardar cambios"
         onEliminar={() => setMostrarConfirmar(true)}
@@ -89,7 +65,7 @@ export default function PaginaEditarParte() {
 
       <ConfirmarEliminar
         abierto={mostrarConfirmar}
-        nombre={`${parteTrabajo.fecha} ${parteTrabajo.horas ?? ''}`.trim()}
+        nombre={`${parteTrabajo.fecha} · ${parteTrabajo.descripcion}`.trim()}
         onCancelar={() => setMostrarConfirmar(false)}
         onConfirmar={handleEliminar}
       />

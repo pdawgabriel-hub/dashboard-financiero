@@ -3,7 +3,6 @@ import { OBRAS_MOCK } from "../../mocks/obrasMock/obrasMock";
 import type { Obra } from "../../types/Obra/Obra";
 import { presupuestoService } from "../PresupuestoService/PresupuestoService";
 import { parteTrabajoService } from "../ParteTrabajoService/ParteTrabajoService";
-import { trabajadorService } from "../TrabajadorService/TrabajadorService";
 import { getTotalIngresosDeObra } from "../IngresoService/IngresoService";
 
 export const obraService = crearCrudService<Obra>('obras', OBRAS_MOCK, 'OBRA');
@@ -28,30 +27,27 @@ export function getObraTotal(obra: Obra): number {
 }
 
 /**
- * Equivalente a _compute_horas_obra (horas_totales_obra) de gestion.obras.
+ * Equivalente a _compute_horas_obra (horas_totales_obra) de gestion.obras:
+ * suma de horas_totales de los Partes de Trabajo de la obra.
  */
 export function getObraHorasTotales(obra: Obra): number {
   return parteTrabajoService
     .getAll()
     .filter((p) => p.obra_id === obra.id)
-    .reduce((suma, p) => suma + (p.horas || 0), 0);
+    .reduce((suma, p) => suma + (p.horas_totales || 0), 0);
 }
 
 /**
- * Aproximación a coste_moo_obra. En Odoo, cada línea de Parte de Trabajo congela
- * el coste/hora del trabajador en el momento de crearla (ver 3.9 del informe);
- * los Partes de Trabajo del front todavía no guardan esa tarifa congelada, así
- * que de momento se usa la tarifa ACTUAL del trabajador como aproximación.
+ * Equivalente a coste_moo_obra: suma de coste_total_parte de los Partes de
+ * Trabajo de la obra. Cada línea de Parte de Trabajo congela el coste/hora
+ * del trabajador en el momento de crearla (ver 3.9 del informe), así que esta
+ * cifra ya no es una aproximación con la tarifa actual.
  */
 export function getObraCosteMoo(obra: Obra): number {
-  const trabajadores = trabajadorService.getAll();
   return parteTrabajoService
     .getAll()
     .filter((p) => p.obra_id === obra.id)
-    .reduce((suma, p) => {
-      const costeHora = trabajadores.find((t) => t.id === p.trabajador_id)?.coste_hora_estandar ?? 0;
-      return suma + (p.horas || 0) * costeHora;
-    }, 0);
+    .reduce((suma, p) => suma + (p.coste_total_parte || 0), 0);
 }
 
 /**
