@@ -4,6 +4,28 @@
  * Reutilizable para cualquier entidad.
  */
 
+const CLAVE_VERSION_DATOS = '__version_datos__';
+// Incrementar SIEMPRE que cambie la forma de algún tipo/mock (renombrar o
+// quitar un campo, restructurar uno existente...). Si no coincide con lo que
+// hay guardado, se limpia todo el localStorage y se resiembra desde cero:
+// evita que un visitante con datos de una versión anterior de la app (guardados
+// en su navegador) se encuentre con una app rota por un "shape" incompatible.
+const VERSION_DATOS_ACTUAL = '1';
+
+function comprobarVersionDatos() {
+  if (typeof localStorage === 'undefined') return;
+
+  const versionGuardada = localStorage.getItem(CLAVE_VERSION_DATOS);
+  if (versionGuardada !== VERSION_DATOS_ACTUAL) {
+    localStorage.clear();
+    localStorage.setItem(CLAVE_VERSION_DATOS, VERSION_DATOS_ACTUAL);
+  }
+}
+
+// Se ejecuta una única vez, al cargar este módulo (compartido por todos los
+// servicios), antes de que ninguno lea o siembre sus propios datos.
+comprobarVersionDatos();
+
 type ConId = { id: string };
 
 export function crearCrudService<T extends ConId>(
