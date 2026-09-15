@@ -3,9 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import FormularioCRUD, {type CampoFormulario} from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
+import ListaRelacionados from "../../../componentes/Crud/ListaRelacionados/ListaRelacionados";
 
 import { proveedorSchema , type ProveedorFormValues} from "../../../schemas/ProveedorSchema/ProveedorSchema";
 import { proveedorService } from "../../../servicios/ProveedorService/ProveedorService";
+import { parteProveedorService } from "../../../servicios/ParteProveedorService/ParteProveedorService";
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
 import type { Proveedor } from "../../../types/Proveedor/Proveedor";
 
@@ -80,6 +82,17 @@ export default function PaginaEditarProveedor() {
             nombre={`${proveedor.nombre}`.trim()}
             onCancelar={() => setMostrarConfirmar(false)}
             onConfirmar={handleEliminar}
+        />
+
+        <ListaRelacionados
+            secciones={[
+                {
+                    titulo: 'Partes de Proveedor',
+                    items: parteProveedorService.getAll()
+                        .filter((p) => p.proveedor_id === proveedor.id)
+                        .map((p) => ({ id: p.id, etiqueta: `${p.fecha} · ${p.descripcion || 'Sin descripción'} (${p.importe}€)`, ruta: `/consultar/partes-proveedor/editar/${p.id}` })),
+                },
+            ]}
         />
         </div>
     );

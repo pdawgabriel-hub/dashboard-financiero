@@ -3,11 +3,17 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 import FormularioCRUD, { type CampoFormulario } from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
+import ListaRelacionados from "../../../componentes/Crud/ListaRelacionados/ListaRelacionados";
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
 
 import { obraSchema, type ObraFormValues } from "../../../schemas/ObraSchema/ObraSchema";
 import { obraService, getObraTotal, getObraHorasTotales, getObraEstadoPago } from "../../../servicios/ObraService/ObraService";
 import { gastoService } from "../../../servicios/GastoService/GastoService";
+import { presupuestoService, getPresupuestoDisplayName } from "../../../servicios/PresupuestoService/PresupuestoService";
+import { parteTrabajoService } from "../../../servicios/ParteTrabajoService/ParteTrabajoService";
+import { parteProveedorService } from "../../../servicios/ParteProveedorService/ParteProveedorService";
+import { parteEspecialistaService } from "../../../servicios/ParteEspecialistaService/ParteEspecialistaService";
+import { ingresoService } from "../../../servicios/IngresoService/IngresoService";
 import type { Obra } from "../../../types/Obra/Obra";
 import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
 
@@ -102,7 +108,42 @@ export default function PaginaEditarObra() {
             onCancelar={() => setMostrarConfirmar(false)}
             onConfirmar={handleEliminar}
         />
+
+        <ListaRelacionados
+            secciones={[
+                {
+                    titulo: 'Presupuestos',
+                    items: presupuestoService.getAll()
+                        .filter((p) => p.obra_id === obra.id)
+                        .map((p) => ({ id: p.id, etiqueta: getPresupuestoDisplayName(p), ruta: `/consultar/presupuestos/editar/${p.id}` })),
+                },
+                {
+                    titulo: 'Partes de Trabajo',
+                    items: parteTrabajoService.getAll()
+                        .filter((p) => p.obra_id === obra.id)
+                        .map((p) => ({ id: p.id, etiqueta: `${p.fecha} · ${p.descripcion}`, ruta: `/consultar/partes-trabajo/editar/${p.id}` })),
+                },
+                {
+                    titulo: 'Partes de Proveedor',
+                    items: parteProveedorService.getAll()
+                        .filter((p) => p.obra_id === obra.id)
+                        .map((p) => ({ id: p.id, etiqueta: `${p.fecha} · ${p.descripcion || 'Sin descripción'} (${p.importe}€)`, ruta: `/consultar/partes-proveedor/editar/${p.id}` })),
+                },
+                {
+                    titulo: 'Partes de Especialista',
+                    items: parteEspecialistaService.getAll()
+                        .filter((p) => p.obra_id === obra.id)
+                        .map((p) => ({ id: p.id, etiqueta: `${p.fecha} · ${p.descripcion || 'Sin descripción'} (${p.importe}€)`, ruta: `/consultar/partes-especialista/editar/${p.id}` })),
+                },
+                {
+                    titulo: 'Ingresos',
+                    items: ingresoService.getAll()
+                        .filter((i) => i.obra_id === obra.id)
+                        .map((i) => ({ id: i.id, etiqueta: `${i.fecha} · ${i.importe}€${i.tipo ? ` (${i.tipo})` : ''}`, ruta: `/consultar/ingresos/editar/${i.id}` })),
+                },
+            ]}
+        />
         </div>
     );
-  
+
 }

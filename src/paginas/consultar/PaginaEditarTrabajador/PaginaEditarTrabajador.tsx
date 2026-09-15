@@ -2,11 +2,22 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FormularioCRUD from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
+import ListaRelacionados from "../../../componentes/Crud/ListaRelacionados/ListaRelacionados";
 import { trabajadorSchema, type trabajadorFormValues } from "../../../schemas/TrabajadorSchema/TrabajadorSchema";
 import { trabajadorService } from "../../../servicios/TrabajadorService/TrabajadorService";
+import { parteTrabajoService } from "../../../servicios/ParteTrabajoService/ParteTrabajoService";
+import { faltaService } from "../../../servicios/FaltaService/FaltaService";
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
 import type { Trabajador } from "../../../types/Trabajador/Trabajador";
 import type { CampoFormulario } from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
+
+const ETIQUETAS_TIPO_FALTA: Record<string, string> = {
+    vacaciones: 'Vacaciones',
+    baja_medica: 'Baja médica',
+    personal: 'Personal',
+    injustificada: 'Injustificada',
+    otro: 'Otro',
+};
 
 // Array de configuarion
 const CAMPOS: CampoFormulario[] = [
@@ -76,6 +87,23 @@ export default function PaginaEditarTrabajador() {
             nombre={`${trabajador.nombre} ${trabajador.apellido ?? ''}`.trim()}
             onCancelar={() => setMostrarConfirmar(false)}
             onConfirmar={handleEliminar}
+          />
+
+          <ListaRelacionados
+            secciones={[
+              {
+                titulo: 'Partes de Trabajo',
+                items: parteTrabajoService.getAll()
+                  .filter((p) => p.lineas.some((l) => l.trabajador_id === trabajador.id))
+                  .map((p) => ({ id: p.id, etiqueta: `${p.fecha} · ${p.descripcion}`, ruta: `/consultar/partes-trabajo/editar/${p.id}` })),
+              },
+              {
+                titulo: 'Faltas',
+                items: faltaService.getAll()
+                  .filter((f) => f.trabajador_id === trabajador.id)
+                  .map((f) => ({ id: f.id, etiqueta: `${ETIQUETAS_TIPO_FALTA[f.tipo]} · ${f.fecha_inicio} → ${f.fecha_fin}`, ruta: `/consultar/faltas/editar/${f.id}` })),
+              },
+            ]}
           />
         </div>
       );

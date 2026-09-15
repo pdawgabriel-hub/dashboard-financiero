@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FormularioCRUD, { type CampoFormulario } from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
+import ListaRelacionados from "../../../componentes/Crud/ListaRelacionados/ListaRelacionados";
 import { especialistaSchema, type EspecialistaFormValues } from "../../../schemas/EspecialistaSchema/EspecialistaSchema";
 import { especialistaService } from "../../../servicios/EspecialistaService/EspecialistaService";
+import { parteEspecialistaService } from "../../../servicios/ParteEspecialistaService/ParteEspecialistaService";
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
 import type { Especialista } from "../../../types/Especialista/Especialista";
 
@@ -78,7 +80,18 @@ export default function PaginaEditarEspecialista() {
             onCancelar={() => setMostrarConfirmar(false)}
             onConfirmar={handleEliminar}
         />
+
+        <ListaRelacionados
+            secciones={[
+                {
+                    titulo: 'Partes de Especialista',
+                    items: parteEspecialistaService.getAll()
+                        .filter((p) => p.especialista_id === especialista.id)
+                        .map((p) => ({ id: p.id, etiqueta: `${p.fecha} · ${p.descripcion || 'Sin descripción'} (${p.importe}€)`, ruta: `/consultar/partes-especialista/editar/${p.id}` })),
+                },
+            ]}
+        />
         </div>
     );
-  
+
 }

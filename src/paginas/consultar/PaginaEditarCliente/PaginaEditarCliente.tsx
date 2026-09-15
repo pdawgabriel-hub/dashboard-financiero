@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import FormularioCRUD, { type CampoFormulario } from '../../../componentes/Crud/FormularioCRUD/FormularioCRUD';
 import ConfirmarEliminar from '../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar';
+import ListaRelacionados from '../../../componentes/Crud/ListaRelacionados/ListaRelacionados';
 import { clienteSchema, type ClienteFormValues } from '../../../schemas/ClienteSchema/ClienteSchema';
 import { clienteService } from '../../../servicios/ClienteService/ClienteService';
+import { presupuestoService, getPresupuestoDisplayName } from '../../../servicios/PresupuestoService/PresupuestoService';
+import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
+import { ingresoService } from '../../../servicios/IngresoService/IngresoService';
 import { useToast } from '../../../contextos/ToastContext/ToastContext';
 import type { Cliente } from '../../../types/Cliente/Cliente';
 
@@ -81,7 +85,30 @@ export default function PaginaEditarCliente() {
         onCancelar={() => setMostrarConfirmar(false)}
         onConfirmar={handleEliminar}
       />
+
+      <ListaRelacionados
+        secciones={[
+          {
+            titulo: 'Presupuestos',
+            items: presupuestoService.getAll()
+              .filter((p) => p.cliente_id === cliente.id)
+              .map((p) => ({ id: p.id, etiqueta: getPresupuestoDisplayName(p), ruta: `/consultar/presupuestos/editar/${p.id}` })),
+          },
+          {
+            titulo: 'Obras',
+            items: obraService.getAll()
+              .filter((o) => o.cliente_id === cliente.id)
+              .map((o) => ({ id: o.id, etiqueta: getObraDisplayName(o), ruta: `/consultar/obras/editar/${o.id}` })),
+          },
+          {
+            titulo: 'Ingresos',
+            items: ingresoService.getAll()
+              .filter((i) => i.cliente_id === cliente.id)
+              .map((i) => ({ id: i.id, etiqueta: `${i.fecha} · ${i.importe}€${i.tipo ? ` (${i.tipo})` : ''}`, ruta: `/consultar/ingresos/editar/${i.id}` })),
+          },
+        ]}
+      />
     </div>
   );
-  
+
 }
