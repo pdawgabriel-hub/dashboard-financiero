@@ -8,7 +8,7 @@ import { useToast } from "../../../contextos/ToastContext/ToastContext";
 import { obraSchema, type ObraFormValues } from "../../../schemas/ObraSchema/ObraSchema";
 import { obraService } from "../../../servicios/ObraService/ObraService";
 import type { Obra } from "../../../types/Obra/Obra";
-import { clienteService } from "../../../servicios/ClienteService/ClienteService";
+import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
 import { presupuestoService } from "../../../servicios/PresupuestoService/PresupuestoService";
 
 export default function PaginaEditarObra() {
@@ -38,7 +38,7 @@ export default function PaginaEditarObra() {
             nombre: 'cliente_id',
             etiqueta: 'Cliente Asignado (ID)',
             tipo: 'select' as const,
-            opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: String(c.id) })),
+            opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
             requerido: true
         },
         {

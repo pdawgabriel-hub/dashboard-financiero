@@ -9,7 +9,7 @@ import { ingresoSchema, type IngresoFormValues } from "../../../schemas/IngresoS
 import { ingresoService } from "../../../servicios/IngresoService/IngresoService";
 import type { Ingreso } from "../../../types/Ingreso/Ingreso";
 import { obraService } from "../../../servicios/ObraService/ObraService"; 
-import { clienteService } from "../../../servicios/ClienteService/ClienteService";
+import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
 
 export default function PaginaEditarIngreso() {
     const obrasRegistradas = obraService.getAll();
@@ -20,9 +20,9 @@ export default function PaginaEditarIngreso() {
         etiqueta: String(o.id)
     }));
 
-    const opcionesClientes = clientesRegistrados.map(c => ({ 
-        valor: c.id, 
-        etiqueta: String(c.id)
+    const opcionesClientes = clientesRegistrados.map(c => ({
+        valor: c.id,
+        etiqueta: getClienteDisplayName(c)
     }));
 
     const CAMPOS: CampoFormulario[] = [

@@ -35,9 +35,13 @@ export default function PaginaEditarCliente() {
 
   function handleSubmit(datos: ClienteFormValues) {
     if (!id) return;
-    clienteService.update(id, datos);
-    mostrarToast('Cambios guardados correctamente');
-    navigate('/consultar/clientes');
+    try {
+      clienteService.update(id, datos);
+      mostrarToast('Cambios guardados correctamente');
+      navigate('/consultar/clientes');
+    } catch (error) {
+      mostrarToast(error instanceof Error ? error.message : 'No se pudieron guardar los cambios');
+    }
   }
 
   function handleEliminar() {

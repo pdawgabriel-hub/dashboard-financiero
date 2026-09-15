@@ -4,7 +4,7 @@ import { useToast } from '../../../contextos/ToastContext/ToastContext';
 
 import { presupuestoSchema, type PresupuestoFormValues } from '../../../schemas/PresupuestoSchema/PresupuestoSchema';
 import { presupuestoService } from '../../../servicios/PresupuestoService/PresupuestoService';
-import { clienteService } from '../../../servicios/ClienteService/ClienteService';
+import { clienteService, getClienteDisplayName } from '../../../servicios/ClienteService/ClienteService';
 
 export default function PaginaFormPresupuestos() {
     
@@ -30,7 +30,7 @@ export default function PaginaFormPresupuestos() {
           nombre: 'cliente_id',
           etiqueta: 'Cliente (ID)',
           tipo: 'select' as const,
-          opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: String(c.id) })),
+          opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
           requerido: true
         }
     ];

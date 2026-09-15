@@ -19,9 +19,13 @@ export default function PaginaFormClientes() {
     const { mostrarToast } = useToast();
 
     function handleSubmit(datos: ClienteFormValues) {
-      clienteService.create(datos);
-      mostrarToast('Cliente creado correctamente');
-      navigate('/consultar/clientes');
+      try {
+        clienteService.create(datos);
+        mostrarToast('Cliente creado correctamente');
+        navigate('/consultar/clientes');
+      } catch (error) {
+        mostrarToast(error instanceof Error ? error.message : 'No se pudo crear el cliente');
+      }
     }
 
     return (

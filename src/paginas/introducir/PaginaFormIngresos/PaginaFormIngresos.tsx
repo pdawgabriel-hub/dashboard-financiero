@@ -5,7 +5,7 @@ import { ingresoSchema } from "../../../schemas/IngresoSchema/IngresoSchema";
 import { ingresoService } from "../../../servicios/IngresoService/IngresoService";
 // Importamos los servicios de donde queremos sacar las opciones relacionales
 import { obraService } from "../../../servicios/ObraService/ObraService"; 
-import { clienteService } from "../../../servicios/ClienteService/ClienteService";
+import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
 
 export default function PaginaFormIngresos() {
 
@@ -19,9 +19,9 @@ export default function PaginaFormIngresos() {
         etiqueta: String(o.id)
     }));
 
-    const opcionesClientes = clientesRegistrados.map(c => ({ 
-        valor: c.id, 
-        etiqueta: String(c.id)
+    const opcionesClientes = clientesRegistrados.map(c => ({
+        valor: c.id,
+        etiqueta: getClienteDisplayName(c)
     }));
 
     // Definimos los CAMPOS dentro del componente para que puedan usar las variables de arriba
