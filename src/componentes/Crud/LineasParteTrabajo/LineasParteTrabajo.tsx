@@ -2,7 +2,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { ParteTrabajoFormValues } from '../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema';
 import { trabajadorService } from '../../../servicios/TrabajadorService/TrabajadorService';
 
-const CLASE_INPUT = 'px-2 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600 w-full';
+const CLASE_INPUT = 'px-2 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600';
 const CLASE_SELECT = `${CLASE_INPUT} cursor-pointer appearance-none`;
 
 export default function LineasParteTrabajo() {
@@ -44,12 +44,12 @@ export default function LineasParteTrabajo() {
       )}
 
       {fields.map((field, index) => (
-        <div key={field.id} className="grid grid-cols-[1fr_70px_90px_auto] gap-2 items-start">
+        <div key={field.id} className="flex flex-wrap gap-2 items-start">
           <select
             {...register(`lineas.${index}.trabajador_id`, {
               onChange: (e) => autofillCosteHora(index, e.target.value),
             })}
-            className={CLASE_SELECT}
+            className={`${CLASE_SELECT} flex-1 min-w-[140px]`}
           >
             <option value="">Selecciona un trabajador...</option>
             {trabajadoresRegistrados.map((t) => (
@@ -61,19 +61,19 @@ export default function LineasParteTrabajo() {
             step="0.5"
             {...register(`lineas.${index}.horas`)}
             placeholder="Horas"
-            className={CLASE_INPUT}
+            className={`${CLASE_INPUT} w-20`}
           />
           <input
             type="number"
             step="0.01"
             {...register(`lineas.${index}.coste_hora`)}
             placeholder="€/h"
-            className={CLASE_INPUT}
+            className={`${CLASE_INPUT} w-24`}
           />
           <button
             type="button"
             onClick={() => remove(index)}
-            className="text-xs px-2 py-1.5 text-red-400 hover:bg-red-950/40 rounded-lg transition-colors"
+            className="text-xs px-2 py-1.5 text-red-400 hover:bg-red-950/40 rounded-lg transition-colors shrink-0"
           >
             Quitar
           </button>

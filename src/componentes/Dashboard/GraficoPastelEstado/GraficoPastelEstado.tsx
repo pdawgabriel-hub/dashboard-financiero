@@ -24,7 +24,7 @@ const formatearTextoEstado = (texto: string) => {
 
 export default function GraficoPastelEstados({ data }: GraficoPastelEstadosProps) {
   return (
-    <div className="h-[300px] w-full flex items-center justify-center">
+    <div className="h-[300px] w-full min-w-0">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie

@@ -1,7 +1,7 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { PresupuestoFormValues } from '../../../schemas/PresupuestoSchema/PresupuestoSchema';
 
-const CLASE_INPUT = 'px-2 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600 w-full';
+const CLASE_INPUT = 'px-2 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600';
 
 export default function LineasPresupuesto() {
   const { register, control, watch, formState: { errors } } = useFormContext<PresupuestoFormValues>();
@@ -35,29 +35,29 @@ export default function LineasPresupuesto() {
       )}
 
       {fields.map((field, index) => (
-        <div key={field.id} className="grid grid-cols-[1fr_60px_90px_auto] gap-2 items-start">
+        <div key={field.id} className="flex flex-wrap gap-2 items-start">
           <input
             {...register(`lineas.${index}.descripcion`)}
             placeholder="Descripción"
-            className={CLASE_INPUT}
+            className={`${CLASE_INPUT} flex-1 min-w-[140px]`}
           />
           <input
             type="number"
             {...register(`lineas.${index}.uds`)}
             placeholder="Uds"
-            className={CLASE_INPUT}
+            className={`${CLASE_INPUT} w-16`}
           />
           <input
             type="number"
             step="0.01"
             {...register(`lineas.${index}.precio`)}
             placeholder="Precio"
-            className={CLASE_INPUT}
+            className={`${CLASE_INPUT} w-24`}
           />
           <button
             type="button"
             onClick={() => remove(index)}
-            className="text-xs px-2 py-1.5 text-red-400 hover:bg-red-950/40 rounded-lg transition-colors"
+            className="text-xs px-2 py-1.5 text-red-400 hover:bg-red-950/40 rounded-lg transition-colors shrink-0"
           >
             Quitar
           </button>
