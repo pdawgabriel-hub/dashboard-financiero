@@ -5,7 +5,7 @@ import { useToast } from '../../../contextos/ToastContext/ToastContext';
 import { parteTrabajoSchema, type ParteTrabajoFormValues } from '../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema';
 import { parteTrabajoService } from '../../../servicios/ParteTrabajoService/ParteTrabajoService';
 import { trabajadorService, getTrabajadorDisplayName } from '../../../servicios/TrabajadorService/TrabajadorService';
-import { obraService } from '../../../servicios/ObraService/ObraService';
+import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
 
 export default function PaginaFormPartes() {
 
@@ -27,7 +27,7 @@ export default function PaginaFormPartes() {
           nombre: 'obra_id',
           etiqueta: 'Obra Destino (ID)',
           tipo: 'select' as const,
-          opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: String(o.id) })),
+          opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
           requerido: true
         }
     ];

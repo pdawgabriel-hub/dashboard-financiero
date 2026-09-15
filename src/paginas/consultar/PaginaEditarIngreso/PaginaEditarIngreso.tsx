@@ -8,16 +8,16 @@ import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/Confi
 import { ingresoSchema, type IngresoFormValues } from "../../../schemas/IngresoSchema/IngresoSchema";
 import { ingresoService } from "../../../servicios/IngresoService/IngresoService";
 import type { Ingreso } from "../../../types/Ingreso/Ingreso";
-import { obraService } from "../../../servicios/ObraService/ObraService"; 
+import { obraService, getObraDisplayName } from "../../../servicios/ObraService/ObraService";
 import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
 
 export default function PaginaEditarIngreso() {
     const obrasRegistradas = obraService.getAll();
     const clientesRegistrados = clienteService.getAll();
 
-    const opcionesObras = obrasRegistradas.map(o => ({ 
-        valor: o.id, 
-        etiqueta: String(o.id)
+    const opcionesObras = obrasRegistradas.map(o => ({
+        valor: o.id,
+        etiqueta: getObraDisplayName(o)
     }));
 
     const opcionesClientes = clientesRegistrados.map(c => ({

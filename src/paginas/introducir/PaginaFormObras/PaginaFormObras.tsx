@@ -5,15 +5,13 @@ import { useToast } from '../../../contextos/ToastContext/ToastContext';
 import { obraSchema, type ObraFormValues } from '../../../schemas/ObraSchema/ObraSchema';
 import { obraService } from '../../../servicios/ObraService/ObraService';
 import { clienteService, getClienteDisplayName } from '../../../servicios/ClienteService/ClienteService';
-import { presupuestoService } from '../../../servicios/PresupuestoService/PresupuestoService';
 
 export default function PaginaFormObras() {
-    
+
     const clientesRegistrados = clienteService.getAll();
-    const presupuestosRegistrados = presupuestoService.getAll();
 
     const CAMPOS: CampoFormulario[] = [
-        { nombre: 'nombre', etiqueta: 'Nombre', requerido: true },
+        { nombre: 'descripcion', etiqueta: 'Descripción', tipo: 'textarea', requerido: true },
         { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
         { nombre: 'fecha_inicio', etiqueta: 'Fecha Inicio', requerido: true },
         { nombre: 'fecha_fin_prevista', etiqueta: 'Fecha Fin Prevista', requerido: true },
@@ -34,13 +32,6 @@ export default function PaginaFormObras() {
             etiqueta: 'Cliente Asignado (ID)',
             tipo: 'select' as const,
             opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
-            requerido: true
-        },
-        {
-            nombre: 'presupuesto_id',
-            etiqueta: 'Presupuesto Vinculado (ID)',
-            tipo: 'select' as const,
-            opciones: presupuestosRegistrados.map(p => ({ valor: p.id, etiqueta: String(p.id) })),
             requerido: true
         }
     ];

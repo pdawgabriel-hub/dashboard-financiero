@@ -4,7 +4,7 @@ import { useToast } from "../../../contextos/ToastContext/ToastContext";
 import { ingresoSchema } from "../../../schemas/IngresoSchema/IngresoSchema";
 import { ingresoService } from "../../../servicios/IngresoService/IngresoService";
 // Importamos los servicios de donde queremos sacar las opciones relacionales
-import { obraService } from "../../../servicios/ObraService/ObraService"; 
+import { obraService, getObraDisplayName } from "../../../servicios/ObraService/ObraService";
 import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
 
 export default function PaginaFormIngresos() {
@@ -14,9 +14,9 @@ export default function PaginaFormIngresos() {
     const clientesRegistrados = clienteService.getAll();
 
     // Transformamos los datos al formato { valor, etiqueta } que pide el select
-    const opcionesObras = obrasRegistradas.map(o => ({ 
-        valor: o.id, 
-        etiqueta: String(o.id)
+    const opcionesObras = obrasRegistradas.map(o => ({
+        valor: o.id,
+        etiqueta: getObraDisplayName(o)
     }));
 
     const opcionesClientes = clientesRegistrados.map(c => ({

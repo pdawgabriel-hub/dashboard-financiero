@@ -70,7 +70,7 @@ export default function PaginaDashboard() {
 
       return {
         name: obra.id || 'Sin ID',
-        nombreCompleto: obra.nombre || 'Sin Nombre',
+        nombreCompleto: obra.descripcion || 'Sin Nombre',
         Gastos: Math.round(gastosObra * 100) / 100
       };
     });
@@ -195,22 +195,15 @@ export default function PaginaDashboard() {
               <p className="text-sm text-slate-500 py-4 text-center">No hay obras dadas de alta.</p>
             ) : (
               obras.map((obra: any) => {
-                // Buscamos el presupuesto de la obra por presupuesto_id
-                const presupuestoAsociado = presupuestos.find((p: any) => p.id === obra.presupuesto_id);
-
-                // Cálculo del importe real de la obra
-                const importeObra = 
-                  limpiarNumero(presupuestoAsociado?.total_con_iva) || 
-                  limpiarNumero(presupuestoAsociado?.total) || 
-                  limpiarNumero(presupuestoAsociado?.importe_total) || 
-                  limpiarNumero(obra.presupuesto) || 
-                  limpiarNumero(obra.importe) || 
-                  0;
+                // Presupuestos aceptados vinculados a esta obra (Presupuesto.obra_id -> Obra)
+                const importeObra = presupuestos
+                  .filter((p: any) => p.obra_id === obra.id && p.estado === 'aceptado')
+                  .reduce((suma: number, p: any) => suma + limpiarNumero(p.importe_total), 0);
 
                 return (
                   <div key={obra.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-slate-200">{obra.nombre}</span>
+                      <span className="text-sm font-medium text-slate-200">{obra.descripcion}</span>
                       <span className="text-xs text-slate-500">{obra.direccion}</span>
                     </div>
                     <div className="flex items-center gap-3">

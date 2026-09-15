@@ -18,6 +18,9 @@ export const presupuestoSchema = z.object({
     cliente_id: z
         .string()
         .min(1, "Debe seleccionar una obra"),
+    obra_id: z
+        .string()
+        .optional(),
 
 });
 

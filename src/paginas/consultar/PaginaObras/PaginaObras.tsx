@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import GridConsulta from "../../../componentes/Crud/GridConsulta/GridConsulta";
-import { obraService } from "../../../servicios/ObraService/ObraService";
+import { obraService, getObraTotal, getObraHorasTotales, getObraEstadoPago } from "../../../servicios/ObraService/ObraService";
 import type { Obra } from "../../../types/Obra/Obra";
 
 export default function PaginaObras() {
@@ -12,19 +12,21 @@ export default function PaginaObras() {
     }, []);
 
     const items  = obras.map((o) => ({
-        
+
         id: o.id,
-        titulo: o.nombre,
+        titulo: o.descripcion,
         estado: o.estado,
-        textoBusqueda: `${o.id} ${o.nombre} ${o.direccion} ${o.cliente_id} ${o.presupuesto_id}`,
+        textoBusqueda: `${o.id} ${o.descripcion} ${o.direccion} ${o.cliente_id}`,
         campos: [
-            {etiqueta: 'Nombre', valor: o.nombre},
+            {etiqueta: 'Descripción', valor: o.descripcion},
             {etiqueta: 'Direccion', valor: o.direccion},
             {etiqueta: 'Fecha Inicio', valor: o.fecha_inicio},
             {etiqueta: 'Fecha Fin Prevista', valor: o.fecha_fin_prevista},
             {etiqueta: 'Estado', valor: o.estado},
             {etiqueta: 'Cliente', valor: o.cliente_id},
-            {etiqueta: 'Presupuesto', valor: o.presupuesto_id},
+            {etiqueta: 'Total', valor: `${getObraTotal(o).toFixed(2)}€`},
+            {etiqueta: 'Horas totales', valor: `${getObraHorasTotales(o)}h`},
+            {etiqueta: 'Estado de pago', valor: getObraEstadoPago(o)},
         ],
     }));
 

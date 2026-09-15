@@ -5,10 +5,12 @@ import { useToast } from '../../../contextos/ToastContext/ToastContext';
 import { presupuestoSchema, type PresupuestoFormValues } from '../../../schemas/PresupuestoSchema/PresupuestoSchema';
 import { presupuestoService } from '../../../servicios/PresupuestoService/PresupuestoService';
 import { clienteService, getClienteDisplayName } from '../../../servicios/ClienteService/ClienteService';
+import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
 
 export default function PaginaFormPresupuestos() {
-    
+
     const clientesRegistrados = clienteService.getAll();
+    const obrasRegistradas = obraService.getAll();
 
     const CAMPOS: CampoFormulario[] = [
         { nombre: 'titulo', etiqueta: 'Titulo', requerido: true },
@@ -32,6 +34,13 @@ export default function PaginaFormPresupuestos() {
           tipo: 'select' as const,
           opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
           requerido: true
+        },
+        {
+          nombre: 'obra_id',
+          etiqueta: 'Obra Vinculada (opcional)',
+          tipo: 'select' as const,
+          opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
+          requerido: false
         }
     ];
     

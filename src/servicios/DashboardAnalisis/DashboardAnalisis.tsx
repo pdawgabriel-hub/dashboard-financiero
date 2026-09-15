@@ -34,34 +34,12 @@ export function obtenerTotalesFinancieros() {
   let totalIngresos = 0;
   let totalGastos = 0;
 
-  // 1. Obtener Ingresos relacionando la obra con su presupuesto mediante `presupuesto_id`
+  // 1. Obtener Ingresos sumando los presupuestos aceptados vinculados a cada obra
+  //    (la relación ahora va Presupuesto.obra_id -> Obra, no al revés)
   obras.forEach((obra) => {
-    let valorIngreso = 0;
-
-    // Si la obra tiene id de presupuesto, buscamos ese presupuesto en el servicio
-    if (obra.presupuesto_id) {
-      const presupuestoEncontrado = presupuestos.find(
-        (p) => p.id === obra.presupuesto_id
-      );
-
-      if (presupuestoEncontrado) {
-        // Accedemos únicamente a las propiedades reales definidas en el tipo Presupuesto
-        valorIngreso =
-          limpiarNumero((presupuestoEncontrado as any).total_presupuesto) ||
-          limpiarNumero((presupuestoEncontrado as any).importe_total) ||
-          limpiarNumero((presupuestoEncontrado as any).importe) ||
-          0;
-      }
-    }
-
-    // Si la obra tuviera el valor directo (por respaldo)
-    if (valorIngreso === 0) {
-      valorIngreso =
-        limpiarNumero((obra as any).presupuesto) ||
-        limpiarNumero((obra as any).importe) ||
-        limpiarNumero((obra as any).total) ||
-        0;
-    }
+    const valorIngreso = presupuestos
+      .filter((p) => p.obra_id === obra.id && p.estado === 'aceptado')
+      .reduce((suma, p) => suma + limpiarNumero(p.importe_total), 0);
 
     totalIngresos += valorIngreso;
   });
@@ -112,7 +90,7 @@ export function obtenerDatosPorObra() {
 
     return {
       name: obra.id || 'Sin ID',
-      nombreCompleto: (obra as any).nombre || 'Sin nombre',
+      nombreCompleto: obra.descripcion || 'Sin nombre',
       Gastos: Math.round(gastosDeObra * 100) / 100,
     };
   });

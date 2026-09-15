@@ -22,6 +22,7 @@ export default function PaginaPresupuestos() {
             {etiqueta: 'Importe Total', valor: `${p.importe_total}`},
             {etiqueta: 'Estado', valor: p.estado},
             {etiqueta: 'Cliente', valor: p.cliente_id},
+            {etiqueta: 'Obra', valor: p.obra_id || 'Sin obra vinculada'},
         ],
     }));
 

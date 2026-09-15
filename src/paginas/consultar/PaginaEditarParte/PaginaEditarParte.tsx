@@ -9,7 +9,7 @@ import { parteTrabajoSchema, type ParteTrabajoFormValues } from "../../../schema
 import { parteTrabajoService } from "../../../servicios/ParteTrabajoService/ParteTrabajoService";
 import type { ParteTrabajo } from "../../../types/ParteTrabajo/ParteTrabajo";
 import { trabajadorService, getTrabajadorDisplayName } from '../../../servicios/TrabajadorService/TrabajadorService';
-import { obraService } from '../../../servicios/ObraService/ObraService';
+import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
 
 export default function PaginaEditarParte() {
 
@@ -31,7 +31,7 @@ export default function PaginaEditarParte() {
           nombre: 'obra_id',
           etiqueta: 'Obra Destino (ID)',
           tipo: 'select' as const,
-          opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: String(o.id) })),
+          opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
           requerido: true
         }
     ];

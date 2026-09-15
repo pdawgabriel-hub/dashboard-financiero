@@ -4,7 +4,7 @@ import { useToast } from '../../../contextos/ToastContext/ToastContext';
 
 import { gastoService } from '../../../servicios/GastoService/GastoService';
 import { proveedorService, getProveedorDisplayName } from '../../../servicios/ProveedorService/ProveedorService';
-import { obraService } from '../../../servicios/ObraService/ObraService';
+import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
 import { gastoSchema } from '../../../schemas/GastoSchema/GastoSchema';
 
 export default function PaginaFormGastos() {
@@ -33,7 +33,7 @@ export default function PaginaFormGastos() {
             nombre: 'obra_id',
             etiqueta: 'Obra Vinculada (ID)',
             tipo: 'select' as const,
-            opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: String(o.id) })),
+            opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
             requerido: true
         }
     ];

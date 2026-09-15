@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const obraSchema = z.object({
 
-    nombre: z
+    descripcion: z
         .string()
         .min(1, 'El campo es obligatorios'),
     direccion: z
@@ -21,9 +21,6 @@ export const obraSchema = z.object({
     cliente_id: z
         .string()
         .min(1, "Debe seleccionar un cliente"),
-    presupuesto_id: z
-        .string()
-        .min(1, "Debe seleccionar un presupuesto"),
 
 });
 

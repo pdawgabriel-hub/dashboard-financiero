@@ -5,4 +5,5 @@ export interface Presupuesto {
     importe_total: number;
     estado: 'borrador' | 'enviado' | 'aceptado' | 'rechazado';
     cliente_id: string; // FK
+    obra_id?: string; // FK opcional: la obra a la que queda vinculado este presupuesto
 }

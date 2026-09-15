@@ -6,19 +6,17 @@ import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/Confi
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
 
 import { obraSchema, type ObraFormValues } from "../../../schemas/ObraSchema/ObraSchema";
-import { obraService } from "../../../servicios/ObraService/ObraService";
+import { obraService, getObraTotal, getObraHorasTotales, getObraEstadoPago } from "../../../servicios/ObraService/ObraService";
 import type { Obra } from "../../../types/Obra/Obra";
 import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
-import { presupuestoService } from "../../../servicios/PresupuestoService/PresupuestoService";
 
 export default function PaginaEditarObra() {
 
     const clientesRegistrados = clienteService.getAll();
-    const presupuestosRegistrados = presupuestoService.getAll();
 
     // Array de configuracion
     const CAMPOS: CampoFormulario[] = [
-        { nombre: 'nombre', etiqueta: 'Nombre', requerido: true },
+        { nombre: 'descripcion', etiqueta: 'Descripción', tipo: 'textarea', requerido: true },
         { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
         { nombre: 'fecha_inicio', etiqueta: 'Fecha Inicio', requerido: true },
         { nombre: 'fecha_fin_prevista', etiqueta: 'Fecha Fin Prevista', requerido: true },
@@ -39,13 +37,6 @@ export default function PaginaEditarObra() {
             etiqueta: 'Cliente Asignado (ID)',
             tipo: 'select' as const,
             opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
-            requerido: true
-        },
-        {
-            nombre: 'presupuesto_id',
-            etiqueta: 'Presupuesto Vinculado (ID)',
-            tipo: 'select' as const,
-            opciones: presupuestosRegistrados.map(p => ({ valor: p.id, etiqueta: String(p.id) })),
             requerido: true
         }
     ];
@@ -90,7 +81,9 @@ export default function PaginaEditarObra() {
         <div className="flex flex-col gap-6">
         <div>
             <h1 className="text-2xl font-bold text-slate-100">Editar obra</h1>
-            <p className="text-slate-400 mt-1">{obra.id}</p>
+            <p className="text-slate-400 mt-1">
+                {obra.id} · Total: {getObraTotal(obra).toFixed(2)}€ · Horas: {getObraHorasTotales(obra)}h · Pago: {getObraEstadoPago(obra)}
+            </p>
         </div>
 
         <FormularioCRUD
@@ -104,7 +97,7 @@ export default function PaginaEditarObra() {
 
         <ConfirmarEliminar
             abierto={mostrarConfirmar}
-            nombre={`${obra.nombre}`.trim()}
+            nombre={`${obra.descripcion}`.trim()}
             onCancelar={() => setMostrarConfirmar(false)}
             onConfirmar={handleEliminar}
         />

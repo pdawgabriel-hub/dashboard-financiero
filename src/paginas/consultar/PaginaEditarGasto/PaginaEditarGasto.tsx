@@ -9,7 +9,7 @@ import { gastoSchema, type GastoFormValues } from "../../../schemas/GastoSchema/
 import { gastoService } from "../../../servicios/GastoService/GastoService";
 import type { Gasto } from "../../../types/Gasto/Gasto";
 import { proveedorService, getProveedorDisplayName } from "../../../servicios/ProveedorService/ProveedorService";
-import { obraService } from "../../../servicios/ObraService/ObraService";
+import { obraService, getObraDisplayName } from "../../../servicios/ObraService/ObraService";
 
 export default function PaginaEditarGasto() {
 
@@ -39,7 +39,7 @@ export default function PaginaEditarGasto() {
       nombre: 'obra_id',
       etiqueta: 'Obra Vinculada (ID)',
       tipo: 'select' as const,
-      opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: String(o.id) })),
+      opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
       requerido: true
     }
   ];
