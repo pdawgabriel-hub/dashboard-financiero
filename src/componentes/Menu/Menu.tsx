@@ -44,6 +44,9 @@ export default function Menu() {
           <Link to="/dashboard" className={obtenerClaseActiva('/dashboard')}>
             Análisis Financiero
           </Link>
+          <Link to="/calendario" className={obtenerClaseActiva('/calendario')}>
+            Calendario
+          </Link>
           <Link to="/consultar/clientes" className={obtenerClaseActiva('/consultar')}>
             Consultar Datos
           </Link>

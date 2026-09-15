@@ -16,6 +16,14 @@ export const MODULOS_ERP = [
     ]
   },
   {
+    id: 'calendario',
+    nombre: 'Calendario',
+    rutaPrincipal: '/calendario',
+    subSecciones: [
+      { nombre: 'Calendario de Eventos', ruta: '', componente: 'TablaCalendario' }
+    ]
+  },
+  {
     id: 'consultar',
     nombre: 'Consultar Datos',
     rutaPrincipal: '/consultar',
@@ -34,8 +42,8 @@ export const MODULOS_ERP = [
       { nombre: 'Ingresos', ruta: 'ingresos', componente: 'TablaIngresos' },
       { nombre: 'Gastos', ruta: 'gastos', componente: 'TablaGastos' },
       // Auxiliares: fuera del ciclo de obra
-      { nombre: 'Faltas de Trabajador', ruta: 'faltas', componente: 'TablaFaltas' },
-      { nombre: 'Calendario de Eventos', ruta: 'calendario', componente: 'TablaCalendario' }
+      { nombre: 'Faltas de Trabajador', ruta: 'faltas', componente: 'TablaFaltas' }
+      // Calendario de Eventos ahora es su propia pestaña en la barra superior
     ]
   },
   {

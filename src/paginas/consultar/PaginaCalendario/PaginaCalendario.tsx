@@ -30,13 +30,13 @@ export default function PaginaCalendario() {
 
     return (
         <div className="flex flex-col gap-6">
-          <div className="flex items-start justify-between flex-wrap gap-3">
-            <div>
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
               <h1 className="text-2xl font-bold text-slate-100">Calendario de Eventos</h1>
               <p className="text-slate-400 mt-1">Presupuestos, ingresos y partes, todos por fecha. Solo lectura: cada evento abre su registro de origen.</p>
             </div>
 
-            <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-lg p-1">
+            <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-lg p-1 shrink-0">
               <button
                 type="button"
                 onClick={() => setVista('mes')}

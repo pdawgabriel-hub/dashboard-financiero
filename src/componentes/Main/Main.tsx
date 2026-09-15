@@ -22,6 +22,8 @@ export default function Main() {
         <Route path="/" element={<VistaDinamica nombreComponente="Home" />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<VistaDinamica nombreComponente="PaginaDashboard" />} />
+        {/* Calendario */}
+        <Route path="/calendario" element={<VistaDinamica nombreComponente="TablaCalendario" />} />
         <Route path="/consultar" element={<Navigate to="/consultar/clientes" replace />} />
         <Route path="/introducir" element={<Navigate to="/introducir/nuevo-cliente" replace />} />
         <Route path="/consultar/clientes/editar/:id" element={<PaginaEditarCliente />} />
