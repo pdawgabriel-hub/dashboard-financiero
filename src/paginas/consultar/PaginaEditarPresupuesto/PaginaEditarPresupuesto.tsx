@@ -1,52 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import FormularioCRUD, { type CampoFormulario } from "../../../componentes/Crud/FormularioCRUD/FormularioCRUD";
+import FormularioPresupuesto from "../../../componentes/Crud/FormularioPresupuesto/FormularioPresupuesto";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
 import { useToast } from "../../../contextos/ToastContext/ToastContext";
 
-import { presupuestoSchema, type PresupuestoFormValues } from "../../../schemas/PresupuestoSchema/PresupuestoSchema";
-import { presupuestoService } from "../../../servicios/PresupuestoService/PresupuestoService";
+import type { PresupuestoFormValues } from "../../../schemas/PresupuestoSchema/PresupuestoSchema";
+import { presupuestoService, getPresupuestoDisplayName } from "../../../servicios/PresupuestoService/PresupuestoService";
 import type { Presupuesto } from "../../../types/Presupuesto/Presupuesto";
-import { clienteService, getClienteDisplayName } from "../../../servicios/ClienteService/ClienteService";
-import { obraService, getObraDisplayName } from "../../../servicios/ObraService/ObraService";
 
 export default function PaginaEditarPresupuesto() {
-
-    const clientesRegistrados = clienteService.getAll();
-    const obrasRegistradas = obraService.getAll();
-
-    const CAMPOS: CampoFormulario[] = [
-        { nombre: 'titulo', etiqueta: 'Titulo', requerido: true },
-        { nombre: 'fecha_emision', etiqueta: 'Fecha Emision', requerido: true },
-        { nombre: 'importe_total', etiqueta: 'Importe Total', requerido: true },
-        { 
-        nombre: 'estado', 
-        etiqueta: 'Estado', 
-        tipo: 'select' as const,
-        opciones: [
-            { valor: 'borrador', etiqueta: 'Borrador' },
-            { valor: 'enviado', etiqueta: 'Enviado' },
-            { valor: 'aceptado', etiqueta: 'Aceptado' },
-            { valor: 'rechazado', etiqueta: 'Rechazado' }
-        ],
-        requerido: true
-        },
-        {
-        nombre: 'cliente_id',
-        etiqueta: 'Cliente (ID)',
-        tipo: 'select' as const,
-        opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
-        requerido: true
-        },
-        {
-        nombre: 'obra_id',
-        etiqueta: 'Obra Vinculada (opcional)',
-        tipo: 'select' as const,
-        opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
-        requerido: false
-        }
-    ];
 
     // Captura el id de la URL
     const { id } = useParams<{ id: string }>();
@@ -88,13 +51,14 @@ export default function PaginaEditarPresupuesto() {
         <div className="flex flex-col gap-6">
         <div>
             <h1 className="text-2xl font-bold text-slate-100">Editar presupuesto</h1>
-            <p className="text-slate-400 mt-1">{presupuesto.id}</p>
+            <p className="text-slate-400 mt-1">{getPresupuestoDisplayName(presupuesto)}</p>
         </div>
 
-        <FormularioCRUD
-            schema={presupuestoSchema}
-            campos={CAMPOS}
-            valoresIniciales={presupuesto}
+        <FormularioPresupuesto
+            valoresIniciales={{
+                ...presupuesto,
+                lineas: presupuesto.lineas.map(({ descripcion, uds, precio }) => ({ descripcion, uds, precio })),
+            }}
             onSubmit={handleSubmit}
             textoBoton="Guardar cambios"
             onEliminar={() => setMostrarConfirmar(true)}
@@ -102,11 +66,11 @@ export default function PaginaEditarPresupuesto() {
 
         <ConfirmarEliminar
             abierto={mostrarConfirmar}
-            nombre={`${presupuesto.importe_total} ${presupuesto.importe_total ?? ''}`.trim()}
+            nombre={presupuesto.nombre_cliente}
             onCancelar={() => setMostrarConfirmar(false)}
             onConfirmar={handleEliminar}
         />
         </div>
     );
-  
+
 }

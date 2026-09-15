@@ -38,8 +38,8 @@ export function obtenerTotalesFinancieros() {
   //    (la relación ahora va Presupuesto.obra_id -> Obra, no al revés)
   obras.forEach((obra) => {
     const valorIngreso = presupuestos
-      .filter((p) => p.obra_id === obra.id && p.estado === 'aceptado')
-      .reduce((suma, p) => suma + limpiarNumero(p.importe_total), 0);
+      .filter((p) => p.obra_id === obra.id && p.estado === 'aprobado')
+      .reduce((suma, p) => suma + limpiarNumero(p.total), 0);
 
     totalIngresos += valorIngreso;
   });

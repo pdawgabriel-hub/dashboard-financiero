@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import GridConsulta from "../../../componentes/Crud/GridConsulta/GridConsulta";
-import { presupuestoService } from "../../../servicios/PresupuestoService/PresupuestoService";
+import { presupuestoService, getPresupuestoAnio } from "../../../servicios/PresupuestoService/PresupuestoService";
 import type { Presupuesto } from "../../../types/Presupuesto/Presupuesto";
 
 export default function PaginaPresupuestos() {
@@ -13,15 +13,17 @@ export default function PaginaPresupuestos() {
 
     const items = presupuestos.map((p) => ({
         id: p.id,
-        titulo: p.titulo,
+        titulo: p.nombre_cliente,
         estado: p.estado,
-        textoBusqueda: `${p.estado} ${p.id} ${p.cliente_id} ${p.fecha_emision}`,
+        textoBusqueda: `${p.estado} ${p.id} ${p.cliente_id} ${p.nombre_cliente} ${p.fecha}`,
         campos: [
-            {etiqueta: 'Titulo', valor: p.titulo},
-            {etiqueta: 'Fecha de Emision', valor: p.fecha_emision},
-            {etiqueta: 'Importe Total', valor: `${p.importe_total}`},
+            {etiqueta: 'Cliente', valor: p.nombre_cliente},
+            {etiqueta: 'Fecha', valor: p.fecha},
+            {etiqueta: 'Año', valor: `${getPresupuestoAnio(p) ?? '-'}`},
+            {etiqueta: 'Base Imponible', valor: `${p.base_imponible.toFixed(2)}€`},
+            {etiqueta: 'IVA', valor: `${p.iva}%`},
+            {etiqueta: 'Total', valor: `${p.total.toFixed(2)}€`},
             {etiqueta: 'Estado', valor: p.estado},
-            {etiqueta: 'Cliente', valor: p.cliente_id},
             {etiqueta: 'Obra', valor: p.obra_id || 'Sin obra vinculada'},
         ],
     }));

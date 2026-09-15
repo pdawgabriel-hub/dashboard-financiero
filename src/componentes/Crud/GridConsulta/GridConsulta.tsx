@@ -24,10 +24,8 @@ const DICCIONARIO_ESTADOS: Record<string, { valor: string; etiqueta: string }[]>
     { valor: "finalizada", etiqueta: "Finalizada" },
   ],
   presupuesto: [
-    { valor: 'borrador', etiqueta: 'Borrador' },
-    { valor: 'enviado', etiqueta: 'Enviado' },
-    { valor: 'aceptado', etiqueta: 'Aceptado' },
-    { valor: 'rechazado', etiqueta: 'Rechazado' }
+    { valor: 'no_aprobado', etiqueta: 'No aprobado' },
+    { valor: 'aprobado', etiqueta: 'Aprobado' },
   ],
   pago: [
     { valor: 'pendiente', etiqueta: 'Pendiente' },

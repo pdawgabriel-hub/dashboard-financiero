@@ -195,10 +195,10 @@ export default function PaginaDashboard() {
               <p className="text-sm text-slate-500 py-4 text-center">No hay obras dadas de alta.</p>
             ) : (
               obras.map((obra: any) => {
-                // Presupuestos aceptados vinculados a esta obra (Presupuesto.obra_id -> Obra)
+                // Presupuestos aprobados vinculados a esta obra (Presupuesto.obra_id -> Obra)
                 const importeObra = presupuestos
-                  .filter((p: any) => p.obra_id === obra.id && p.estado === 'aceptado')
-                  .reduce((suma: number, p: any) => suma + limpiarNumero(p.importe_total), 0);
+                  .filter((p: any) => p.obra_id === obra.id && p.estado === 'aprobado')
+                  .reduce((suma: number, p: any) => suma + limpiarNumero(p.total), 0);
 
                 return (
                   <div key={obra.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">

@@ -18,14 +18,13 @@ export function getObraDisplayName(obra: Obra): string {
 
 /**
  * Equivalente a _compute_total_obra de gestion.obras: suma de los presupuestos
- * vinculados a esta obra cuyo estado equivale al "aprobado" de Odoo (de momento
- * "aceptado" en el front; se unificará cuando se actualice el modelo de Presupuestos).
+ * vinculados a esta obra en estado "aprobado".
  */
 export function getObraTotal(obra: Obra): number {
   return presupuestoService
     .getAll()
-    .filter((p) => p.obra_id === obra.id && p.estado === 'aceptado')
-    .reduce((suma, p) => suma + (p.importe_total || 0), 0);
+    .filter((p) => p.obra_id === obra.id && p.estado === 'aprobado')
+    .reduce((suma, p) => suma + (p.total || 0), 0);
 }
 
 /**
