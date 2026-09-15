@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 
 import { obraService } from '../../servicios/ObraService/ObraService';
-import { parteProveedorService } from '../../servicios/ParteProveedorService/ParteProveedorService';
 import { presupuestoService } from '../../servicios/PresupuestoService/PresupuestoService';
-import { obtenerTotalesFinancieros } from '../../servicios/DashboardAnalisis/DashboardAnalisis';
+import {
+  obtenerTotalesFinancieros,
+  obtenerDatosPorObra,
+  obtenerTendenciaMensualGastos,
+  obtenerMovimientosRecientes,
+  type MovimientoReciente,
+} from '../../servicios/DashboardAnalisis/DashboardAnalisis';
 
 import type { Obra } from '../../types/Obra/Obra';
-import type { ParteProveedor } from '../../types/ParteProveedor/ParteProveedor';
 
 import TarjetasKPI from '../../componentes/Dashboard/TarjetasKpi/TarjetasKpi';
 import GraficoBarras, { type DatosGraficoObra } from '../../componentes/Dashboard/GraficoBarras/GraficoBarras';
@@ -47,12 +51,11 @@ export default function PaginaDashboard() {
 
   const [obras, setObras] = useState<Obra[]>([]);
   const [presupuestos, setPresupuestos] = useState<any[]>([]);
-  const [ultimosGastos, setUltimosGastos] = useState<ParteProveedor[]>([]);
+  const [ultimosGastos, setUltimosGastos] = useState<MovimientoReciente[]>([]);
 
   useEffect(() => {
     // 1. Cargar colecciones de datos
     const todasLasObras: Obra[] = obraService.getAll() || [];
-    const todosLosPartesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
     const todosLosPresupuestos = presupuestoService.getAll() || [];
 
     setObras(todasLasObras);
@@ -62,19 +65,9 @@ export default function PaginaDashboard() {
     const totales = obtenerTotalesFinancieros();
     setTotalesFinancieros(totales);
 
-    // 3. Gastos acumulados por Obra (Gráfico de Barras con ID corto)
-    const balanceObras: DatosGraficoObra[] = todasLasObras.map((obra: any) => {
-      const gastosObra = todosLosPartesProveedor
-        .filter((p) => p.obra_id === obra.id)
-        .reduce((suma, p) => suma + (limpiarNumero(p.importe) || 0), 0);
-
-      return {
-        name: obra.id || 'Sin ID',
-        nombreCompleto: obra.descripcion || 'Sin Nombre',
-        Gastos: Math.round(gastosObra * 100) / 100
-      };
-    });
-    setDatosBarras(balanceObras);
+    // 3. Gastos acumulados por Obra (Gráfico de Barras con ID corto):
+    //    Partes de Proveedor + Partes de Especialista de cada obra.
+    setDatosBarras(obtenerDatosPorObra());
 
     // 4. Distribución por Estado (Gráfico de Pastel)
     const estadosPosibles: Obra['estado'][] = ['planificada', 'en_progreso', 'pausada', 'finalizada'];
@@ -85,28 +78,10 @@ export default function PaginaDashboard() {
     setDatosPastel(conteoEstados);
 
     // 5. Tendencia Temporal Mensual de Gastos
-    const mesesNombre = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    const agrupadoPorMes: { [key: number]: number } = {};
-    for (let i = 0; i < 12; i++) agrupadoPorMes[i] = 0;
+    setDatosTendencia(obtenerTendenciaMensualGastos());
 
-    todosLosPartesProveedor.forEach((p) => {
-      const fechaGasto = new Date(p.fecha);
-      if (!isNaN(fechaGasto.getTime())) {
-        agrupadoPorMes[fechaGasto.getMonth()] += limpiarNumero(p.importe) || 0;
-      }
-    });
-
-    const datosLinea: DatosTendencia[] = mesesNombre.map((mes, index) => ({
-      mes,
-      Gastos: Math.round(agrupadoPorMes[index] * 100) / 100
-    }));
-    setDatosTendencia(datosLinea);
-
-    // 6. Últimos movimientos
-    const ultimos = [...todosLosPartesProveedor]
-      .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
-      .slice(0, 4);
-    setUltimosGastos(ultimos);
+    // 6. Últimos movimientos (Partes de Proveedor + Partes de Especialista)
+    setUltimosGastos(obtenerMovimientosRecientes().slice(0, 4));
 
   }, []);
 
@@ -169,16 +144,15 @@ export default function PaginaDashboard() {
             {ultimosGastos.length === 0 ? (
               <p className="text-sm text-slate-500 py-4 text-center">No hay transacciones registradas.</p>
             ) : (
-              ultimosGastos.map((parte) => {
-                const totalMonto = limpiarNumero(parte.importe) || 0;
+              ultimosGastos.map((movimiento) => {
                 return (
-                  <div key={parte.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
+                  <div key={movimiento.id} className="flex justify-between items-center p-3 rounded-lg bg-slate-950/40 border border-slate-800/60">
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-slate-200">{parte.descripcion || 'Sin descripción'}</span>
-                      <span className="text-xs text-slate-500">{new Date(parte.fecha).toLocaleDateString('es-ES')}</span>
+                      <span className="text-sm font-medium text-slate-200">{movimiento.concepto}</span>
+                      <span className="text-xs text-slate-500">{new Date(movimiento.fecha).toLocaleDateString('es-ES')}</span>
                     </div>
                     <span className="text-sm font-semibold text-rose-400">
-                      -{totalMonto.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                      -{movimiento.total.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
                     </span>
                   </div>
                 );

@@ -9,6 +9,7 @@ import PaginaPresupuestos from '../../paginas/consultar/PaginaPresupuestos/Pagin
 import PaginaObras from '../../paginas/consultar/PaginaObras/PaginaObras';
 import PaginaGastos from '../../paginas/consultar/PaginaGastos/PaginaGastos';
 import PaginaPartesProveedor from '../../paginas/consultar/PaginaPartesProveedor/PaginaPartesProveedor';
+import PaginaPartesEspecialista from '../../paginas/consultar/PaginaPartesEspecialista/PaginaPartesEspecialista';
 import PaginaIngresos from '../../paginas/consultar/PaginaIngresos/PaginaIngresos';
 import PaginaPartes from '../../paginas/consultar/PaginaPartes/PaginaPartes';
 
@@ -19,6 +20,7 @@ import PaginaFormEspecialistas from '../../paginas/introducir/PaginaFormEspecial
 import PaginaFormPresupuestos from '../../paginas/introducir/PaginaFormPresupuestos/PaginaFormPresupuestos';
 import PaginaFormObras from '../../paginas/introducir/PaginaFormObras/PaginaFormObras';
 import PaginaFormPartesProveedor from '../../paginas/introducir/PaginaFormPartesProveedor/PaginaFormPartesProveedor';
+import PaginaFormPartesEspecialista from '../../paginas/introducir/PaginaFormPartesEspecialista/PaginaFormPartesEspecialista';
 import PaginaFormIngresos from '../../paginas/introducir/PaginaFormIngresos/PaginaFormIngresos';
 import PaginaFormPartes from '../../paginas/introducir/PaginaFormPartes/PaginaFormPartes';
 
@@ -40,6 +42,7 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
     TablaObras: PaginaObras,
     TablaGastos: PaginaGastos,
     TablaPartesProveedor: PaginaPartesProveedor,
+    TablaPartesEspecialista: PaginaPartesEspecialista,
     TablaIngresos: PaginaIngresos,
     TablaPartes: PaginaPartes,
     
@@ -51,6 +54,7 @@ export default function VistaDinamica({ nombreComponente }: VistaDinamicaProps) 
     FormPresupuesto: PaginaFormPresupuestos,
     FormObra: PaginaFormObras,
     FormParteProveedor: PaginaFormPartesProveedor,
+    FormParteEspecialista: PaginaFormPartesEspecialista,
     FormIngreso: PaginaFormIngresos,
     FormParte: PaginaFormPartes,
   };

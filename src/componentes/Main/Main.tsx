@@ -11,6 +11,7 @@ import PaginaEditarObra from '../../paginas/consultar/PaginaEditarObra/PaginaEdi
 import PaginaEditarGasto from '../../paginas/consultar/PaginaEditarGasto/PaginaEditarGasto';
 import PaginaEditarIngreso from '../../paginas/consultar/PaginaEditarIngreso/PaginaEditarIngreso';
 import PaginaEditarParteProveedor from '../../paginas/consultar/PaginaEditarParteProveedor/PaginaEditarParteProveedor';
+import PaginaEditarParteEspecialista from '../../paginas/consultar/PaginaEditarParteEspecialista/PaginaEditarParteEspecialista';
 
 export default function Main() {
   return (
@@ -32,6 +33,7 @@ export default function Main() {
         <Route path="/consultar/gastos/editar/:id" element={<PaginaEditarGasto />} />
         <Route path="/consultar/ingresos/editar/:id" element={<PaginaEditarIngreso />} />
         <Route path="/consultar/partes-proveedor/editar/:id" element={<PaginaEditarParteProveedor />} />
+        <Route path="/consultar/partes-especialista/editar/:id" element={<PaginaEditarParteEspecialista />} />
         <Route path="/consultar/:seccion" element={<ContenedorDinamico moduloId="consultar" />} />
         <Route path="/introducir/:seccion" element={<ContenedorDinamico moduloId="introducir" />} />
         <Route path="*" element={<VistaDinamica nombreComponente="Home" />} />

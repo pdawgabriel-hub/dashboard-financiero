@@ -1,9 +1,11 @@
 import { obraService } from '../ObraService/ObraService';
 import { parteProveedorService } from '../ParteProveedorService/ParteProveedorService';
+import { parteEspecialistaService } from '../ParteEspecialistaService/ParteEspecialistaService';
 import { presupuestoService } from '../PresupuestoService/PresupuestoService';
 
 import type { Obra } from '../../types/Obra/Obra';
 import type { ParteProveedor } from '../../types/ParteProveedor/ParteProveedor';
+import type { ParteEspecialista } from '../../types/ParteEspecialista/ParteEspecialista';
 import type { Presupuesto } from '../../types/Presupuesto/Presupuesto';
 
 /**
@@ -29,6 +31,7 @@ function limpiarNumero(valor: unknown): number {
 export function obtenerTotalesFinancieros() {
   const obras: Obra[] = obraService.getAll() || [];
   const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
+  const partesEspecialista: ParteEspecialista[] = parteEspecialistaService.getAll() || [];
   const presupuestos: Presupuesto[] = presupuestoService.getAll() || [];
 
   let totalIngresos = 0;
@@ -43,10 +46,12 @@ export function obtenerTotalesFinancieros() {
     totalIngresos += valorIngreso;
   });
 
-  // 2. Total de gastos. De momento solo refleja los Partes de Proveedor: cuando
-  //    exista Partes de Especialista y el coste de mano de obra se sume aquí,
-  //    esta cifra se ampliará (ver ficha de Gastos, informe §3.7).
-  const totalGastos = partesProveedor.reduce((suma, parte) => suma + limpiarNumero(parte.importe), 0);
+  // 2. Total de gastos: Partes de Proveedor + Partes de Especialista. El coste
+  //    de mano de obra no se incluye aquí (solo se ve, obra a obra, en la
+  //    ficha de Gastos de cada una: informe §3.7).
+  const totalGastos =
+    partesProveedor.reduce((suma, parte) => suma + limpiarNumero(parte.importe), 0) +
+    partesEspecialista.reduce((suma, parte) => suma + limpiarNumero(parte.importe), 0);
 
   // 3. Cálculos de margen y utilidad
   const beneficioNeto = totalIngresos - totalGastos;
@@ -66,18 +71,49 @@ export function obtenerTotalesFinancieros() {
 export function obtenerDatosPorObra() {
   const obras: Obra[] = obraService.getAll() || [];
   const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
+  const partesEspecialista: ParteEspecialista[] = parteEspecialistaService.getAll() || [];
 
   return obras.map((obra) => {
-    const gastosDeObra = partesProveedor
+    const gastosProveedor = partesProveedor
+      .filter((p) => p.obra_id === obra.id)
+      .reduce((suma, p) => suma + limpiarNumero(p.importe), 0);
+    const gastosEspecialista = partesEspecialista
       .filter((p) => p.obra_id === obra.id)
       .reduce((suma, p) => suma + limpiarNumero(p.importe), 0);
 
     return {
       name: obra.id || 'Sin ID',
       nombreCompleto: obra.descripcion || 'Sin nombre',
-      Gastos: Math.round(gastosDeObra * 100) / 100,
+      Gastos: Math.round((gastosProveedor + gastosEspecialista) * 100) / 100,
     };
   });
+}
+
+const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+export interface DatosTendenciaMensual {
+  mes: string;
+  Gastos: number;
+}
+
+export function obtenerTendenciaMensualGastos(): DatosTendenciaMensual[] {
+  const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
+  const partesEspecialista: ParteEspecialista[] = parteEspecialistaService.getAll() || [];
+
+  const agrupadoPorMes: { [key: number]: number } = {};
+  for (let i = 0; i < 12; i++) agrupadoPorMes[i] = 0;
+
+  [...partesProveedor, ...partesEspecialista].forEach((p) => {
+    const fechaGasto = new Date(p.fecha);
+    if (!isNaN(fechaGasto.getTime())) {
+      agrupadoPorMes[fechaGasto.getMonth()] += limpiarNumero(p.importe);
+    }
+  });
+
+  return MESES.map((mes, index) => ({
+    mes,
+    Gastos: Math.round(agrupadoPorMes[index] * 100) / 100,
+  }));
 }
 
 export interface MovimientoReciente {
@@ -90,12 +126,24 @@ export interface MovimientoReciente {
 
 export function obtenerMovimientosRecientes(): MovimientoReciente[] {
   const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
+  const partesEspecialista: ParteEspecialista[] = parteEspecialistaService.getAll() || [];
 
-  return partesProveedor.map((p) => ({
-    id: p.id,
-    concepto: p.descripcion || 'Sin concepto',
-    fecha: p.fecha || new Date().toISOString(),
-    total: limpiarNumero(p.importe),
-    tipo: 'gasto' as const,
-  }));
+  const movimientos: MovimientoReciente[] = [
+    ...partesProveedor.map((p) => ({
+      id: p.id,
+      concepto: p.descripcion || 'Sin concepto',
+      fecha: p.fecha || new Date().toISOString(),
+      total: limpiarNumero(p.importe),
+      tipo: 'gasto' as const,
+    })),
+    ...partesEspecialista.map((p) => ({
+      id: p.id,
+      concepto: p.descripcion || 'Sin concepto',
+      fecha: p.fecha || new Date().toISOString(),
+      total: limpiarNumero(p.importe),
+      tipo: 'gasto' as const,
+    })),
+  ];
+
+  return movimientos.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
 }

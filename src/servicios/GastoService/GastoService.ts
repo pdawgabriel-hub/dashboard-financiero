@@ -3,6 +3,7 @@ import { GASTOS_MOCK } from "../../mocks/gastosMock/gastosMock";
 import type { Gasto } from "../../types/Gasto/Gasto";
 import { obraService, getObraHorasTotales, getObraCosteMoo, getObraPendienteCobro } from "../ObraService/ObraService";
 import { parteProveedorService } from "../ParteProveedorService/ParteProveedorService";
+import { parteEspecialistaService } from "../ParteEspecialistaService/ParteEspecialistaService";
 import { getTotalIngresosDeObra } from "../IngresoService/IngresoService";
 import { presupuestoService } from "../PresupuestoService/PresupuestoService";
 import { clienteService } from "../ClienteService/ClienteService";
@@ -59,17 +60,17 @@ function getCosteProveedores(gasto: Gasto): number {
     .reduce((suma, p) => suma + (p.importe || 0), 0);
 }
 
-// Equivalente a coste_especialistas: suma de parte_especialista_ids.importe.
-// Los Partes de Especialista (informe §3.10) todavía no existen en el front,
-// así que de momento siempre es 0; se completará (con el parámetro `gasto` de
-// vuelta) cuando se implemente ese modelo.
-function getCosteEspecialistas(): number {
-  return 0;
+// Equivalente a coste_especialistas: suma de parte_especialista_ids.importe
+function getCosteEspecialistas(gasto: Gasto): number {
+  return parteEspecialistaService
+    .getAll()
+    .filter((p) => p.obra_id === gasto.obra_id)
+    .reduce((suma, p) => suma + (p.importe || 0), 0);
 }
 
 // Equivalente a "gastos": coste_proveedores + coste_especialistas + coste_moo
 function getGastosTotales(gasto: Gasto): number {
-  return getCosteProveedores(gasto) + getCosteEspecialistas() + getCosteMoo(gasto);
+  return getCosteProveedores(gasto) + getCosteEspecialistas(gasto) + getCosteMoo(gasto);
 }
 
 // Equivalente a "ingresos": suma de obra_id.ingresos_ids.importe. Cada Ingreso
