@@ -2,15 +2,24 @@ import { useLocation } from 'react-router-dom';
 import Menu from './componentes/Menu/Menu';
 import Aside from './componentes/Aside/Aside';
 import Main from './componentes/Main/Main';
+import RutasImprimir from './componentes/Main/RutasImprimir';
 
 export default function App() {
   const location = useLocation();
+
+  // Las páginas de impresión (equivalentes a los informes PDF de Odoo) se
+  // muestran a página completa, sin menú ni barra lateral: son un documento,
+  // no una vista de la app.
+  if (location.pathname.includes('/imprimir/')) {
+    return <RutasImprimir />;
+  }
+
   const mostrarAside = location.pathname.startsWith('/consultar') || location.pathname.startsWith('/introducir');
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
       <Menu />
-      
+
       {/* En móvil: flex-col (Menú arriba, contenido abajo) y permitimos scroll global */}
       {/* En PC (md:): flex-row (Menú a la izquierda, contenido a la derecha) y bloqueamos el desborde (overflow-hidden) */}
       <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Printer } from "lucide-react";
 
 import FormularioPresupuesto from "../../../componentes/Crud/FormularioPresupuesto/FormularioPresupuesto";
 import ConfirmarEliminar from "../../../componentes/Crud/ConfirmarEliminar/ConfirmarEliminar";
@@ -49,9 +50,19 @@ export default function PaginaEditarPresupuesto() {
 
     return (
         <div className="flex flex-col gap-6">
-        <div>
-            <h1 className="text-2xl font-bold text-slate-100">Editar presupuesto</h1>
-            <p className="text-slate-400 mt-1">{getPresupuestoDisplayName(presupuesto)}</p>
+        <div className="flex items-start justify-between gap-3 flex-wrap">
+            <div>
+                <h1 className="text-2xl font-bold text-slate-100">Editar presupuesto</h1>
+                <p className="text-slate-400 mt-1">{getPresupuestoDisplayName(presupuesto)}</p>
+            </div>
+            <Link
+                to={`/consultar/presupuestos/imprimir/${presupuesto.id}`}
+                target="_blank"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg transition-colors shrink-0"
+            >
+                <Printer className="w-4 h-4" />
+                Imprimir
+            </Link>
         </div>
 
         <FormularioPresupuesto
