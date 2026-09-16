@@ -2,11 +2,11 @@
 
 # ERP Construcción - Sistema de Gestión Modular
 
-Un sistema ERP moderno, fluido y totalmente responsivo diseñado para la gestión de proyectos de construcción, control de presupuestos, gastos y análisis financiero en tiempo real. Desarrollado con **React**, **TypeScript** y **Tailwind CSS**.
+Un sistema ERP moderno, fluido y totalmente responsivo para la gestión integral de una constructora: clientes, obras, presupuestos, partes de trabajo, proveedores, especialistas, gastos, ingresos y calendario, con análisis financiero en tiempo real. Desarrollado con **React**, **TypeScript** y **Tailwind CSS**.
 
-El modelo de negocio (Clientes, Obras, Presupuestos, Partes de trabajo...) está basado en un desarrollo real hecho a medida para un cliente sobre **Odoo**, adaptando aquí su lógica y su ciclo de negocio a una versión 100% frontend, portable y de acceso público.
+El modelo de negocio, con sus 13 entidades (Clientes, Obras, Presupuestos, Partes de trabajo...), está basado en un desarrollo real hecho a medida para un cliente sobre **Odoo**, adaptando aquí su lógica y su ciclo de negocio completo a una versión 100% frontend, portable y de acceso público — incluyendo vistas de tarjetas/lista, registros relacionados, calendario tipo Google Calendar, autocompletado en los selectores de relación y exportación a PDF de los documentos principales.
 
-Este proyecto está enfocado puramente en el **Desarrollo Frontend**, demostrando buenas prácticas de renderizado rápido, interfaces reactivas y un control de estado riguroso. Para facilitar su portabilidad y testeo ágil, **la aplicación prescinde de una base de datos física o un backend tradicional**; toda la persistencia de datos se gestiona localmente en el navegador a través de **localStorage**, apoyándose en un ecosistema de **datos simulados (mocks)** preestablecidos para una experiencia de usuario fluida desde el primer segundo.
+Este proyecto está enfocado puramente en el **Desarrollo Frontend**, demostrando buenas prácticas de renderizado rápido, interfaces reactivas y un control de estado riguroso. Para facilitar su portabilidad y testeo ágil, **la aplicación prescinde de una base de datos física o un backend tradicional**; toda la persistencia de datos se gestiona localmente en el navegador a través de **localStorage** (con control de versión para evitar datos obsoletos), apoyándose en un ecosistema de **datos simulados (mocks)** preestablecidos para una experiencia de usuario fluida desde el primer segundo.
 
 **[Ver demo en vivo](https://dashboard-financiero-kappa-blue.vercel.app/)**
 
