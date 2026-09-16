@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+/* El navegador solo añade su cabecera/pie (URL, título, fecha, nº de página)
+   cuando hay margen de página disponible para dibujarlos: al forzar margen 0
+   en @page desaparecen. El espaciado del documento lo controlamos nosotros
+   con el padding propio de DocumentoImprimible. */
+@media print {
+  @page {
+    margin: 0;
+  }
+}
