@@ -1,7 +1,7 @@
 export interface Ingreso {
   id: string; // ingreso_id
-  obra_id?: string; // FK opcional
-  cliente_id?: string; // FK opcional
+  obra_id: string; // FK
+  cliente_id: string; // FK
   tipo?: string; // Ej: Transferencia, Cheque, Efectivo
   fecha: string; // YYYY-MM-DD, por defecto hoy
   documento?: string;

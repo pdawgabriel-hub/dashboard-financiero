@@ -3,10 +3,10 @@ import { z } from "zod";
 export const ingresoSchema = z.object({
     obra_id: z
         .string()
-        .optional(),
+        .min(1, "Debe seleccionar una obra"),
     cliente_id: z
         .string()
-        .optional(),
+        .min(1, "Debe seleccionar un cliente"),
     tipo: z
         .string()
         .optional(),

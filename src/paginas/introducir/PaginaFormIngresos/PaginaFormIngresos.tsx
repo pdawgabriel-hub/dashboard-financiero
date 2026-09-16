@@ -35,21 +35,21 @@ export default function PaginaFormIngresos() {
         // Desplegable dinámico relacional (Obras)
         {
             nombre: 'obra_id',
-            etiqueta: 'Obra Asignada (opcional)',
+            etiqueta: 'Obra Asignada',
             tipo: 'select',
             buscable: true,
             opciones: opcionesObras,
-            requerido: false
+            requerido: true
         },
 
         // Desplegable dinámico relacional (Clientes)
         {
             nombre: 'cliente_id',
-            etiqueta: 'Cliente (opcional)',
+            etiqueta: 'Cliente',
             tipo: 'select',
             buscable: true,
             opciones: opcionesClientes,
-            requerido: false
+            requerido: true
         },
     ];
 
@@ -66,7 +66,7 @@ export default function PaginaFormIngresos() {
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-2xl font-bold text-slate-100">Nuevo Ingreso</h1>
-            <p className="text-slate-400 mt-1">Registra un cobro recibido, opcionalmente vinculado a una obra.</p>
+            <p className="text-slate-400 mt-1">Registra un cobro recibido, vinculado a una obra y a un cliente.</p>
           </div>
 
           <FormularioCRUD

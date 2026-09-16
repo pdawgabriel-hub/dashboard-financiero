@@ -8,7 +8,7 @@
 export interface Gasto {
   id: string; // gasto_id
   obra_id: string; // FK obligatoria, relación 1:1 con la Obra
-  presupuesto_id?: string; // FK opcional, debe pertenecer a la misma obra
+  presupuesto_id: string; // FK, debe pertenecer a la misma obra
   direccion_obra?: string;
   inicio_obra?: string; // YYYY-MM-DD
   fin_obra?: string; // YYYY-MM-DD

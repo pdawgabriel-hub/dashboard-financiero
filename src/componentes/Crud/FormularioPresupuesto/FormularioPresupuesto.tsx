@@ -90,14 +90,15 @@ export default function FormularioPresupuesto({ valoresIniciales, onSubmit, text
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className={CLASE_LABEL}>Obra vinculada (opcional)</label>
+          <label className={CLASE_LABEL}>Obra vinculada<span className="text-red-400 ml-0.5">*</span></label>
           <ComboboxBuscable
             nombre="obra_id"
             opciones={obrasRegistradas.map((o) => ({ valor: o.id, etiqueta: getObraDisplayName(o) }))}
             valor={watch('obra_id') ?? ''}
             onChange={(valor) => setValue('obra_id', valor, { shouldValidate: true })}
-            placeholder="Sin obra vinculada"
+            placeholder="Buscar obra..."
           />
+          {errors.obra_id && <p className="text-xs text-red-400">{String(errors.obra_id.message)}</p>}
         </div>
 
         <div className="flex flex-col gap-1.5">

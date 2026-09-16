@@ -19,7 +19,7 @@ export interface Presupuesto {
     cuota_iva: number; // computado: base_imponible * iva / 100
     total: number; // computado: base_imponible + cuota_iva (antes "importe_total")
     cliente_id: string; // FK
-    obra_id?: string; // FK opcional
+    obra_id: string; // FK
     lineas: PresupuestoLinea[];
 }
 

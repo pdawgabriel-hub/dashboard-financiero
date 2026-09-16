@@ -10,7 +10,7 @@ const CLAVE_VERSION_DATOS = '__version_datos__';
 // hay guardado, se limpia todo el localStorage y se resiembra desde cero:
 // evita que un visitante con datos de una versión anterior de la app (guardados
 // en su navegador) se encuentre con una app rota por un "shape" incompatible.
-const VERSION_DATOS_ACTUAL = '1';
+const VERSION_DATOS_ACTUAL = '2';
 
 function comprobarVersionDatos() {
   if (typeof localStorage === 'undefined') return;

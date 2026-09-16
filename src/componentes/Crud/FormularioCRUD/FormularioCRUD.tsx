@@ -37,7 +37,15 @@ export default function FormularioCRUD<T extends Record<string, any>>({
     formState: { errors, isSubmitting },
   } = useForm<any>({
     resolver: zodResolver(schema),
-    defaultValues: valoresIniciales as any,
+    // Los combobox buscables no pasan por register(): sin un valor inicial
+    // explícito, un campo sin tocar llega a Zod como `undefined` en vez de
+    // `''`, y salta el error genérico de tipo en lugar del mensaje del schema.
+    defaultValues: {
+      ...Object.fromEntries(
+        campos.filter((c) => c.tipo === 'select' && c.buscable).map((c) => [c.nombre, ''])
+      ),
+      ...valoresIniciales,
+    } as any,
   });
 
   return (

@@ -14,14 +14,20 @@ const crud = crearCrudService<Gasto>('gastos', GASTOS_MOCK, 'GAS');
 /**
  * Equivalente al create() de gestion.gastos + la relación 1:1 con Obra:
  * si la obra ya tiene ficha, la devuelve; si no, la crea con los valores
- * por defecto (mandante/gestion_licencia/pago_icio = "no").
+ * por defecto (mandante/gestion_licencia/pago_icio = "no"), vinculada al
+ * presupuesto aprobado de la obra (o al primero disponible si aún no hay
+ * ninguno aprobado).
  */
 function obtenerOCrearFicha(obraId: string): Gasto {
   const existente = crud.getAll().find((g) => g.obra_id === obraId);
   if (existente) return existente;
 
+  const presupuestosDeLaObra = presupuestoService.getAll().filter((p) => p.obra_id === obraId);
+  const presupuesto = presupuestosDeLaObra.find((p) => p.estado === 'aprobado') ?? presupuestosDeLaObra[0];
+
   return crud.create({
     obra_id: obraId,
+    presupuesto_id: presupuesto?.id ?? '',
     mandante: 'no',
     gestion_licencia: 'no',
     pago_icio: 'no',

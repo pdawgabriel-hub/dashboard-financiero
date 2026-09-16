@@ -6,7 +6,7 @@ export interface Obra {
   fecha_fin_prevista: string; // YYYY-MM-DD
   cliente_id: string; // FK
   // presupuesto_id (FK única) desaparece: en Odoo la relación va al revés,
-  // un Presupuesto apunta opcionalmente a su Obra (ver Presupuesto.obra_id)
+  // un Presupuesto apunta a su Obra (ver Presupuesto.obra_id, obligatoria)
   // y una Obra puede tener varios presupuestos vinculados.
   //
   // "estado" (planificada/en_progreso/pausada/finalizada) desaparece: no

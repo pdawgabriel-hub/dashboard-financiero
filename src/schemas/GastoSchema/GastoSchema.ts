@@ -8,7 +8,7 @@ const fechaOpcional = z
 export const gastoSchema = z
   .object({
     obra_id: z.string().min(1, 'Debe seleccionar una obra'),
-    presupuesto_id: z.string().optional(),
+    presupuesto_id: z.string().min(1, 'Debe seleccionar un presupuesto'),
     direccion_obra: z.string().optional(),
     inicio_obra: fechaOpcional,
     fin_obra: fechaOpcional,

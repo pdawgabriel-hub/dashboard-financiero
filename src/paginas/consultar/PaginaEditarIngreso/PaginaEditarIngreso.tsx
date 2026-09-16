@@ -33,19 +33,19 @@ export default function PaginaEditarIngreso() {
         { nombre: 'importe', etiqueta: 'Importe (€)', tipo: 'number', requerido: true },
         {
             nombre: 'obra_id',
-            etiqueta: 'Obra Asignada (opcional)',
+            etiqueta: 'Obra Asignada',
             tipo: 'select',
             buscable: true,
             opciones: opcionesObras,
-            requerido: false
+            requerido: true
         },
         {
             nombre: 'cliente_id',
-            etiqueta: 'Cliente (opcional)',
+            etiqueta: 'Cliente',
             tipo: 'select',
             buscable: true,
             opciones: opcionesClientes,
-            requerido: false
+            requerido: true
         },
     ];
 

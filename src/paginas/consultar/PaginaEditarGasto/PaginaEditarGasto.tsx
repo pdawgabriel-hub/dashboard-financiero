@@ -48,11 +48,11 @@ export default function PaginaEditarGasto() {
   const CAMPOS: CampoFormulario[] = [
     {
       nombre: 'presupuesto_id',
-      etiqueta: 'Presupuesto vinculado (opcional)',
+      etiqueta: 'Presupuesto vinculado',
       tipo: 'select' as const,
       buscable: true,
       opciones: gastoService.getPresupuestosDeLaObra(obra.id).map(p => ({ valor: p.id, etiqueta: getPresupuestoDisplayName(p) })),
-      requerido: false,
+      requerido: true,
     },
     { nombre: 'direccion_obra', etiqueta: 'Dirección de la obra', requerido: false },
     { nombre: 'solicitud_obra', etiqueta: 'Fecha de solicitud (AAAA-MM-DD)', requerido: false },
