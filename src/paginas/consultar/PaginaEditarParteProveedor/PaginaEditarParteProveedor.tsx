@@ -36,6 +36,7 @@ export default function PaginaEditarParteProveedor() {
       nombre: 'proveedor_id',
       etiqueta: 'Proveedor Asignado',
       tipo: 'select' as const,
+      buscable: true,
       opciones: proveedoresRegistrados.map(p => ({ valor: p.id, etiqueta: getProveedorDisplayName(p) })),
       requerido: true
     },
@@ -43,6 +44,7 @@ export default function PaginaEditarParteProveedor() {
       nombre: 'obra_id',
       etiqueta: 'Obra Vinculada',
       tipo: 'select' as const,
+      buscable: true,
       opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
       requerido: true
     }

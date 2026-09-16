@@ -37,6 +37,7 @@ export default function PaginaEditarObra() {
             nombre: 'cliente_id',
             etiqueta: 'Cliente Asignado (ID)',
             tipo: 'select' as const,
+            buscable: true,
             opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
             requerido: true
         }

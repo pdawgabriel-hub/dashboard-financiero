@@ -31,6 +31,7 @@ export default function PaginaEditarFalta() {
             nombre: 'trabajador_id',
             etiqueta: 'Trabajador',
             tipo: 'select' as const,
+            buscable: true,
             opciones: trabajadoresRegistrados.map(t => ({ valor: t.id, etiqueta: getTrabajadorDisplayName(t) })),
             requerido: true
         },

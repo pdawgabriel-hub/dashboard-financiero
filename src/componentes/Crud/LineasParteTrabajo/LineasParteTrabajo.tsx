@@ -1,9 +1,9 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { ParteTrabajoFormValues } from '../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema';
 import { trabajadorService } from '../../../servicios/TrabajadorService/TrabajadorService';
+import ComboboxBuscable from '../ComboboxBuscable/ComboboxBuscable';
 
 const CLASE_INPUT = 'px-2 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600';
-const CLASE_SELECT = `${CLASE_INPUT} cursor-pointer appearance-none`;
 
 export default function LineasParteTrabajo() {
   const { register, control, watch, setValue, formState: { errors } } = useFormContext<ParteTrabajoFormValues>();
@@ -45,17 +45,17 @@ export default function LineasParteTrabajo() {
 
       {fields.map((field, index) => (
         <div key={field.id} className="flex flex-wrap gap-2 items-start">
-          <select
-            {...register(`lineas.${index}.trabajador_id`, {
-              onChange: (e) => autofillCosteHora(index, e.target.value),
-            })}
-            className={`${CLASE_SELECT} flex-1 min-w-[140px]`}
-          >
-            <option value="">Selecciona un trabajador...</option>
-            {trabajadoresRegistrados.map((t) => (
-              <option key={t.id} value={t.id}>{t.nombre} {t.apellido}</option>
-            ))}
-          </select>
+          <ComboboxBuscable
+            className="flex-1 min-w-[140px]"
+            nombre={`lineas.${index}.trabajador_id`}
+            opciones={trabajadoresRegistrados.map((t) => ({ valor: t.id, etiqueta: `${t.nombre} ${t.apellido}` }))}
+            valor={watch(`lineas.${index}.trabajador_id`) ?? ''}
+            onChange={(valor) => {
+              setValue(`lineas.${index}.trabajador_id`, valor, { shouldValidate: true });
+              autofillCosteHora(index, valor);
+            }}
+            placeholder="Buscar trabajador..."
+          />
           <input
             type="number"
             step="0.5"

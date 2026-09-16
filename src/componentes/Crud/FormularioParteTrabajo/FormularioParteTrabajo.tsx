@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { parteTrabajoSchema, type ParteTrabajoFormValues } from '../../../schemas/ParteTrabajoSchema/ParteTrabajoSchema';
 import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
 import LineasParteTrabajo from '../LineasParteTrabajo/LineasParteTrabajo';
+import ComboboxBuscable from '../ComboboxBuscable/ComboboxBuscable';
 
 interface FormularioParteTrabajoProps {
   valoresIniciales?: Partial<ParteTrabajoFormValues>;
@@ -19,7 +20,6 @@ const VALORES_POR_DEFECTO: ParteTrabajoFormValues = {
 };
 
 const CLASE_INPUT = 'px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600 w-full';
-const CLASE_SELECT = `${CLASE_INPUT} cursor-pointer appearance-none`;
 const CLASE_LABEL = 'text-sm font-medium text-slate-300';
 
 export default function FormularioParteTrabajo({ valoresIniciales, onSubmit, textoBoton, onEliminar }: FormularioParteTrabajoProps) {
@@ -31,7 +31,7 @@ export default function FormularioParteTrabajo({ valoresIniciales, onSubmit, tex
     resolver: zodResolver(parteTrabajoSchema),
     defaultValues: { ...VALORES_POR_DEFECTO, ...valoresIniciales },
   });
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = metodos;
+  const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = metodos;
 
   return (
     <FormProvider {...metodos}>
@@ -53,12 +53,13 @@ export default function FormularioParteTrabajo({ valoresIniciales, onSubmit, tex
 
         <div className="flex flex-col gap-1.5">
           <label className={CLASE_LABEL}>Obra<span className="text-red-400 ml-0.5">*</span></label>
-          <select {...register('obra_id')} className={CLASE_SELECT}>
-            <option value="">Selecciona una opción...</option>
-            {obrasRegistradas.map((o) => (
-              <option key={o.id} value={o.id}>{getObraDisplayName(o)}</option>
-            ))}
-          </select>
+          <ComboboxBuscable
+            nombre="obra_id"
+            opciones={obrasRegistradas.map((o) => ({ valor: o.id, etiqueta: getObraDisplayName(o) }))}
+            valor={watch('obra_id') ?? ''}
+            onChange={(valor) => setValue('obra_id', valor, { shouldValidate: true })}
+            placeholder="Buscar obra..."
+          />
           {errors.obra_id && <p className="text-xs text-red-400">{String(errors.obra_id.message)}</p>}
         </div>
 

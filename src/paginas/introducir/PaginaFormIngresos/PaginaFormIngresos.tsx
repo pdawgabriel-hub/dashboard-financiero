@@ -37,6 +37,7 @@ export default function PaginaFormIngresos() {
             nombre: 'obra_id',
             etiqueta: 'Obra Asignada (opcional)',
             tipo: 'select',
+            buscable: true,
             opciones: opcionesObras,
             requerido: false
         },
@@ -46,6 +47,7 @@ export default function PaginaFormIngresos() {
             nombre: 'cliente_id',
             etiqueta: 'Cliente (opcional)',
             tipo: 'select',
+            buscable: true,
             opciones: opcionesClientes,
             requerido: false
         },

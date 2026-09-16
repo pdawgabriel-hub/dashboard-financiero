@@ -4,6 +4,7 @@ import { presupuestoSchema, type PresupuestoFormValues } from '../../../schemas/
 import { clienteService, getClienteDisplayName } from '../../../servicios/ClienteService/ClienteService';
 import { obraService, getObraDisplayName } from '../../../servicios/ObraService/ObraService';
 import LineasPresupuesto from '../LineasPresupuesto/LineasPresupuesto';
+import ComboboxBuscable from '../ComboboxBuscable/ComboboxBuscable';
 
 interface FormularioPresupuestoProps {
   valoresIniciales?: Partial<PresupuestoFormValues>;
@@ -69,15 +70,16 @@ export default function FormularioPresupuesto({ valoresIniciales, onSubmit, text
 
         <div className="flex flex-col gap-1.5">
           <label className={CLASE_LABEL}>Cliente<span className="text-red-400 ml-0.5">*</span></label>
-          <select
-            {...register('cliente_id', { onChange: (e) => autofillDesdeCliente(e.target.value) })}
-            className={CLASE_SELECT}
-          >
-            <option value="">Selecciona una opción...</option>
-            {clientesRegistrados.map((c) => (
-              <option key={c.id} value={c.id}>{getClienteDisplayName(c)}</option>
-            ))}
-          </select>
+          <ComboboxBuscable
+            nombre="cliente_id"
+            opciones={clientesRegistrados.map((c) => ({ valor: c.id, etiqueta: getClienteDisplayName(c) }))}
+            valor={watch('cliente_id') ?? ''}
+            onChange={(valor) => {
+              setValue('cliente_id', valor, { shouldValidate: true });
+              autofillDesdeCliente(valor);
+            }}
+            placeholder="Buscar cliente..."
+          />
           {errors.cliente_id && <p className="text-xs text-red-400">{String(errors.cliente_id.message)}</p>}
           {nombreClienteActual && (
             <p className="text-xs text-slate-500">
@@ -89,12 +91,13 @@ export default function FormularioPresupuesto({ valoresIniciales, onSubmit, text
 
         <div className="flex flex-col gap-1.5">
           <label className={CLASE_LABEL}>Obra vinculada (opcional)</label>
-          <select {...register('obra_id')} className={CLASE_SELECT}>
-            <option value="">Sin obra vinculada</option>
-            {obrasRegistradas.map((o) => (
-              <option key={o.id} value={o.id}>{getObraDisplayName(o)}</option>
-            ))}
-          </select>
+          <ComboboxBuscable
+            nombre="obra_id"
+            opciones={obrasRegistradas.map((o) => ({ valor: o.id, etiqueta: getObraDisplayName(o) }))}
+            valor={watch('obra_id') ?? ''}
+            onChange={(valor) => setValue('obra_id', valor, { shouldValidate: true })}
+            placeholder="Sin obra vinculada"
+          />
         </div>
 
         <div className="flex flex-col gap-1.5">

@@ -35,6 +35,7 @@ export default function PaginaEditarIngreso() {
             nombre: 'obra_id',
             etiqueta: 'Obra Asignada (opcional)',
             tipo: 'select',
+            buscable: true,
             opciones: opcionesObras,
             requerido: false
         },
@@ -42,6 +43,7 @@ export default function PaginaEditarIngreso() {
             nombre: 'cliente_id',
             etiqueta: 'Cliente (opcional)',
             tipo: 'select',
+            buscable: true,
             opciones: opcionesClientes,
             requerido: false
         },

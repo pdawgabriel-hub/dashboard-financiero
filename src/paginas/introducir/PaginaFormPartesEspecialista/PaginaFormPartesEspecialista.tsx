@@ -30,6 +30,7 @@ export default function PaginaFormPartesEspecialista() {
             nombre: 'especialista_id',
             etiqueta: 'Especialista Asignado',
             tipo: 'select' as const,
+            buscable: true,
             opciones: especialistasRegistrados.map(e => ({ valor: e.id, etiqueta: getEspecialistaDisplayName(e) })),
             requerido: true
         },
@@ -37,6 +38,7 @@ export default function PaginaFormPartesEspecialista() {
             nombre: 'obra_id',
             etiqueta: 'Obra Vinculada',
             tipo: 'select' as const,
+            buscable: true,
             opciones: obrasRegistradas.map(o => ({ valor: o.id, etiqueta: getObraDisplayName(o) })),
             requerido: true
         }

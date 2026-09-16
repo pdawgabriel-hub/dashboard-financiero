@@ -49,6 +49,7 @@ export default function PaginaEditarGasto() {
       nombre: 'presupuesto_id',
       etiqueta: 'Presupuesto vinculado (opcional)',
       tipo: 'select' as const,
+      buscable: true,
       opciones: gastoService.getPresupuestosDeLaObra(obra.id).map(p => ({ valor: p.id, etiqueta: getPresupuestoDisplayName(p) })),
       requerido: false,
     },

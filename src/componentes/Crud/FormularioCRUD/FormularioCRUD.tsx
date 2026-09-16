@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import ComboboxBuscable from '../ComboboxBuscable/ComboboxBuscable';
 
 export interface CampoFormulario {
-  nombre: string;       
+  nombre: string;
   etiqueta: string;
   tipo?: 'text' | 'email' | 'tel' | 'number' | 'textarea' | 'select';
   requerido?: boolean;
   opciones?: { valor: string; etiqueta: string }[];
+  buscable?: boolean; // solo aplica con tipo: 'select': lo cambia por un combobox con búsqueda
 }
 
 interface FormularioCRUDProps<T extends Record<string, any>> {
@@ -30,6 +32,8 @@ export default function FormularioCRUD<T extends Record<string, any>>({
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<any>({
     resolver: zodResolver(schema),
@@ -54,6 +58,14 @@ export default function FormularioCRUD<T extends Record<string, any>>({
                 {...register(campo.nombre)}
                 rows={3}
                 className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-600 w-full resize-none"
+              />
+            ) : campo.tipo === 'select' && campo.buscable ? (
+              <ComboboxBuscable
+                nombre={campo.nombre}
+                opciones={campo.opciones ?? []}
+                valor={watch(campo.nombre) ?? ''}
+                onChange={(valor) => setValue(campo.nombre, valor, { shouldValidate: true })}
+                placeholder="Buscar..."
               />
             ) : campo.tipo === 'select' ? (
               <select
