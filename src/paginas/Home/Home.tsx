@@ -14,7 +14,7 @@ export default function Home() {
             Panel de Control
           </h1>
           <p className="text-slate-400 text-sm leading-relaxed">
-            He diseñado y desarrollado esta SPA como una demostración técnica enfocada en resolver flujos de trabajo complejos, gestión de CRUDs relacionales y sincronización ágil en el lado del cliente.
+            He diseñado y desarrollado esta SPA como una demostración técnica enfocada en resolver flujos de trabajo complejos, gestión de CRUDs relacionales y sincronización ágil en el lado del cliente. El modelo de negocio — 13 entidades que cubren el ciclo completo de una constructora (clientes, obras, presupuestos, partes de trabajo, proveedores, especialistas...) — está basado en un desarrollo real que hice a medida para un cliente sobre <strong>Odoo</strong>, adaptado aquí a una versión 100% frontend.
           </p>
         </div>
         <div className="flex flex-col gap-2 w-full">
@@ -50,9 +50,9 @@ export default function Home() {
       {/* ACCESOS RÁPIDOS VISUALES */}
       <div>
         <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider mb-4">Secciones Destacadas</h3>
-        <div className="grid sm:grid-cols-3 gap-4">
-          <Link 
-            to="/dashboard" 
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            to="/dashboard"
             className="group border border-slate-800/80 bg-slate-900/30 hover:bg-slate-900/60 hover:border-indigo-500/30 rounded-xl p-5 transition-all flex flex-col justify-between min-h-[130px]"
           >
             <div>
@@ -64,26 +64,39 @@ export default function Home() {
             </span>
           </Link>
 
-          <Link 
-            to="/consultar/clientes" 
+          <Link
+            to="/consultar/clientes"
             className="group border border-slate-800/80 bg-slate-900/30 hover:bg-slate-900/60 hover:border-emerald-500/30 rounded-xl p-5 transition-all flex flex-col justify-between min-h-[130px]"
           >
             <div>
               <h4 className="text-slate-200 font-bold text-sm mt-3 group-hover:text-emerald-400 transition-colors">Vistas</h4>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Consulta las tablas interconectadas de clientes, presupuestos y trabajadores.</p>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Consulta en tarjetas o lista, con los registros relacionados de cada ficha (presupuestos, partes...).</p>
             </div>
             <span className="text-xs text-emerald-400 font-semibold mt-4 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
               Consultar tablas →
             </span>
           </Link>
 
-          <Link 
-            to="/introducir/nuevo-cliente" 
+          <Link
+            to="/calendario"
+            className="group border border-slate-800/80 bg-slate-900/30 hover:bg-slate-900/60 hover:border-sky-500/30 rounded-xl p-5 transition-all flex flex-col justify-between min-h-[130px]"
+          >
+            <div>
+              <h4 className="text-slate-200 font-bold text-sm mt-3 group-hover:text-sky-400 transition-colors">Calendario</h4>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Vista mensual tipo Google Calendar con presupuestos, ingresos y partes por fecha.</p>
+            </div>
+            <span className="text-xs text-sky-400 font-semibold mt-4 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Ver calendario →
+            </span>
+          </Link>
+
+          <Link
+            to="/introducir/nuevo-cliente"
             className="group border border-slate-800/80 bg-slate-900/30 hover:bg-slate-900/60 hover:border-amber-500/30 rounded-xl p-5 transition-all flex flex-col justify-between min-h-[130px]"
           >
             <div>
               <h4 className="text-slate-200 font-bold text-sm mt-3 group-hover:text-amber-400 transition-colors">Formularios Dinámicos</h4>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Añade nuevos registros con formularios validados en tiempo real mediante schemas.</p>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Formularios validados en tiempo real, con autocompletado en los selectores de relación.</p>
             </div>
             <span className="text-xs text-amber-400 font-semibold mt-4 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
               Crear registro →
@@ -99,7 +112,7 @@ export default function Home() {
           Para ver todo el potencial técnico de esta aplicación en menos de 2 minutos, te recomiendo seguir este flujo:
         </p>
         
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="relative pl-8">
             <span className="absolute left-0 top-0 w-6 h-6 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-bold flex items-center justify-center">1</span>
             <h4 className="text-slate-200 font-semibold text-xs mb-1">Crea un Nuevo Registro</h4>
@@ -114,6 +127,11 @@ export default function Home() {
             <span className="absolute left-0 top-0 w-6 h-6 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-bold flex items-center justify-center">3</span>
             <h4 className="text-slate-200 font-semibold text-xs mb-1">Comprueba la Reactividad</h4>
             <p className="text-[11px] text-slate-500 leading-relaxed">Elimina cualquier gasto o ingreso en sus respectivas tablas y regresa al <strong>Dashboard</strong> para observar cómo se recalculan los totales al instante.</p>
+          </div>
+          <div className="relative pl-8">
+            <span className="absolute left-0 top-0 w-6 h-6 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-bold flex items-center justify-center">4</span>
+            <h4 className="text-slate-200 font-semibold text-xs mb-1">Exporta un Presupuesto a PDF</h4>
+            <p className="text-[11px] text-slate-500 leading-relaxed">Entra en un <strong>Presupuesto</strong> y pulsa <strong>Imprimir</strong>: se abre el documento listo para guardar como PDF desde el navegador.</p>
           </div>
         </div>
       </div>
@@ -148,6 +166,14 @@ export default function Home() {
           <li className="flex items-center gap-2">
             <span className="text-indigo-400">✔</span>
             <span>Manejo de rutas dinámicas mediante <strong>React Router Dom</strong>.</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="text-indigo-400">✔</span>
+            <span>Persistencia versionada: se limpia automáticamente el LocalStorage obsoleto al cambiar el modelo de datos.</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="text-indigo-400">✔</span>
+            <span>Exportación a PDF de presupuestos, partes de trabajo y seguimiento de gastos mediante <code>window.print()</code>.</span>
           </li>
         </ul>
       </div>
