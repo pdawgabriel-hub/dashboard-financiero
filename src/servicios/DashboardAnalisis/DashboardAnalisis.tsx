@@ -1,12 +1,13 @@
-import { obraService } from '../ObraService/ObraService';
+import { obraService, getObraCosteMoo } from '../ObraService/ObraService';
+import { getTotalIngresosDeObra } from '../IngresoService/IngresoService';
 import { parteProveedorService } from '../ParteProveedorService/ParteProveedorService';
 import { parteEspecialistaService } from '../ParteEspecialistaService/ParteEspecialistaService';
-import { presupuestoService } from '../PresupuestoService/PresupuestoService';
+import { parteTrabajoService } from '../ParteTrabajoService/ParteTrabajoService';
 
 import type { Obra } from '../../types/Obra/Obra';
 import type { ParteProveedor } from '../../types/ParteProveedor/ParteProveedor';
 import type { ParteEspecialista } from '../../types/ParteEspecialista/ParteEspecialista';
-import type { Presupuesto } from '../../types/Presupuesto/Presupuesto';
+import type { ParteTrabajo } from '../../types/ParteTrabajo/ParteTrabajo';
 
 /**
  * Función auxiliar para convertir valores a número de forma limpia
@@ -28,32 +29,37 @@ function limpiarNumero(valor: unknown): number {
   return 0;
 }
 
+/**
+ * KPIs globales del dashboard. Son la suma, obra a obra, de lo que muestra la
+ * ficha de Gastos de cada una (informe §3.7 y §11.2), para que el dashboard y
+ * las fichas nunca den cifras distintas:
+ *   ingresos  = cobros reales registrados (Ingresos), NO presupuestos aprobados
+ *   gastos    = partes de proveedor + partes de especialista + mano de obra
+ *   beneficio = ingresos - gastos (caja real, nunca presupuesto - gastos)
+ */
 export function obtenerTotalesFinancieros() {
   const obras: Obra[] = obraService.getAll() || [];
   const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
   const partesEspecialista: ParteEspecialista[] = parteEspecialistaService.getAll() || [];
-  const presupuestos: Presupuesto[] = presupuestoService.getAll() || [];
 
   let totalIngresos = 0;
+  let totalGastos = 0;
 
-  // 1. Obtener Ingresos sumando los presupuestos aceptados vinculados a cada obra
-  //    (la relación ahora va Presupuesto.obra_id -> Obra, no al revés)
   obras.forEach((obra) => {
-    const valorIngreso = presupuestos
-      .filter((p) => p.obra_id === obra.id && p.estado === 'aprobado')
-      .reduce((suma, p) => suma + limpiarNumero(p.total), 0);
+    // 1. Ingresos: lo que el cliente ha pagado de verdad (equivale a gastos.ingresos)
+    totalIngresos += getTotalIngresosDeObra(obra.id);
 
-    totalIngresos += valorIngreso;
+    // 2. Gastos: proveedores + especialistas + mano de obra (equivale a gastos.gastos)
+    const costeProveedores = partesProveedor
+      .filter((p) => p.obra_id === obra.id)
+      .reduce((suma, p) => suma + limpiarNumero(p.importe), 0);
+    const costeEspecialistas = partesEspecialista
+      .filter((p) => p.obra_id === obra.id)
+      .reduce((suma, p) => suma + limpiarNumero(p.importe), 0);
+    totalGastos += costeProveedores + costeEspecialistas + getObraCosteMoo(obra);
   });
 
-  // 2. Total de gastos: Partes de Proveedor + Partes de Especialista. El coste
-  //    de mano de obra no se incluye aquí (solo se ve, obra a obra, en la
-  //    ficha de Gastos de cada una: informe §3.7).
-  const totalGastos =
-    partesProveedor.reduce((suma, parte) => suma + limpiarNumero(parte.importe), 0) +
-    partesEspecialista.reduce((suma, parte) => suma + limpiarNumero(parte.importe), 0);
-
-  // 3. Cálculos de margen y utilidad
+  // 3. Beneficio de caja y margen sobre lo cobrado
   const beneficioNeto = totalIngresos - totalGastos;
   const margenBeneficio =
     totalIngresos > 0
@@ -81,10 +87,13 @@ export function obtenerDatosPorObra() {
       .filter((p) => p.obra_id === obra.id)
       .reduce((suma, p) => suma + limpiarNumero(p.importe), 0);
 
+    // Mismos gastos que la ficha de Gastos: proveedores + especialistas + mano de obra
+    const costeMoo = getObraCosteMoo(obra);
+
     return {
       name: obra.id || 'Sin ID',
       nombreCompleto: obra.descripcion || 'Sin nombre',
-      Gastos: Math.round((gastosProveedor + gastosEspecialista) * 100) / 100,
+      Gastos: Math.round((gastosProveedor + gastosEspecialista + costeMoo) * 100) / 100,
     };
   });
 }
@@ -99,16 +108,22 @@ export interface DatosTendenciaMensual {
 export function obtenerTendenciaMensualGastos(): DatosTendenciaMensual[] {
   const partesProveedor: ParteProveedor[] = parteProveedorService.getAll() || [];
   const partesEspecialista: ParteEspecialista[] = parteEspecialistaService.getAll() || [];
+  const partesTrabajo: ParteTrabajo[] = parteTrabajoService.getAll() || [];
 
   const agrupadoPorMes: { [key: number]: number } = {};
   for (let i = 0; i < 12; i++) agrupadoPorMes[i] = 0;
 
-  [...partesProveedor, ...partesEspecialista].forEach((p) => {
-    const fechaGasto = new Date(p.fecha);
+  const sumarAlMes = (fecha: string, importe: unknown) => {
+    const fechaGasto = new Date(fecha);
     if (!isNaN(fechaGasto.getTime())) {
-      agrupadoPorMes[fechaGasto.getMonth()] += limpiarNumero(p.importe);
+      agrupadoPorMes[fechaGasto.getMonth()] += limpiarNumero(importe);
     }
-  });
+  };
+
+  // Proveedores y especialistas, por la fecha de cada parte
+  [...partesProveedor, ...partesEspecialista].forEach((p) => sumarAlMes(p.fecha, p.importe));
+  // Mano de obra, por la fecha de cada parte de trabajo (coste ya congelado en sus líneas)
+  partesTrabajo.forEach((p) => sumarAlMes(p.fecha, p.coste_total_parte));
 
   return MESES.map((mes, index) => ({
     mes,

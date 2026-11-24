@@ -1,90 +1,56 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 
-import { obraService } from '../../servicios/ObraService/ObraService';
+import { obraService, getObraTotal } from '../../servicios/ObraService/ObraService';
 import { gastoService } from '../../servicios/GastoService/GastoService';
-import { presupuestoService } from '../../servicios/PresupuestoService/PresupuestoService';
 import {
   obtenerTotalesFinancieros,
   obtenerDatosPorObra,
   obtenerTendenciaMensualGastos,
   obtenerMovimientosRecientes,
-  type MovimientoReciente,
 } from '../../servicios/DashboardAnalisis/DashboardAnalisis';
 
 import type { Obra } from '../../types/Obra/Obra';
 
 import TarjetasKPI from '../../componentes/Dashboard/TarjetasKpi/TarjetasKpi';
-import GraficoBarras, { type DatosGraficoObra } from '../../componentes/Dashboard/GraficoBarras/GraficoBarras';
+import GraficoBarras from '../../componentes/Dashboard/GraficoBarras/GraficoBarras';
 import GraficoPastelEstados, { type DatosPastelEstado } from '../../componentes/Dashboard/GraficoPastelEstado/GraficoPastelEstado';
-import GraficoLineaGastos, { type DatosTendencia } from '../../componentes/Dashboard/GraficoLineaGastos/GraficoLineaGastos';
+import GraficoLineaGastos from '../../componentes/Dashboard/GraficoLineaGastos/GraficoLineaGastos';
 
-/**
- * Función auxiliar para limpiar y formatear números en JS
- */
-function limpiarNumero(valor: any): number {
-  if (valor === null || valor === undefined) return 0;
-  if (typeof valor === 'number') return isNaN(valor) ? 0 : valor;
-
-  if (typeof valor === 'string') {
-    const textoLimpio = valor
-      .replace(/[^\d,-.]/g, '')
-      .replace(/\./g, '')
-      .replace(',', '.');
-
-    const num = parseFloat(textoLimpio);
-    return isNaN(num) ? 0 : num;
-  }
-
-  return 0;
-}
+const SALUDES_POSIBLES: Array<'verde' | 'ambar' | 'rojo'> = ['verde', 'ambar', 'rojo'];
 
 export default function PaginaDashboard() {
-  const [datosBarras, setDatosBarras] = useState<DatosGraficoObra[]>([]);
-  const [datosPastel, setDatosPastel] = useState<DatosPastelEstado[]>([]);
-  const [datosTendencia, setDatosTendencia] = useState<DatosTendencia[]>([]);
-  
-  const [totalesFinancieros, setTotalesFinancieros] = useState({
-    totalIngresos: 0,
-    totalGastos: 0,
-    beneficioNeto: 0,
-    margenBeneficio: 0,
-  });
-
-  const [obras, setObras] = useState<Obra[]>([]);
-  const [presupuestos, setPresupuestos] = useState<any[]>([]);
-  const [ultimosGastos, setUltimosGastos] = useState<MovimientoReciente[]>([]);
-
-  useEffect(() => {
-    // 1. Cargar colecciones de datos
+  // Los datos se leen de localStorage de forma síncrona y no cambian mientras
+  // el dashboard está abierto, así que se calculan una sola vez al montar
+  // (sin useState + useEffect, que provocaba un segundo render innecesario).
+  const {
+    obras,
+    totalesFinancieros,
+    datosBarras,
+    datosPastel,
+    datosTendencia,
+    ultimosGastos,
+  } = useMemo(() => {
     const todasLasObras: Obra[] = obraService.getAll() || [];
-    const todosLosPresupuestos = presupuestoService.getAll() || [];
 
-    setObras(todasLasObras);
-    setPresupuestos(todosLosPresupuestos);
-
-    // 2. Totales financieros e indicadores KPI
-    const totales = obtenerTotalesFinancieros();
-    setTotalesFinancieros(totales);
-
-    // 3. Gastos acumulados por Obra (Gráfico de Barras con ID corto):
-    //    Partes de Proveedor + Partes de Especialista de cada obra.
-    setDatosBarras(obtenerDatosPorObra());
-
-    // 4. Distribución por Salud de la Obra (Gráfico de Pastel): equivalente a
-    //    salud_obra (verde/ámbar/rojo), no a un estado manual (no existe en Odoo).
-    const saludesPosibles: Array<'verde' | 'ambar' | 'rojo'> = ['verde', 'ambar', 'rojo'];
-    const conteoSalud: DatosPastelEstado[] = saludesPosibles.map(salud => ({
+    // Distribución por Salud de la Obra (Gráfico de Pastel): equivalente a
+    // salud_obra (verde/ámbar/rojo), no a un estado manual (no existe en Odoo).
+    const conteoSalud: DatosPastelEstado[] = SALUDES_POSIBLES.map(salud => ({
       name: salud,
       value: todasLasObras.filter(o => gastoService.getSaludObra(o) === salud).length
     })).filter(item => item.value > 0);
-    setDatosPastel(conteoSalud);
 
-    // 5. Tendencia Temporal Mensual de Gastos
-    setDatosTendencia(obtenerTendenciaMensualGastos());
-
-    // 6. Últimos movimientos (Partes de Proveedor + Partes de Especialista)
-    setUltimosGastos(obtenerMovimientosRecientes().slice(0, 4));
-
+    return {
+      obras: todasLasObras,
+      // KPIs: suma de las fichas de Gastos de todas las obras
+      totalesFinancieros: obtenerTotalesFinancieros(),
+      // Gastos acumulados por obra: proveedores + especialistas + mano de obra
+      datosBarras: obtenerDatosPorObra(),
+      datosPastel: conteoSalud,
+      // Tendencia mensual de gastos
+      datosTendencia: obtenerTendenciaMensualGastos(),
+      // Últimos movimientos (Partes de Proveedor + Partes de Especialista)
+      ultimosGastos: obtenerMovimientosRecientes().slice(0, 4),
+    };
   }, []);
 
   const getBadgeColor = (salud: 'verde' | 'ambar' | 'rojo') => {
@@ -164,10 +130,8 @@ export default function PaginaDashboard() {
               <p className="text-sm text-slate-500 py-4 text-center">No hay obras dadas de alta.</p>
             ) : (
               obras.map((obra: Obra) => {
-                // Presupuestos aprobados vinculados a esta obra (Presupuesto.obra_id -> Obra)
-                const importeObra = presupuestos
-                  .filter((p: any) => p.obra_id === obra.id && p.estado === 'aprobado')
-                  .reduce((suma: number, p: any) => suma + limpiarNumero(p.total), 0);
+                // Total de la obra: suma de sus presupuestos aprobados
+                const importeObra = getObraTotal(obra);
                 const salud = gastoService.getSaludObra(obra);
 
                 return (

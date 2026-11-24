@@ -111,15 +111,15 @@ Presupuestos, Partes de Trabajo y el informe de seguimiento financiero de Gastos
 
 El sistema cuenta con un panel analítico centralizado que procesa los flujos de caja y estados de salud del negocio:
 
-* **Tarjetas de Métricas (KPIs):** Visualización rápida de los principales indicadores del negocio (Total de Ingresos, Gastos Acumulados, Margen de Beneficio y Presupuestos Pendientes).
-* **Balance de Pérdidas y Ganancias:** Cálculo reactivo del beneficio neto de la empresa aplicando la fórmula:
-    $$Beneficio = \sum Ingresos - \sum Gastos$$
-* **Alertas de Desviación Presupuestaria:** Monitorización en tiempo real del presupuesto asignado a las obras frente a los gastos reales imputados mediante partes y facturas, detectando sobrecostes de forma temprana.
-* **Control de Flujo de Caja (Cash Flow):** Segmentación del dinero real cobrado/pagado frente al dinero comprometido (facturas en estado *pendiente*).
-* **Gráficos Interactivos y Visualización Avanzada:**
-  * **Gráfico de Barras (`GraficoBarras`):** Comparativa de ingresos y costes imputados por cada obra en ejecución.
-  * **Gráfico de Línea (`GraficoLineaGastos`):** Evolución temporal del volumen de gastos e inversiones a lo largo del tiempo.
-  * **Gráfico de Pastel (`GraficoPastelEstado`):** Distribución porcentual del estado de las obras y presupuestos del sistema.
+* **Tarjetas de Métricas (KPIs):** Total de Ingresos, Total de Gastos, Resultado Neto y Margen de Beneficio de toda la cartera. Son la suma, obra a obra, de lo que muestra la ficha de Gastos de cada una, así que el dashboard y las fichas siempre dan las mismas cifras.
+* **Beneficio de caja, no proyectado:** los ingresos son los cobros realmente registrados (no los presupuestos aprobados) y los gastos incluyen partes de proveedor, partes de especialista y mano de obra propia:
+    $$Beneficio = \sum Cobros - (\sum Proveedores + \sum Especialistas + \sum Mano\ de\ obra)$$
+    $$Margen = Beneficio / \sum Cobros$$
+* **Gráficos Interactivos:**
+  * **Gráfico de Barras (`GraficoBarras`):** Costes acumulados por obra (proveedores + especialistas + mano de obra).
+  * **Gráfico de Línea (`GraficoLineaGastos`):** Gastos agrupados por mes según la fecha de cada parte, incluida la mano de obra.
+  * **Gráfico de Pastel (`GraficoPastelEstado`):** Distribución de las obras por salud financiera (verde: cobrada del todo; ámbar: en curso sin pérdidas; rojo: beneficio negativo).
+* **Listados de detalle:** últimas transacciones (partes de proveedor y especialista) y desglose de cada obra con su importe aprobado y su salud.
 
 ---
 
@@ -197,7 +197,7 @@ src/
 │   ├── VistaDinamica/    # Renderizador dinámico de componentes por string-key
 │   │
 │   ├── Dashboard/        # Ecosistema analítico centralizado del Dashboard
-│   │   ├── GraficoBarras/          # Comparativa de Ingresos vs. Gastos por Obra
+│   │   ├── GraficoBarras/          # Costes acumulados por obra
 │   │   ├── GraficoLineaGastos/     # Evolución temporal y tendencia de costes
 │   │   ├── GraficoPastelEstado/    # Distribución porcentual por estados de obras
 │   │   ├── TarjetasKpi/            # Indicadores financieros de alto nivel (KPIs)
