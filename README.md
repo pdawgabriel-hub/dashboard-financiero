@@ -1,260 +1,245 @@
-<a id="inicio"></a>
+<a id="top"></a>
+# ERP Construcción
 
-# ERP Construcción - Sistema de Gestión Modular
+**Español** | [English](./README.en.md)
 
-Un sistema ERP moderno, fluido y totalmente responsivo para la gestión integral de una constructora: clientes, obras, presupuestos, partes de trabajo, proveedores, especialistas, gastos, ingresos y calendario, con análisis financiero en tiempo real. Desarrollado con **React**, **TypeScript** y **Tailwind CSS**.
+### ERP para constructoras hecho solo con frontend: obras, presupuestos, partes, cobros y seguimiento financiero, con dashboard, calendario y PDF
 
-El modelo de negocio, con sus 13 entidades (Clientes, Obras, Presupuestos, Partes de trabajo...), está basado en un desarrollo real hecho a medida para un cliente sobre **Odoo**, adaptando aquí su lógica y su ciclo de negocio completo a una versión 100% frontend, portable y de acceso público — incluyendo vistas de tarjetas/lista, registros relacionados, calendario tipo Google Calendar, autocompletado en los selectores de relación y exportación a PDF de los documentos principales.
+[![CI](https://github.com/pdawgabriel-hub/dashboard-financiero/actions/workflows/ci.yml/badge.svg)](https://github.com/pdawgabriel-hub/dashboard-financiero/actions/workflows/ci.yml)
+[![Guía técnica](https://github.com/pdawgabriel-hub/dashboard-financiero/actions/workflows/docs.yml/badge.svg)](https://pdawgabriel-hub.github.io/dashboard-financiero/)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-desplegado-000000?logo=vercel&logoColor=white)
+![Licencia](https://img.shields.io/badge/Licencia-Portfolio%20%2F%20Uso%20restringido-red)
+![Estado](https://img.shields.io/badge/Estado-Demo%20p%C3%BAblica-brightgreen)
 
-Este proyecto está enfocado puramente en el **Desarrollo Frontend**, demostrando buenas prácticas de renderizado rápido, interfaces reactivas y un control de estado riguroso. Para facilitar su portabilidad y testeo ágil, **la aplicación prescinde de una base de datos física o un backend tradicional**; toda la persistencia de datos se gestiona localmente en el navegador a través de **localStorage** (con control de versión para evitar datos obsoletos), apoyándose en un ecosistema de **datos simulados (mocks)** preestablecidos para una experiencia de usuario fluida desde el primer segundo.
+**[Abrir la demo](https://dashboard-financiero-kappa-blue.vercel.app/)** · **[Guía técnica](https://pdawgabriel-hub.github.io/dashboard-financiero/)**
 
-**[Ver demo en vivo](https://dashboard-financiero-kappa-blue.vercel.app/)**
-
-## Capturas
-[⬆ Volver arriba](#inicio)
-
-<table>
-  <tr>
-    <td align="center"><b>Dashboard financiero</b></td>
-    <td align="center"><b>Gestión CRUD (vista de tarjetas)</b></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/dashboard.png" width="420"/></td>
-    <td><img src="docs/screenshots/crud.png" width="420"/></td>
-  </tr>
-  <tr>
-    <td align="center"><b>Calendario mensual</b></td>
-    <td align="center"><b>Exportación a PDF</b></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/calendario.png" width="420"/></td>
-    <td><img src="docs/screenshots/imprimir.png" width="420"/></td>
-  </tr>
-</table>
-
-<details>
-<summary>Formulario</summary>
-
-<img src="docs/screenshots/formulario.png" width="420"/>
-
-</details>
+---
 
 ## Índice
 
-*   [Capturas](#capturas)
-*   [Características Clave](#características-clave)
-*   [Modelo de Datos](#modelo-de-datos)
-*   [Exportación a PDF](#exportación-a-pdf)
-*   [Módulo de Análisis Financiero (Dashboard)](#módulo-de-análisis-financiero-dashboard)
-*   [Sistema de Notificaciones (useToast)](#sistema-de-notificaciones-usetoast)
-*   [Optimización y Buenas Prácticas](#optimización-y-buenas-prácticas)
-*   [Stack Tecnológico](#stack-tecnológico)
-*   [Estructura del Proyecto](#estructura-del-proyecto)
-*   [Despliegue en Producción (Vercel)](#despliegue-en-producción-vercel)
-*   [Licencia](#licencia)
+- [Descripción general](#descripcion-general)
+- [Arquitectura](#arquitectura)
+- [Características principales](#caracteristicas)
+  - [1. Ciclo de negocio](#ciclo-negocio)
+  - [2. Análisis financiero](#analisis-financiero)
+  - [3. Calendario e informes](#calendario-informes)
+  - [4. Experiencia de uso](#experiencia)
+- [Reglas de negocio](#reglas-negocio)
+- [Capturas de pantalla](#capturas)
+- [Puesta en marcha](#puesta-en-marcha)
+- [Calidad](#calidad)
+- [Documentación técnica](#documentacion-tecnica)
+- [Licencia](#licencia)
+- [Autor](#autor)
 
 ---
 
-## Características Clave
+<a id="descripcion-general"></a>
+## Descripción general
 
-*   **Diseño 100% Responsivo:** Interfaz adaptada dinámicamente para móviles, tablets y ordenadores mediante layouts híbridos y menús deslizantes horizontales (`overflow-x-auto`) en Tailwind.
-*   **Filtrado Avanzado:** Componente de consulta global (`GridConsulta`) con buscador predictivo por texto y selectores normalizados por estados del ciclo de vida del negocio.
-*   **Formularios Dinámicos:** Arquitectura basada en React Hook Form y validación estricta de esquemas en tiempo real con Zod.
-*   **Automatización de Cálculos:** Sistema integrado y reactivo para el cálculo automático de importes netos, porcentajes de IVA y totales consolidados de gastos e ingresos.
-*   **Gestión de Datos Relacionales:** Cruce automático de IDs (Clientes, Obras, Presupuestos) en la capa de presentación para mostrar información legible en lugar de códigos técnicos.
-*   **Vistas Intercambiables (Tarjetas/Lista):** Alternancia entre una vista de tarjetas estilo Odoo y una tabla de lista clásica en todos los listados, con tarjetas totalmente clicables para entrar directamente a la ficha sin pasar por un botón de "editar".
-*   **Registros Relacionados:** Cada ficha (Cliente, Obra, Trabajador...) muestra automáticamente sus elementos asociados (presupuestos, partes, gastos...) a modo de "smart buttons", replicando el comportamiento de un ERP como Odoo.
-*   **Calendario Mensual:** Vista de calendario tipo Google Calendar, con panel de detalle por día, accesible como pestaña propia en la navegación superior.
-*   **Autocompletado en Relaciones:** Los selectores de relación (cliente, obra, trabajador...) usan un combobox buscable en lugar de un `<select>` nativo, para localizar registros con rapidez en catálogos grandes.
-*   **Exportación a PDF:** Generación de documentos imprimibles (Presupuesto, Parte de Trabajo, Seguimiento de Gastos) con maquetación propia, ver [Exportación a PDF](#exportación-a-pdf).
+**ERP Construcción** digitaliza la gestión de una empresa de construcción y reformas: clientes, presupuestos, obras, mano de obra propia, proveedores y especialistas externos, cobros y el seguimiento financiero de cada obra. Responde a las preguntas que se hace cada día quien dirige una obra:
 
----
+- ¿Cuánto vale esta obra, según los presupuestos que el cliente ha aprobado?
+- ¿Cuánto llevamos gastado en mano de obra, materiales y subcontratas?
+- ¿Cuánto nos ha pagado el cliente y cuánto nos debe todavía?
+- ¿Estamos ganando o perdiendo dinero, de verdad, con lo cobrado?
+- ¿Qué pasó cada día: qué presupuestos, cobros y partes hay en el calendario?
 
-## Modelo de Datos
-[⬆ Volver arriba](#inicio)
+El modelo de negocio, con sus 12 entidades y sus reglas financieras, sale de un **ERP real que desarrollé a medida sobre Odoo** para una empresa del sector y que está en producción. Como ese proyecto tiene datos reales de clientes, esta versión reproduce su ciclo de negocio completo en una aplicación **solo de frontend**, con datos ficticios, que cualquiera puede abrir y usar entera.
 
-La aplicación cubre el ciclo de negocio completo de una constructora, replicando en el frontend el modelo de datos de un ERP real:
+### Cómo está construido
 
-| Modelo | Descripción |
-| --- | --- |
-| **Clientes** | Datos de contacto y fiscales de clientes/promotores. |
-| **Trabajadores** | Plantilla interna de la empresa. |
-| **Proveedores** | Proveedores de materiales y servicios. |
-| **Especialistas** | Profesionales externos subcontratados (arquitectos, electricistas...). |
-| **Obras** | Proyectos de construcción, con estado y salud financiera calculados. |
-| **Presupuestos** | Líneas de presupuesto por obra, con IVA y totales calculados. |
-| **Gastos** | Ficha de seguimiento financiero 1:1 por obra (costes, ingresos, beneficio real). |
-| **Ingresos** | Cobros asociados a cada obra. |
-| **Partes de Trabajo** | Horas imputadas por los trabajadores a cada obra. |
-| **Partes de Especialista** | Horas/servicios imputados por especialistas externos. |
-| **Partes de Proveedor** | Suministros/servicios imputados por proveedores. |
-| **Faltas de Trabajador** | Registro de ausencias del personal. |
-| **Calendario de Eventos** | Eventos y citas asociados a las obras. |
+- **Sin backend.** Todo ocurre en el navegador: los datos se guardan en `localStorage` y se siembran con 10 registros de ejemplo por entidad, relacionados entre sí. Cada visitante tiene sus propios datos, y una guarda de versión los resiembra si cambia su forma.
+- **Servicios con las reglas de negocio** (`src/servicios/`). Un CRUD genérico por entidad y, encima, las funciones que calculan el total de la obra, el beneficio, el pendiente de cobro o la salud. Se calculan al leer y nunca se guardan, así que no hay nada que mantener sincronizado.
+- **Formularios validados** con React Hook Form y Zod, y **pantallas reutilizables**: una rejilla de consulta común, un formulario genérico y fichas con sus registros relacionados.
 
-Los campos calculados (`estado`, `salud_obra`, `beneficio_real`...) se derivan en tiempo de lectura a partir de los datos base y nunca se persisten directamente, evitando desincronizaciones en `localStorage`.
+El proyecto es una pieza de **portfolio de frontend**: arquitectura por capas en React y TypeScript, formularios complejos con líneas dinámicas, lógica de negocio real separada de la interfaz y un producto completo para un caso de uso real.
+
+[Volver arriba](#top)
 
 ---
 
-## Exportación a PDF
-[⬆ Volver arriba](#inicio)
+<a id="arquitectura"></a>
+## Arquitectura
 
-Presupuestos, Partes de Trabajo y el informe de seguimiento financiero de Gastos incluyen un botón **"Imprimir"** que abre un documento dedicado en una pestaña nueva, maquetado como un informe de impresión (cabecera, líneas, totales) e independiente del tema oscuro de la aplicación.
+![Esquema de la arquitectura: los datos de ejemplo de src/mocks siembran localStorage en la primera visita; en el navegador, las páginas usan formularios y componentes, que leen y escriben a través de los servicios; los servicios guardan en localStorage y calculan las reglas de negocio al leer. Vercel sirve la app desde el repositorio y GitHub Actions publica la guía técnica en GitHub Pages.](docs/img/arquitectura.svg)
 
-* Rutas bajo `/imprimir/*`, renderizadas fuera del layout habitual (sin menú ni barra lateral).
-* Exportación a PDF real a través del diálogo nativo `window.print()` del navegador ("Guardar como PDF"), sin dependencias adicionales.
-* `@page { margin: 0 }` en modo impresión para evitar que el navegador añada su propia cabecera/pie (URL, fecha, número de página) al documento.
+Detalle de cada capa, del flujo de una lectura y una escritura y de por qué no hay backend: [guía técnica, Arquitectura](https://pdawgabriel-hub.github.io/dashboard-financiero/arquitectura/).
 
----
-
-## Módulo de Análisis Financiero (Dashboard)
-[⬆ Volver arriba](#inicio)
-
-El sistema cuenta con un panel analítico centralizado que procesa los flujos de caja y estados de salud del negocio:
-
-* **Tarjetas de Métricas (KPIs):** Total de Ingresos, Total de Gastos, Resultado Neto y Margen de Beneficio de toda la cartera. Son la suma, obra a obra, de lo que muestra la ficha de Gastos de cada una, así que el dashboard y las fichas siempre dan las mismas cifras.
-* **Beneficio de caja, no proyectado:** los ingresos son los cobros realmente registrados (no los presupuestos aprobados) y los gastos incluyen partes de proveedor, partes de especialista y mano de obra propia:
-    $$Beneficio = \sum Cobros - (\sum Proveedores + \sum Especialistas + \sum Mano\ de\ obra)$$
-    $$Margen = Beneficio / \sum Cobros$$
-* **Gráficos Interactivos:**
-  * **Gráfico de Barras (`GraficoBarras`):** Costes acumulados por obra (proveedores + especialistas + mano de obra).
-  * **Gráfico de Línea (`GraficoLineaGastos`):** Gastos agrupados por mes según la fecha de cada parte, incluida la mano de obra.
-  * **Gráfico de Pastel (`GraficoPastelEstado`):** Distribución de las obras por salud financiera (verde: cobrada del todo; ámbar: en curso sin pérdidas; rojo: beneficio negativo).
-* **Listados de detalle:** últimas transacciones (partes de proveedor y especialista) y desglose de cada obra con su importe aprobado y su salud.
+[Volver arriba](#top)
 
 ---
 
-## Sistema de Notificaciones (useToast)
-[⬆ Volver arriba](#inicio)
+<a id="caracteristicas"></a>
+## Características principales
 
-Para mantener una experiencia de usuario fluida y reactiva, el proyecto integra un **Contexto de Notificaciones Personalizado manejado a través del hook `useToast`**. Este ecosistema permite lanzar alertas visuales temporales y flotantes desde cualquier componente o página de forma muy sencilla.
+La navegación sigue el ciclo de negocio: **Inicio**, **Análisis Financiero**, **Calendario**, **Consultar Datos** (12 listados con su ficha) e **Introducir Datos** (11 formularios de alta).
 
-### Cómo usarlo en tus vistas o componentes:
+<a id="ciclo-negocio"></a>
+### 1. Ciclo de negocio
 
-1. **Importar el hook personalizado** `useToast` en el archivo donde lo necesites.
-2. **Extraer la función** `mostrarToast`.
-3. **Invocar la función** pasándole el mensaje de texto deseado tras realizar acciones como crear, editar o eliminar registros.
+| Módulo | Descripción |
+|---|---|
+| **Clientes** | Datos de contacto y fiscales. Su ficha muestra sus presupuestos, obras e ingresos. |
+| **Presupuestos** | Líneas de reforma (unidades × precio) con IVA. Copian los datos del cliente al crearse y solo cuentan para la obra si están aprobados. |
+| **Obras** | Proyecto para un cliente. Su precio, horas, estado de pago y salud financiera se calculan solos. |
+| **Partes de Trabajo** | Una tarea de un día, con una línea por trabajador: horas × su tarifa, que se copia al elegirlo y no cambia aunque la tarifa suba después. |
+| **Partes de Proveedor y de Especialista** | Cada factura o servicio externo imputado a una obra. |
+| **Ingresos** | Cada cobro del cliente, siempre ligado a una obra. |
+| **Gastos** | Ficha 1:1 de cada obra que junta costes, cobros, beneficio y pendiente de cobro. No se da de alta a mano: nace con su obra. |
+| **Trabajadores, Proveedores, Especialistas** | Catálogos con su tarifa o importe de referencia. Cada ficha muestra sus partes (y, la del trabajador, sus faltas). |
+| **Faltas de Trabajador** | Vacaciones, bajas y ausencias, con los días calculados. |
 
-### Ejemplo práctico de implementación:
+<a id="analisis-financiero"></a>
+### 2. Análisis financiero
 
-```tsx
-import { useToast } from "../../../contextos/ToastContext/ToastContext";
+| Bloque | Descripción |
+|---|---|
+| **KPIs** | Ingresos, gastos, resultado neto y margen de toda la cartera: la suma de las fichas de Gastos de todas las obras, así que el dashboard y las fichas siempre coinciden. |
+| **Costes por obra** | Gasto total de cada obra: proveedores, especialistas y mano de obra. |
+| **Salud de la cartera** | Cuántas obras están en verde (cobradas), ámbar (en curso, sin pérdidas) y rojo (con pérdidas). |
+| **Flujo temporal** | Gastos por mes, según la fecha de cada parte. |
+| **Detalle** | Últimas transacciones y desglose de cada obra con su total y su salud. |
 
-export default function MiComponente() {
-  // 1. Instanciamos el hook que consume el contexto de notificaciones
-  const { mostrarToast } = useToast();
+<a id="calendario-informes"></a>
+### 3. Calendario e informes
 
-  const handleAccion = () => {
-    // ... lógica del negocio (ej. guardar datos) ...
+| Módulo | Descripción |
+|---|---|
+| **Calendario** | Vista mensual de presupuestos, cobros y los tres tipos de parte, con un color por tipo y un panel con el detalle de cada día. También en lista, con buscador y filtro. |
+| **Documentos PDF** | Presupuesto, Parte de Trabajo y Seguimiento de Gastos, maquetados como documentos y exportables a PDF desde el navegador, sin librerías. |
 
-    // 2. Lanzamos la notificación visual flotante
-    mostrarToast("¡Operación completada con éxito!");
-  };
+<a id="experiencia"></a>
+### 4. Experiencia de uso
 
-  return (
-    <button onClick={handleAccion} className="bg-emerald-600 text-white p-2 rounded">
-      Guardar Registro
-    </button>
-  );
-}
+- **Vista de tarjetas o de lista** en todos los listados, con buscador y filtro por estado; toda la tarjeta lleva a la ficha.
+- **Registros relacionados** en las fichas, al estilo de un ERP: los presupuestos, obras e ingresos de un cliente, los partes de una obra o de un trabajador…
+- **Selectores con búsqueda**: se encuentra un cliente, una obra o un trabajador escribiendo su nombre, NIF o descripción, no solo su código.
+- **Validación en el momento**, con el mensaje junto al campo, y **avisos** tras guardar o borrar.
+- **Diseño adaptable** a móvil, tablet y ordenador.
+
+[Volver arriba](#top)
+
+---
+
+<a id="reglas-negocio"></a>
+## Reglas de negocio
+
+Las cifras salen de unas pocas reglas, heredadas del ERP original, que se aplican igual en el listado, la ficha, el dashboard y el PDF:
+
+```
+total de la obra    = Σ presupuestos aprobados de la obra
+gastos              = partes de proveedor + partes de especialista + mano de obra (horas × tarifa congelada)
+beneficio real      = cobrado − gastos              ← caja, nunca presupuesto − gastos
+pendiente de cobro  = total de la obra − cobrado
+salud               = rojo si hay pérdidas · verde si está cobrada · ámbar en otro caso
 ```
 
----
+La más importante es la del beneficio: en el ERP original se calculaba con lo presupuestado y daba beneficios que todavía no existían. Todas las fórmulas, las validaciones y los casos límite: [guía técnica, Reglas de negocio](https://pdawgabriel-hub.github.io/dashboard-financiero/reglas-negocio/).
 
-## Optimización y Buenas Prácticas
-[⬆ Volver arriba](#inicio)
-
-*   **Evitamos Rerenders Innecesarios:** Uso intensivo de `useMemo` en los componentes de filtrado (`GridConsulta`) para procesar las búsquedas y cruces de datos relacionales únicamente cuando el array de elementos o el término de búsqueda cambian.
-*   **Filtros:** Normalización automática de strings (`.toLowerCase().trim()`) en las búsquedas, haciendo que los filtros por estado sean inmunes a discrepancias entre mayúsculas, minúsculas o espacios accidentales de la base de datos.
-*   **Tipado Estricto de Extremo a Extremo:** Cero uso de `any`. Toda la información (desde las entidades del negocio hasta las props del generador de formularios genéricos) está respaldada por tipos rigurosos de TypeScript.
-*   **Persistencia Versionada:** Un guard de versión sobre `localStorage` (`CrudService`) limpia automáticamente los datos obsoletos de usuarios recurrentes cuando cambia la forma de los modelos, evitando estados inconsistentes entre sesiones.
+[Volver arriba](#top)
 
 ---
 
-## Stack Tecnológico
-[⬆ Volver arriba](#inicio)
+<a id="capturas"></a>
+## Capturas de pantalla
 
-*   **Frontend:** React 19 (Hooks + `useMemo` + `useEffect`)
-*   **Lenguaje:** TypeScript (Tipado estricto)
-*   **Enrutamiento:** React Router DOM (Manejo dinámico de parámetros de sección)
-*   **Formularios & Validación:** React Hook Form + Zod + Resolvers
-*   **Gráficos:** Recharts (barras, líneas y pastel)
-*   **Iconografía:** lucide-react
-*   **Estilos:** Tailwind CSS (Diseño Mobile-First adaptativo)
+| Dashboard financiero |
+|---|
+| ![Dashboard financiero](docs/img/capturas/dashboard.png) |
+
+| Listado de obras (vista de tarjetas) | Formulario |
+|---|---|
+| ![Listado de obras en vista de tarjetas](docs/img/capturas/crud.png) | ![Formulario de alta](docs/img/capturas/formulario.png) |
+
+| Calendario mensual | Documento imprimible (PDF) |
+|---|---|
+| ![Calendario mensual](docs/img/capturas/calendario.png) | ![Documento imprimible](docs/img/capturas/imprimir.png) |
+
+[Volver arriba](#top)
 
 ---
 
-## Estructura del Proyecto
-[⬆ Volver arriba](#inicio)
+<a id="puesta-en-marcha"></a>
+## Puesta en marcha
 
-El sistema se organiza bajo una arquitectura limpia y altamente modular basada en carpetas funcionales, separando de forma estricta la interfaz, la lógica de negocio y las páginas dinámicas.
+Necesitas **Node.js 24** y **pnpm**:
 
-```text
-src/
-├── componentes/          # Componentes atómicos e independientes de la UI
-│   ├── Aside/            # Menú de navegación lateral (adaptable a móvil)
-│   ├── Main/             # Contenedor principal de vistas y enrutador (incluye RutasImprimir)
-│   ├── Menu/             # Barra de navegación superior con scroll móvil
-│   ├── VistaDinamica/    # Renderizador dinámico de componentes por string-key
-│   │
-│   ├── Dashboard/        # Ecosistema analítico centralizado del Dashboard
-│   │   ├── GraficoBarras/          # Costes acumulados por obra
-│   │   ├── GraficoLineaGastos/     # Evolución temporal y tendencia de costes
-│   │   ├── GraficoPastelEstado/    # Distribución porcentual por estados de obras
-│   │   ├── TarjetasKpi/            # Indicadores financieros de alto nivel (KPIs)
-│   │   └── UltimosMovimientos/     # Registro contable y transacciones recientes
-│   │
-│   ├── Calendario/       # Vista de calendario mensual tipo Google Calendar
-│   │   └── CalendarioMes/
-│   │
-│   ├── Imprimir/         # Componentes compartidos de las páginas de impresión/PDF
-│   │   ├── BarraAccionesImprimir/  # Barra "Volver / Imprimir"
-│   │   └── DocumentoImprimible/    # "Papel" reutilizable de los informes
-│   │
-│   └── Crud/             # Sub-ecosistema para operaciones CRUD globales
-│       ├── BuscadorId/            # Barra de búsqueda predictiva de texto
-│       ├── ComboboxBuscable/      # Selector buscable para relaciones (many2one)
-│       ├── GridConsulta/          # Layout de rejilla con filtro por estado y vista tarjetas/lista
-│       ├── TablaDatos/            # Vista de lista/tabla clásica de un listado
-│       ├── TarjetaDato/           # Tarjetas individuales, totalmente clicables
-│       ├── ListaRelacionados/     # Registros relacionados de una ficha (estilo "smart button")
-│       ├── FormularioCRUD/        # Generador de formularios reactivos con React Hook Form
-│       ├── FormularioPresupuesto/ # Formulario con líneas dinámicas (useFieldArray)
-│       ├── FormularioParteTrabajo/# Formulario con líneas dinámicas (useFieldArray)
-│       ├── LineasPresupuesto/     # Editor de líneas de un presupuesto
-│       ├── LineasParteTrabajo/    # Editor de líneas de un parte de trabajo
-│       └── ConfirmarEliminar/     # Modal de seguridad para borrado de registros
-│
-├── paginas/              # Capa de vistas completas de la aplicación
-│   ├── Home/             # Pantalla de bienvenida al ERP
-│   ├── PaginaDashboard/  # Panel financiero centralizado con analíticas
-│   ├── consultar/        # Listados y fichas de edición de los 13 modelos de negocio
-│   │   ├── PaginaClientes, PaginaObras, PaginaGastos, PaginaCalendario...
-│   │   └── PaginaEditarCliente, PaginaEditarObra... (Formularios de edición por ID)
-│   ├── introducir/       # Formularios dedicados de inserción
-│   │   └── PaginaFormClientes, PaginaFormObras, PaginaFormPresupuestos...
-│   └── imprimir/         # Documentos imprimibles/PDF (Presupuesto, Parte, Gasto)
-│
-├── contextos/            # Estados globales de React compartidos entre componentes, usado para el ToastContext (useToast)
-├── schemas/              # Esquemas y reglas de validación estricta creados con Zod
-├── servicios/            # Servicios de lógica de negocio y persistencia (uno por modelo + DashboardAnalisis)
-├── types/                # Interfaces y tipos de TypeScript de extremo a extremo
-├── mocks/                # Datos simulados y rutas de navegación (uno por modelo)
-├── App.tsx               # Orquestador de layouts e hilos de renderizado (detecta rutas de impresión)
-└── main.tsx              # Punto de entrada de la aplicación en el DOM
+```bash
+git clone https://github.com/pdawgabriel-hub/dashboard-financiero.git
+cd dashboard-financiero
+pnpm install
+pnpm dev          # http://localhost:5173
+pnpm build        # comprueba los tipos y genera la versión de producción
 ```
 
----
+No hace falta configurar nada: no hay variables de entorno, backend ni base de datos. La primera visita siembra los datos de ejemplo.
 
-## Despliegue en Producción (Vercel)
-[⬆ Volver arriba](#inicio)
+La app está desplegada en **[dashboard-financiero-kappa-blue.vercel.app](https://dashboard-financiero-kappa-blue.vercel.app/)**.
 
-Este proyecto está completamente optimizado y configurado para compilarse de forma automática al hacer un push a la rama principal.
-
-Ver despliegue [despliegue en Vercel](https://dashboard-financiero-kappa-blue.vercel.app/).
+[Volver arriba](#top)
 
 ---
 
+<a id="calidad"></a>
+## Calidad
+
+- **TypeScript estricto** de extremo a extremo, con un tipo por entidad y otro para crear, que no deja pasar el `id` ni los campos calculados.
+- **Validación con Zod** en todos los formularios antes de guardar.
+- **Una sola fuente para cada cálculo**: ninguna pantalla recalcula un importe por su cuenta.
+- **Integración continua con GitHub Actions**: en cada push se comprueban los tipos y se genera la versión de producción, igual que en Vercel. La insignia **CI** de arriba muestra el resultado del último commit.
+
+Lo que queda pendiente (lint del resto de pantallas y tests de las reglas de negocio) está en la [guía técnica, Calidad](https://pdawgabriel-hub.github.io/dashboard-financiero/calidad/).
+
+[Volver arriba](#top)
+
+---
+
+<a id="documentacion-tecnica"></a>
+## Documentación técnica
+
+Toda la documentación técnica está en la **[guía técnica](https://pdawgabriel-hub.github.io/dashboard-financiero/)**, publicada en GitHub Pages:
+
+| Página | Qué explica |
+|---|---|
+| [Arquitectura](https://pdawgabriel-hub.github.io/dashboard-financiero/arquitectura/) | Las capas de la app y por qué no hay backend |
+| [Modelo de datos](https://pdawgabriel-hub.github.io/dashboard-financiero/modelo-datos/) | Las entidades, sus relaciones y qué campos se calculan |
+| [Reglas de negocio](https://pdawgabriel-hub.github.io/dashboard-financiero/reglas-negocio/) | Las fórmulas financieras y las validaciones |
+| [Recorrido por el código](https://pdawgabriel-hub.github.io/dashboard-financiero/codigo/) | Los patrones que se repiten, con fragmentos reales |
+| [Dashboard, calendario e informes](https://pdawgabriel-hub.github.io/dashboard-financiero/dashboard/) | Qué calcula cada gráfico y cómo se imprime a PDF |
+| [Desarrollo local](https://pdawgabriel-hub.github.io/dashboard-financiero/desarrollo-local/) | Instalación, comandos y cómo reiniciar los datos |
+| [Calidad](https://pdawgabriel-hub.github.io/dashboard-financiero/calidad/) | Tipos, validación, lint e integración continua |
+| [Despliegue](https://pdawgabriel-hub.github.io/dashboard-financiero/despliegue/) | Vercel y la publicación de la guía |
+| [Origen y decisiones](https://pdawgabriel-hub.github.io/dashboard-financiero/decisiones/) | Del ERP en Odoo a esta versión: qué se conserva, qué cambia y qué falta |
+| [Dónde tocar para…](https://pdawgabriel-hub.github.io/dashboard-financiero/donde-tocar/) | Qué ficheros cambiar para los cambios más habituales |
+
+[Volver arriba](#top)
+
+---
+
+<a id="licencia"></a>
 ## Licencia
-[⬆ Volver arriba](#inicio)
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto se publica como **pieza de portfolio personal** y tiene una licencia de uso restringido. En detalle:
+
+- Puedes **ver, clonar y ejecutar** el código con fines de **aprendizaje, evaluación técnica o revisión de portfolio** (por ejemplo, como parte de un proceso de selección o para estudiar la arquitectura del proyecto).
+- Puedes **modificar el código para uso personal, no comercial**, siempre citando la autoría original.
+- **No está permitido el uso comercial** del proyecto, ni total ni parcial (incluyendo su despliegue como producto o servicio, su reventa o su integración en soluciones comerciales de terceros) sin autorización expresa del autor.
+- **El único titular con derecho a explotación comercial del proyecto es el autor original**, [Gabriel](https://github.com/pdawgabriel-hub).
+
+El texto legal completo se encuentra en [`LICENSE.md`](./LICENSE.md) (versión en inglés: [`LICENSE.en.md`](./LICENSE.en.md)).
+
+[Volver arriba](#top)
+
+---
+
+<a id="autor"></a>
+## Autor
+
+Desarrollado por **Gabriel Iborra Vicente** como proyecto de portfolio, con el objetivo de demostrar el desarrollo frontend de una aplicación de gestión completa: arquitectura por capas en React y TypeScript, formularios complejos, lógica de negocio real separada de la interfaz y un producto que replica un ERP en producción.
+
+[Volver arriba](#top)

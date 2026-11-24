@@ -1,0 +1,77 @@
+# Guía técnica de ERP Construcción: mkdocs serve (en local) · se publica en GitHub
+# Pages con .github/workflows/docs.yml. Las páginas están en docs/; las imágenes,
+# en docs/img/ (las mismas que usan los README).
+site_name: ERP Construcción · Guía técnica
+site_description: Cómo está construido ERP Construcción, un ERP para constructoras hecho solo con frontend (React, TypeScript y localStorage)
+site_author: Gabriel Iborra Vicente
+site_url: https://pdawgabriel-hub.github.io/dashboard-financiero/
+repo_url: https://github.com/pdawgabriel-hub/dashboard-financiero
+repo_name: pdawgabriel-hub/dashboard-financiero
+edit_uri: edit/main/docs/
+copyright: Gabriel Iborra Vicente · licencia de portfolio con uso comercial restringido
+
+theme:
+  name: material
+  language: es
+  icon:
+    logo: material/hammer-wrench
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: green
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Cambiar a modo oscuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: green
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Cambiar a modo claro
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+nav:
+  - Inicio: index.md
+  - Arquitectura: arquitectura.md
+  - Modelo de datos: modelo-datos.md
+  - Reglas de negocio: reglas-negocio.md
+  - Recorrido por el código: codigo.md
+  - Dashboard, calendario e informes: dashboard.md
+  - Desarrollo local: desarrollo-local.md
+  - Calidad: calidad.md
+  - Despliegue: despliegue.md
+  - Origen y decisiones: decisiones.md
+  - Dónde tocar para…: donde-tocar.md
+
+# Con --strict, un enlace a una página o a un anclaje que no existe hace fallar
+# la construcción (por defecto MkDocs solo informa de los anclajes rotos)
+validation:
+  links:
+    not_found: warn
+    anchors: warn
+    absolute_links: warn
+    unrecognized_links: warn
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
