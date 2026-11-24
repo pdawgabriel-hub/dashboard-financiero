@@ -14,15 +14,15 @@ La app es una **SPA sin backend**: todo, incluida la "base de datos", vive en el
 El proyecto es una pieza de portfolio de **frontend**: el objetivo es que cualquiera pueda abrir la demo y usarla entera (crear, editar, borrar, imprimir) sin cuentas, sin servidor que mantener y sin coste. `localStorage` da exactamente eso:
 
 - **Cada visitante tiene sus propios datos.** Lo que alguien cree o borre no lo ve nadie más, y no hay riesgo de que la demo acabe llena de basura.
-- **Arranca con datos.** La primera visita siembra 10 registros por entidad, relacionados entre sí, así que el dashboard y las fichas tienen contenido desde el primer segundo.
+- **Arranca con datos.** La primera visita siembra 10 registros por entidad, relacionados entre sí, así que el Análisis Financiero y las fichas tienen contenido desde el primer segundo.
 - **Despliegue estático.** Vercel solo sirve ficheros; no hay base de datos ni funciones.
 
-El precio es que los datos no se comparten entre navegadores y que no hay transacciones: dos escrituras relacionadas (por ejemplo, una obra y su ficha de gastos) no son atómicas. Para una demo es aceptable; en [Origen y decisiones](decisiones.md) está qué cambiaría al llevarlo a producción.
+El precio es que los datos no se comparten entre navegadores y que no hay transacciones: dos escrituras relacionadas (por ejemplo, una obra y su Seguimiento de Gastos) no son atómicas. Para una demo es aceptable; en [Origen y decisiones](decisiones.md) está qué cambiaría al llevarlo a producción.
 
 ## Flujo de una lectura y de una escritura {#flujo}
 
 ```
-Lectura (p. ej. la ficha de Gastos de una obra)
+Lectura (p. ej. el Seguimiento de Gastos de una obra)
   PaginaEditarGasto
     └─► gastoService.getBeneficioReal(gasto)
           ├─► getTotalIngresosDeObra(obra)      ─► ingresoService.getAll()        ─► localStorage['ingresos']

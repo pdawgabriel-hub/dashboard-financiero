@@ -9,7 +9,7 @@ const CAMPOS: CampoFormulario[] = [
     {nombre: 'nombre', etiqueta: 'Nombre', requerido: true},
     {nombre: 'apellido', etiqueta: 'Apellido', requerido: true},
     {nombre: 'telf', etiqueta: 'Teléfono', tipo: 'tel', requerido: false},
-    {nombre: 'coste_hora_estandar', etiqueta: 'Coste hora estandar', tipo: 'number', requerido: true},
+    {nombre: 'coste_hora_estandar', etiqueta: 'Coste/hora estándar (€)', tipo: 'number', requerido: true},
 ];
 
 export default function PaginaFormTrabajadores() {

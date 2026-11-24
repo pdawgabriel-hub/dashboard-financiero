@@ -2,7 +2,7 @@ import { crearCrudService } from "../CrudService/CrudService";
 import { PRESUPUESTOS_MOCK } from "../../mocks/presupuestosMock/presupuestosMock";
 import type { Presupuesto, PresupuestoInput, PresupuestoLinea, PresupuestoLineaInput } from "../../types/Presupuesto/Presupuesto";
 
-const crud = crearCrudService<Presupuesto>('presupuestos', PRESUPUESTOS_MOCK, 'PRES');
+const crud = crearCrudService<Presupuesto>('presupuestos', PRESUPUESTOS_MOCK, 'PREP');
 
 // Equivalente a _compute_total_linea de gestion.presupuesto.linea.
 function calcularLineas(lineas: PresupuestoLineaInput[]): PresupuestoLinea[] {

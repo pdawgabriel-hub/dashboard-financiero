@@ -86,7 +86,7 @@ export default function PaginaEditarGasto() {
     <div className="flex flex-col gap-6">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">Seguimiento financiero</h1>
+          <h1 className="text-2xl font-bold text-slate-100">Seguimiento de Gastos en Obra</h1>
           <p className="text-slate-400 mt-1">
             {getObraDisplayName(obra)} · Estado: <span className={estado === 'finalizado' ? 'text-emerald-400' : 'text-amber-400'}>{estado}</span>
           </p>
@@ -97,7 +97,7 @@ export default function PaginaEditarGasto() {
           className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg transition-colors shrink-0"
         >
           <Printer className="w-4 h-4" />
-          Imprimir
+          Imprimir Seguimiento
         </Link>
       </div>
 

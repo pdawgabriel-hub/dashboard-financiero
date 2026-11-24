@@ -13,7 +13,7 @@ export default function UltimosMovimientos() {
 
       <div className="flex flex-col divide-y divide-slate-800/60">
         {movimientos.length === 0 ? (
-          <p className="text-sm text-slate-500 py-4 text-center">No hay transacciones registradas.</p>
+          <p className="text-sm text-slate-500 py-4 text-center">No hay gastos registrados.</p>
         ) : (
           movimientos.map((mov) => (
             <div key={mov.id} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">

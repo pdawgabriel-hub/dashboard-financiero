@@ -61,7 +61,7 @@ export default function PaginaEditarPresupuesto() {
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg transition-colors shrink-0"
             >
                 <Printer className="w-4 h-4" />
-                Imprimir
+                Imprimir Presupuesto
             </Link>
         </div>
 

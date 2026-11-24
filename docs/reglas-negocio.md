@@ -1,6 +1,6 @@
 # Reglas de negocio
 
-Estas son las reglas que hacen que la app sea un ERP y no solo un CRUD. Vienen del ERP en Odoo del que parte el proyecto (ver [Origen y decisiones](decisiones.md)) y están en `src/servicios/`, cada una en el servicio de su entidad, con un comentario que indica a qué campo de Odoo equivale.
+Estas son las reglas que hacen que la app se comporte como el ERP y no como un simple CRUD. Son las de mi ERP a Medida para Construcción y Reformas (Odoo 18) (ver [Origen y decisiones](decisiones.md)) y están en `src/servicios/`, cada una en el servicio de su entidad, con un comentario que indica a qué campo de Odoo equivale.
 
 Todos los importes se redondean a dos decimales.
 
@@ -38,7 +38,7 @@ horas_totales        = Σ horas de sus líneas
 coste_total_parte    = Σ coste_subtotal de sus líneas
 ```
 
-## Ficha de Gastos
+## Seguimiento de Gastos
 
 ```
 coste_proveedores    = Σ importe de los partes de proveedor de la obra
@@ -56,10 +56,10 @@ salud de la obra     = 'rojo'   si beneficio_real < 0
                        'ambar'  en otro caso
 ```
 
-Todas están en `GastoService.ts`. `getSaludObra` vive ahí y no en `ObraService` porque depende del beneficio, que sale de la ficha de Gastos, y `ObraService` no puede importar `GastoService` sin crear una dependencia circular.
+Todas están en `GastoService.ts`. `getSaludObra` vive ahí y no en `ObraService` porque depende del beneficio real, que sale del Seguimiento de Gastos, y `ObraService` no puede importar `GastoService` sin crear una dependencia circular.
 
 !!! warning "Beneficio de caja, no beneficio proyectado"
-    `beneficio_real` es **lo cobrado menos lo gastado**, nunca *lo presupuestado menos lo gastado*. En el ERP original, calcularlo con el presupuesto daba beneficios que todavía no existían, y fue el error más caro que hubo que corregir. El dashboard usa la misma regla: sus KPIs son la suma de las fichas de Gastos de todas las obras.
+    `beneficio_real` es **lo cobrado menos lo gastado**, nunca *lo presupuestado menos lo gastado*. En el ERP, calcularlo con el presupuesto daba beneficios que todavía no existían, y fue el error más caro que hubo que corregir. El Análisis Financiero usa la misma regla: sus KPIs son la suma del Seguimiento de Gastos de todas las obras.
 
 ## Validaciones
 
@@ -74,7 +74,7 @@ Las comprueban los esquemas de Zod (`src/schemas/`) antes de llegar al servicio;
 | `importe > 0` | Partes de Proveedor, Partes de Especialista e Ingresos |
 | `base ≥ 0` | Proveedores |
 | `importe ≥ 0` (opcional) | Especialistas |
-| Fecha de fin no anterior a la de inicio | Faltas y ficha de Gastos |
+| Fecha de fin no anterior a la de inicio | Faltas y Seguimiento de Gastos |
 | Fechas con formato `AAAA-MM-DD` | Todas las entidades con fecha |
 | Obligatorios | Cliente: nombre, NIF, dirección, teléfono · Trabajador: nombre, apellido, coste/h · Obra: descripción, dirección, fechas, cliente · Presupuesto: fecha, cliente, obra · Partes: fecha, obra y trabajador, proveedor o especialista · Ingreso: fecha, obra, cliente, importe · Falta: trabajador, fechas, tipo |
 

@@ -4,7 +4,7 @@
 
 - **TypeScript estricto en todo el proyecto.** Cada entidad tiene su tipo en `src/types/`, con un tipo `…Input` aparte para crear, que no permite pasar el `id` ni los campos que calcula el servicio.
 - **Validación con Zod antes de guardar.** Ningún formulario llega al servicio sin pasar por su esquema de `src/schemas/`. Las reglas están en [Reglas de negocio](reglas-negocio.md#validaciones).
-- **Una sola fuente para cada cálculo.** Las cifras financieras salen siempre de las mismas funciones de `src/servicios/`, que usan el listado, la ficha, el dashboard y el PDF. Ninguna página recalcula un importe por su cuenta.
+- **Una sola fuente para cada cálculo.** Las cifras financieras salen siempre de las mismas funciones de `src/servicios/`, que usan el listado, la ficha, el Análisis Financiero y el PDF. Ninguna página recalcula un importe por su cuenta.
 - **Guarda de versión de los datos.** Si cambia la forma de los datos, el navegador de cada visitante se resiembra solo en lugar de romperse (ver [Recorrido por el código](codigo.md#crud)).
 
 ## Integración continua {#ci}
@@ -25,11 +25,11 @@ pnpm build
 
 ## Lint
 
-`pnpm lint` ejecuta ESLint con las reglas recomendadas de TypeScript y de React Hooks. Los ficheros del dashboard (`PaginaDashboard.tsx` y `DashboardAnalisis.tsx`) pasan sin errores. En el resto quedan avisos pendientes, y por eso el lint todavía no forma parte del CI:
+`pnpm lint` ejecuta ESLint con las reglas recomendadas de TypeScript y de React Hooks. Los ficheros del Análisis Financiero (`PaginaDashboard.tsx` y `DashboardAnalisis.tsx`) pasan sin errores. En el resto quedan avisos pendientes, y por eso el lint todavía no forma parte del CI:
 
 | Regla | Avisos | Qué pide |
 |---|---|---|
-| `react-hooks/set-state-in-effect` | 28 | No llenar el estado dentro de un `useEffect` al montar. Las páginas de listado y edición leen los datos así; como `localStorage` es síncrono, se pueden leer directamente al inicializar el estado, como ya hace el dashboard |
+| `react-hooks/set-state-in-effect` | 28 | No llenar el estado dentro de un `useEffect` al montar. Las páginas de listado y edición leen los datos así; como `localStorage` es síncrono, se pueden leer directamente al inicializar el estado, como ya hace el Análisis Financiero |
 | `@typescript-eslint/no-explicit-any` | 9 | Sustituir `any` por tipos concretos, sobre todo en `FormularioCRUD` |
 | `react-refresh/only-export-components` | 1 | Separar el hook `useToast` del componente `ToastProvider` |
 | `react-hooks/incompatible-library` | 3 (advertencias) | Aviso del React Compiler sobre `watch()` de React Hook Form; no es un error |
@@ -38,7 +38,7 @@ Cuando se corrijan, el siguiente paso es añadir `pnpm lint` al CI.
 
 ## Tests
 
-No hay tests automáticos todavía. Las reglas de [Reglas de negocio](reglas-negocio.md) son funciones puras sobre los servicios, así que son el primer candidato: con [Vitest](https://vitest.dev/) y un `localStorage` simulado se pueden probar sin navegador. Un buen primer escenario es el del ERP original:
+No hay tests automáticos todavía. Las reglas de [Reglas de negocio](reglas-negocio.md) son funciones puras sobre los servicios, así que son el primer candidato: con [Vitest](https://vitest.dev/) y un `localStorage` simulado se pueden probar sin navegador. Un buen primer escenario es el que documenta el ERP:
 
 | Paso | Acción | Resultado esperado |
 |---|---|---|

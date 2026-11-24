@@ -40,8 +40,8 @@ export default function PaginaGastos() {
     return (
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-100">Gastos</h1>
-            <p className="text-slate-400 mt-1">Ficha de seguimiento financiero de cada obra (ingresos, gastos y beneficio real).</p>
+            <h1 className="text-2xl font-bold text-slate-100">Seguimiento de Gastos</h1>
+            <p className="text-slate-400 mt-1">Ficha financiera de cada obra: gastos, ingresos, beneficio real y pendiente de cobro.</p>
             </div>
 
           <GridConsulta

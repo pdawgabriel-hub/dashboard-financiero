@@ -50,7 +50,7 @@ export function getObraTotal(obra: Obra): number {
 }
 ```
 
-Las páginas nunca calculan importes por su cuenta: llaman a estas funciones. Así la ficha de una obra, el listado, el dashboard y el PDF dan siempre la misma cifra.
+Las páginas nunca calculan importes por su cuenta: llaman a estas funciones. Así la ficha de una obra, el listado, el Análisis Financiero y el PDF dan siempre la misma cifra.
 
 ## 3. Formularios genéricos con React Hook Form y Zod {#formularios}
 
@@ -59,10 +59,10 @@ La mayoría de altas y ediciones usan `FormularioCRUD`, que recibe un esquema de
 ```tsx
 const CAMPOS: CampoFormulario[] = [
   { nombre: 'descripcion', etiqueta: 'Descripción', tipo: 'textarea', requerido: true },
-  { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
+  { nombre: 'direccion', etiqueta: 'Dirección', requerido: true },
   {
     nombre: 'cliente_id',
-    etiqueta: 'Cliente Asignado (ID)',
+    etiqueta: 'Cliente',
     tipo: 'select',
     buscable: true,
     opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
@@ -93,7 +93,7 @@ const items = obras.map((o) => {
     campos: [
       {etiqueta: 'Descripción', valor: o.descripcion},
       // …
-      {etiqueta: 'Total', valor: `${getObraTotal(o).toFixed(2)}€`},
+      {etiqueta: 'Total Presupuesto', valor: `${getObraTotal(o).toFixed(2)}€`},
       {etiqueta: 'Estado de pago', valor: getObraEstadoPago(o)},
       {etiqueta: 'Salud', valor: salud},
     ],
@@ -115,6 +115,6 @@ Las fichas de Cliente, Trabajador, Proveedor, Especialista y Obra muestran, bajo
 const { mostrarToast } = useToast();
 // …
 obraService.create(datos);
-mostrarToast('Obra creado correctamente');
+mostrarToast('Obra creada correctamente');
 navigate('/consultar/obras');
 ```

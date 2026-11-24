@@ -25,7 +25,7 @@ const CAMPOS: CampoFormulario[] = [
     {nombre: 'nombre', etiqueta: 'Nombre', requerido: true},
     {nombre: 'apellido', etiqueta: 'Apellido', requerido: true},
     {nombre: 'telf', etiqueta: 'Teléfono', tipo: 'tel', requerido: false},
-    {nombre: 'coste_hora_estandar', etiqueta: 'Coste hora estandar', tipo: 'number', requerido: true},
+    {nombre: 'coste_hora_estandar', etiqueta: 'Coste/hora estándar (€)', tipo: 'number', requerido: true},
 ];
 
 export default function PaginaEditarTrabajador() {
@@ -69,7 +69,7 @@ export default function PaginaEditarTrabajador() {
     return (
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-100">Editar Trabajador</h1>
+            <h1 className="text-2xl font-bold text-slate-100">Editar trabajador</h1>
             <p className="text-slate-400 mt-1">{trabajador.id}</p>
           </div>
     

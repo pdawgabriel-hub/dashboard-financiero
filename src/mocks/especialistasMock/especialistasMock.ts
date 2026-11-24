@@ -2,7 +2,7 @@ import type { Especialista } from "../../types/Especialista/Especialista";
 
 export const ESPECIALISTAS_MOCK: Especialista[] = [
   {
-    id: "ESP-001",
+    id: "ESP0001",
     tipo: "Electricista",
     ref: "REF-E-001",
     comunicacionParte: "WhatsApp",
@@ -13,7 +13,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 35,
   },
   {
-    id: "ESP-002",
+    id: "ESP0002",
     tipo: "Fontanero",
     ref: "REF-E-002",
     comunicacionParte: "Teléfono",
@@ -24,7 +24,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 32,
   },
   {
-    id: "ESP-003",
+    id: "ESP0003",
     tipo: "Climatización",
     ref: "REF-E-003",
     comunicacionParte: "Email",
@@ -35,7 +35,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 38,
   },
   {
-    id: "ESP-004",
+    id: "ESP0004",
     tipo: "Herrero / Metalúrgico",
     ref: "REF-E-004",
     comunicacionParte: "WhatsApp",
@@ -46,7 +46,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 34,
   },
   {
-    id: "ESP-005",
+    id: "ESP0005",
     tipo: "Pladurista / Escayolista",
     ref: "REF-E-005",
     comunicacionParte: "Teléfono",
@@ -57,7 +57,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 28,
   },
   {
-    id: "ESP-006",
+    id: "ESP0006",
     tipo: "Pintor",
     ref: "REF-E-006",
     comunicacionParte: "WhatsApp",
@@ -68,7 +68,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 25,
   },
   {
-    id: "ESP-007",
+    id: "ESP0007",
     tipo: "Maquinista / Excavaciones",
     ref: "REF-E-007",
     comunicacionParte: "Email",
@@ -79,7 +79,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 45,
   },
   {
-    id: "ESP-008",
+    id: "ESP0008",
     tipo: "Aislamientos",
     ref: "REF-E-008",
     comunicacionParte: "Teléfono",
@@ -90,7 +90,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 30,
   },
   {
-    id: "ESP-009",
+    id: "ESP0009",
     tipo: "Antenista / Redes",
     ref: "REF-E-009",
     comunicacionParte: "WhatsApp",
@@ -101,7 +101,7 @@ export const ESPECIALISTAS_MOCK: Especialista[] = [
     importe: 36,
   },
   {
-    id: "ESP-010",
+    id: "ESP0010",
     tipo: "Tejadista / Impermeabilizador",
     ref: "REF-E-010",
     comunicacionParte: "Email",

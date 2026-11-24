@@ -2,7 +2,7 @@ import type { Trabajador } from '../../types/Trabajador/Trabajador';
 
 export const TRABAJADORES_MOCK: Trabajador[] = [
   {
-    id: 'TRAB-001',
+    id: 'TRB0001',
     tipo: 'Albañil',
     nombre: 'Carlos',
     apellido: 'García',
@@ -10,7 +10,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 15.50
   },
   {
-    id: 'TRAB-002',
+    id: 'TRB0002',
     tipo: 'Pintor',
     nombre: 'Luis',
     apellido: 'Fernández',
@@ -18,7 +18,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 14.00
   },
   {
-    id: 'TRAB-003',
+    id: 'TRB0003',
     tipo: 'Fontanero',
     nombre: 'Francisco',
     apellido: 'Martínez',
@@ -26,7 +26,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 16.00
   },
   {
-    id: 'TRAB-004',
+    id: 'TRB0004',
     tipo: 'Electricista',
     nombre: 'Daniel',
     apellido: 'Sánchez',
@@ -34,7 +34,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 16.50
   },
   {
-    id: 'TRAB-005',
+    id: 'TRB0005',
     tipo: 'Albañil',
     nombre: 'Manuel',
     apellido: 'Gómez',
@@ -42,7 +42,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 15.50
   },
   {
-    id: 'TRAB-006',
+    id: 'TRB0006',
     tipo: 'Encofrador',
     nombre: 'Antonio',
     apellido: 'Ruiz',
@@ -50,7 +50,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 17.00
   },
   {
-    id: 'TRAB-007',
+    id: 'TRB0007',
     tipo: 'Pladurista',
     nombre: 'David',
     apellido: 'Muñoz',
@@ -58,7 +58,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 14.50
   },
   {
-    id: 'TRAB-008',
+    id: 'TRB0008',
     tipo: 'Carpintero',
     nombre: 'Jorge',
     apellido: 'Jiménez',
@@ -66,7 +66,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 16.80
   },
   {
-    id: 'TRAB-009',
+    id: 'TRB0009',
     tipo: 'Peón Especialista',
     nombre: 'Javier',
     apellido: 'Castro',
@@ -74,7 +74,7 @@ export const TRABAJADORES_MOCK: Trabajador[] = [
     coste_hora_estandar: 12.50
   },
   {
-    id: 'TRAB-010',
+    id: 'TRB0010',
     tipo: 'Pintor',
     nombre: 'Ángel',
     apellido: 'López',

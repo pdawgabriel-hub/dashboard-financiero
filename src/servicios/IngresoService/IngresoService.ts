@@ -2,7 +2,7 @@ import { crearCrudService } from "../CrudService/CrudService";
 import { INGRESOS_MOCK } from "../../mocks/ingresoMock/ingresoMock";
 import type { Ingreso } from "../../types/Ingreso/Ingreso";
 
-export const ingresoService = crearCrudService<Ingreso>('ingresos', INGRESOS_MOCK, 'INGR');
+export const ingresoService = crearCrudService<Ingreso>('ingresos', INGRESOS_MOCK, 'ING');
 
 // Equivalente a _compute_anio de gestion.ingresos.
 export function getIngresoAnio(ingreso: Ingreso): number | null {

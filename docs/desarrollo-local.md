@@ -12,7 +12,7 @@ Dependencias principales (`package.json`):
 | `react`, `react-dom` | Interfaz |
 | `react-router-dom` | Navegación entre pantallas |
 | `react-hook-form`, `@hookform/resolvers`, `zod` | Formularios y validación |
-| `recharts` | Gráficos del dashboard |
+| `recharts` | Gráficos del Análisis Financiero |
 | `lucide-react` | Iconos |
 | `tailwindcss`, `@tailwindcss/vite` | Estilos |
 | `vite`, `typescript`, `eslint` | Build, tipos y lint |

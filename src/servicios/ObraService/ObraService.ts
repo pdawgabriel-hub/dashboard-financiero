@@ -5,7 +5,7 @@ import { presupuestoService } from "../PresupuestoService/PresupuestoService";
 import { parteTrabajoService } from "../ParteTrabajoService/ParteTrabajoService";
 import { getTotalIngresosDeObra } from "../IngresoService/IngresoService";
 
-export const obraService = crearCrudService<Obra>('obras', OBRAS_MOCK, 'OBRA');
+export const obraService = crearCrudService<Obra>('obras', OBRAS_MOCK, 'OBR');
 
 /**
  * Etiqueta legible para selectores de Obra: "código - primera línea de la descripción".

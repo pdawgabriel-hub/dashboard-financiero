@@ -30,12 +30,12 @@ export default function PaginaEditarObra() {
     // Array de configuracion
     const CAMPOS: CampoFormulario[] = [
         { nombre: 'descripcion', etiqueta: 'Descripción', tipo: 'textarea', requerido: true },
-        { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
+        { nombre: 'direccion', etiqueta: 'Dirección', requerido: true },
         { nombre: 'fecha_inicio', etiqueta: 'Fecha Inicio', requerido: true },
         { nombre: 'fecha_fin_prevista', etiqueta: 'Fecha Fin Prevista', requerido: true },
         {
             nombre: 'cliente_id',
-            etiqueta: 'Cliente Asignado (ID)',
+            etiqueta: 'Cliente',
             tipo: 'select' as const,
             buscable: true,
             opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
@@ -76,7 +76,7 @@ export default function PaginaEditarObra() {
     }
 
     if (obra === null) {
-        return <p className="text-slate-500">No se encontró la obra solicitado.</p>;
+        return <p className="text-slate-500">No se encontró la obra solicitada.</p>;
     }
 
     return (

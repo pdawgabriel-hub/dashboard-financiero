@@ -2,7 +2,7 @@ import type { Proveedor } from "../../types/Proveedor/Proveedor";
 
 export const PROVEEDORES_MOCK: Proveedor[] = [
   {
-    id: "PROV-001",
+    id: "PROV0001",
     nombre: "Cementos del Cantábrico S.A.",
     direccion: "Polígono Industrial Guarnizo, Santander",
     telf: "985112233",
@@ -16,7 +16,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 1452,
   },
   {
-    id: "PROV-002",
+    id: "PROV0002",
     nombre: "Alquilair Maquinaria",
     direccion: "Calle Industria 8, Madrid",
     telf: "916554433",
@@ -30,7 +30,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 1028.5,
   },
   {
-    id: "PROV-003",
+    id: "PROV0003",
     nombre: "Saneamientos Mar Menor S.L.",
     direccion: "Avenida del Puerto 12, Cartagena",
     telf: "968181214",
@@ -44,7 +44,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 520.3,
   },
   {
-    id: "PROV-004",
+    id: "PROV0004",
     nombre: "Andamios Giralda",
     direccion: "Calle Torneo 45, Sevilla",
     telf: "954212223",
@@ -58,7 +58,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 726,
   },
   {
-    id: "PROV-005",
+    id: "PROV0005",
     nombre: "Suministros Eléctricos del Sur S.A.",
     direccion: "Polígono La Negrilla, Sevilla",
     telf: "954606162",
@@ -72,7 +72,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 1185.8,
   },
   {
-    id: "PROV-006",
+    id: "PROV0006",
     nombre: "Pladur y Yesos Sevilla",
     direccion: "Calle Feria 22, Sevilla",
     telf: "955987456",
@@ -86,7 +86,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 411.4,
   },
   {
-    id: "PROV-007",
+    id: "PROV0007",
     nombre: "Pinturas Andaluzas S.L.",
     direccion: "Calle Betis 3, Sevilla",
     telf: "954881122",
@@ -100,7 +100,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 332.75,
   },
   {
-    id: "PROV-008",
+    id: "PROV0008",
     nombre: "Aislamientos Acústicos Térmicos S.A.",
     direccion: "Polígono El Pino, Sevilla",
     telf: "954334455",
@@ -114,7 +114,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 617.1,
   },
   {
-    id: "PROV-009",
+    id: "PROV0009",
     nombre: "Cerámicas y Gres Giralda",
     direccion: "Avenida de Andalucía 90, Sevilla",
     telf: "954112299",
@@ -128,7 +128,7 @@ export const PROVEEDORES_MOCK: Proveedor[] = [
     total: 871.2,
   },
   {
-    id: "PROV-010",
+    id: "PROV0010",
     nombre: "Herramientas y Ferretería Industrial Sur",
     direccion: "Calle Recaredo 5, Sevilla",
     telf: "955223344",

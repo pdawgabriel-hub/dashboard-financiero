@@ -1,9 +1,9 @@
 <a id="top"></a>
-# ERP Construcción
+# ERP Construcción - Dashboard Financiero
 
 [Español](./README.md) | **English**
 
-### A frontend-only ERP for construction companies: projects, quotes, work reports, payments and financial tracking, with a dashboard, a calendar and PDF documents
+### Frontend-only version of my custom ERP for construction and renovation (Odoo 18, in production): same business cycle, same financial rules and same financial analysis, in React and with no backend
 
 [![CI](https://github.com/pdawgabriel-hub/dashboard-financiero/actions/workflows/ci.yml/badge.svg)](https://github.com/pdawgabriel-hub/dashboard-financiero/actions/workflows/ci.yml)
 [![Technical guide](https://github.com/pdawgabriel-hub/dashboard-financiero/actions/workflows/docs.yml/badge.svg)](https://pdawgabriel-hub.github.io/dashboard-financiero/)
@@ -43,7 +43,9 @@ The app's interface is in Spanish. Below, each feature is named as it appears in
 <a id="overview"></a>
 ## Overview
 
-**ERP Construcción** digitises the management of a construction and renovation company: clients, quotes, construction projects, in-house labour, external suppliers and specialists, customer payments and the financial tracking of each project. It answers the questions a project manager asks every day:
+**ERP Construcción - Dashboard Financiero** is the frontend version of my **custom ERP for construction and renovation** (*ERP a Medida para Construcción y Reformas*), which I built on **Odoo 18** for a real construction and renovation company and which has been **in production** since October 2026. Since that ERP works with real client data and cannot be shown, this project reproduces its full business cycle in React (client → quote → project → work, specialist and supplier reports → costs and payments → actual profit), with fictitious data and no backend, so that anyone can open it and use it end to end.
+
+Like the ERP, it answers the questions a project manager asks every day:
 
 - How much is this project worth, according to the quotes the client has approved?
 - How much have we spent on labour, materials and subcontractors?
@@ -51,7 +53,7 @@ The app's interface is in Spanish. Below, each feature is named as it appears in
 - Are we actually making or losing money, based on what has been collected?
 - What happened each day: which quotes, payments and work reports are on the calendar?
 
-The business model, with its 12 entities and its financial rules, comes from a **real ERP I built as a custom Odoo module** for a company in the sector, which is in production. Since that project holds real client data, this version reproduces its full business cycle as a **frontend-only** application with fictitious data that anyone can open and use end to end.
+From the ERP it keeps the 12 business models, the financial rules and the terminology: the menus (Gestión de Obras, Análisis Financiero, Consultar Datos), the KPIs (Ingresos Cobrados, Gastos Totales, Beneficio Real), each project's cost tracking (Seguimiento de Gastos), the reports (Imprimir Presupuesto, Imprimir Parte, Imprimir Seguimiento) and the record codes (`OBR0001`, `PREP0001`, `CLI0001`…). What changes and what is missing compared to the ERP: [technical guide, Origen y decisiones](https://pdawgabriel-hub.github.io/dashboard-financiero/decisiones/) (in Spanish).
 
 ### How it is built
 
@@ -59,7 +61,7 @@ The business model, with its 12 entities and its financial rules, comes from a *
 - **Services that hold the business rules** (`src/servicios/`). A generic CRUD per entity and, on top of it, the functions that compute a project's total, profit, outstanding balance and health. They are computed on read and never stored, so there is nothing to keep in sync.
 - **Validated forms** with React Hook Form and Zod, and **reusable screens**: a shared listing grid, a generic form and record pages that show their related records.
 
-The project is a **frontend portfolio piece**: a layered React and TypeScript architecture, complex forms with dynamic line items, real business logic kept apart from the UI, and a complete product for a real use case.
+The project is a **frontend portfolio piece**: a layered React and TypeScript architecture, complex forms with dynamic line items, real business logic kept apart from the UI, and the adaptation of an ERP in production into a public web application.
 
 [Back to top](#top)
 
@@ -79,7 +81,7 @@ Each layer, how a read and a write flow through them, and why there is no backen
 <a id="features"></a>
 ## Main features
 
-Navigation follows the business cycle: **Inicio** (home), **Análisis Financiero** (financial analysis), **Calendario** (calendar), **Consultar Datos** (12 listings, each with its record page) and **Introducir Datos** (11 creation forms).
+Navigation, under **Gestión de Obras** (project management) as in the ERP, follows the business cycle: **Inicio** (home), **Análisis Financiero** (financial analysis), **Calendario** (calendar), **Consultar Datos** (12 listings, each with its record page) and **Introducir Datos** (11 creation forms).
 
 <a id="business-cycle"></a>
 ### 1. Business cycle
@@ -88,11 +90,11 @@ Navigation follows the business cycle: **Inicio** (home), **Análisis Financiero
 |---|---|
 | **Clientes** (clients) | Contact and tax details. The record page lists the client's quotes, projects and payments. |
 | **Presupuestos** (quotes) | Line items (units × price) plus VAT. They copy the client's details when created and only count towards the project once approved. |
-| **Obras** (projects) | A project for a client. Its price, hours, payment status and financial health are computed automatically. |
+| **Obras** (projects) | A project for a client. Its quoted total, hours, payment status and financial health (green, amber or red) are computed automatically. |
 | **Partes de Trabajo** (work reports) | One task on one day, with a line per worker: hours × their hourly rate, which is copied when the worker is chosen and does not change if the rate goes up later. |
 | **Partes de Proveedor / de Especialista** (supplier / specialist reports) | Each external invoice or service charged to a project. |
 | **Ingresos** (payments) | Each payment from the client, always tied to a project. |
-| **Gastos** (cost tracking) | A 1:1 sheet per project that brings together costs, payments, profit and outstanding balance. It is never created by hand: it comes with its project. |
+| **Seguimiento de Gastos** (cost tracking) | A 1:1 financial sheet per project that brings together costs, payments, actual profit and outstanding balance. It is never created by hand: it comes with its project. |
 | **Trabajadores, Proveedores, Especialistas** (workers, suppliers, specialists) | Catalogues with their rate or reference amount. Each record page lists their reports (and, for workers, their absences). |
 | **Faltas de Trabajador** (worker absences) | Holidays, sick leave and absences, with the number of days computed. |
 
@@ -101,11 +103,11 @@ Navigation follows the business cycle: **Inicio** (home), **Análisis Financiero
 
 | Block | Description |
 |---|---|
-| **KPIs** | Income, costs, net result and margin for the whole portfolio: the sum of every project's cost-tracking sheet, so the dashboard and the sheets always match. |
-| **Costs per project** | Total cost of each project: suppliers, specialists and labour. |
-| **Portfolio health** | How many projects are green (fully paid), amber (in progress, no losses) and red (losing money). |
-| **Cost over time** | Costs per month, by the date of each report. |
-| **Detail** | Latest transactions and a breakdown of each project with its total and health. |
+| **KPIs** | Ingresos Cobrados (income collected), Gastos Totales (total costs), Beneficio Real (actual profit) and Margen de Beneficio (profit margin) for the whole portfolio: the sum of every project's cost tracking, so the financial analysis and the sheets always match. |
+| **Costes Acumulados por Obra** (costs per project) | Total cost of each project: suppliers, specialists and labour. |
+| **Salud de las Obras** (project health) | How many projects are green (fully paid), amber (in progress, no losses) and red (losing money). |
+| **Evolución Mensual de Gastos** (monthly costs) | Costs per month, by the date of each report. |
+| **Detail** | Latest costs charged and a breakdown of each project with its quoted total and health. |
 
 <a id="calendar-documents"></a>
 ### 3. Calendar and documents
@@ -131,7 +133,7 @@ Navigation follows the business cycle: **Inicio** (home), **Análisis Financiero
 <a id="business-rules"></a>
 ## Business rules
 
-The figures come from a few rules, inherited from the original ERP, applied the same way in the listing, the record page, the dashboard and the PDF:
+The figures come from the same rules as the ERP, applied the same way in the listing, the record page, the financial analysis and the PDF:
 
 ```
 project total        = Σ approved quotes of the project
@@ -141,7 +143,7 @@ outstanding balance  = project total − collected
 health               = red if losing money · green if fully paid · amber otherwise
 ```
 
-The most important one is profit: the original ERP once computed it from the quoted amount and showed profits that did not exist yet. All formulas, validations and edge cases: [technical guide, Reglas de negocio](https://pdawgabriel-hub.github.io/dashboard-financiero/reglas-negocio/) (in Spanish).
+The most important one is actual profit: the ERP initially computed it from the quoted amount and showed profits that did not exist yet. All formulas, validations and edge cases: [technical guide, Reglas de negocio](https://pdawgabriel-hub.github.io/dashboard-financiero/reglas-negocio/) (in Spanish).
 
 [Back to top](#top)
 
@@ -150,9 +152,9 @@ The most important one is profit: the original ERP once computed it from the quo
 <a id="screenshots"></a>
 ## Screenshots
 
-| Financial dashboard |
+| Financial analysis (Análisis Financiero) |
 |---|
-| ![Financial dashboard](docs/img/capturas/dashboard.png) |
+| ![Financial analysis](docs/img/capturas/dashboard.png) |
 
 | Project listing (card view) | Form |
 |---|---|
@@ -216,7 +218,7 @@ All the technical documentation is in the **[technical guide](https://pdawgabrie
 | [Desarrollo local](https://pdawgabriel-hub.github.io/dashboard-financiero/desarrollo-local/) | Installation, commands and resetting the data |
 | [Calidad](https://pdawgabriel-hub.github.io/dashboard-financiero/calidad/) | Types, validation, lint and continuous integration |
 | [Despliegue](https://pdawgabriel-hub.github.io/dashboard-financiero/despliegue/) | Vercel and publishing the guide |
-| [Origen y decisiones](https://pdawgabriel-hub.github.io/dashboard-financiero/decisiones/) | From the Odoo ERP to this version: what is kept, what changes and what is missing |
+| [Origen y decisiones](https://pdawgabriel-hub.github.io/dashboard-financiero/decisiones/) | From the ERP in production to this version: what is kept, what changes and what is missing |
 | [Dónde tocar para…](https://pdawgabriel-hub.github.io/dashboard-financiero/donde-tocar/) | Which files to change for the most common changes |
 
 [Back to top](#top)
@@ -242,6 +244,6 @@ The full legal text is in [`LICENSE.en.md`](./LICENSE.en.md) (Spanish version: [
 <a id="author"></a>
 ## Author
 
-Built by **Gabriel Iborra Vicente** as a portfolio project, to demonstrate frontend development of a complete management application: a layered React and TypeScript architecture, complex forms, real business logic kept apart from the UI, and a product that replicates an ERP running in production.
+Built by **Gabriel Iborra Vicente** as a portfolio project, to demonstrate frontend development of a complete management application: a layered React and TypeScript architecture, complex forms, real business logic kept apart from the UI, and the frontend version of his custom construction ERP, running in production.
 
 [Back to top](#top)

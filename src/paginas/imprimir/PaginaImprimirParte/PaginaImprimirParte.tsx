@@ -35,7 +35,7 @@ export default function PaginaImprimirParte() {
       <DocumentoImprimible>
         <div className="flex items-start justify-between border-b border-slate-300 pb-6 mb-6">
           <div>
-            <p className="text-xl font-black text-emerald-700 tracking-wide">Construcción</p>
+            <p className="text-xl font-black text-emerald-700 tracking-wide">Gestión de Obras</p>
             <p className="text-sm text-slate-500 mt-1">Parte de trabajo</p>
           </div>
           <div className="text-right text-sm">

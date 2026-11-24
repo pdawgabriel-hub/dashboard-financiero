@@ -14,7 +14,7 @@ export default function Home() {
             Panel de Control
           </h1>
           <p className="text-slate-400 text-sm leading-relaxed">
-            He diseñado y desarrollado esta SPA como una demostración técnica enfocada en resolver flujos de trabajo complejos, gestión de CRUDs relacionales y sincronización ágil en el lado del cliente. El modelo de negocio — 13 entidades que cubren el ciclo completo de una constructora (clientes, obras, presupuestos, partes de trabajo, proveedores, especialistas...) — está basado en un desarrollo real que hice a medida para un cliente sobre <strong>Odoo</strong>, adaptado aquí a una versión 100% frontend.
+            He diseñado y desarrollado esta SPA como una demostración técnica enfocada en resolver flujos de trabajo complejos, gestión de CRUDs relacionales y sincronización ágil en el lado del cliente. Es la versión 100% frontend de mi <strong>ERP a Medida para Construcción y Reformas</strong>, desarrollado sobre <strong>Odoo 18</strong> para una empresa real y en producción: mismo ciclo de negocio (cliente → presupuesto → obra → partes → gastos e ingresos → beneficio real), mismas reglas financieras y los mismos 12 modelos de datos, con datos ficticios y sin backend.
           </p>
         </div>
         <div className="flex flex-col gap-2 w-full">
@@ -56,8 +56,8 @@ export default function Home() {
             className="group border border-slate-800/80 bg-slate-900/30 hover:bg-slate-900/60 hover:border-indigo-500/30 rounded-xl p-5 transition-all flex flex-col justify-between min-h-[130px]"
           >
             <div>
-              <h4 className="text-slate-200 font-bold text-sm mt-3 group-hover:text-indigo-400 transition-colors">Dashboard Analítico</h4>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Métricas de rentabilidad de obras, balance de ingresos y gastos acumulados.</p>
+              <h4 className="text-slate-200 font-bold text-sm mt-3 group-hover:text-indigo-400 transition-colors">Análisis Financiero</h4>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Beneficio real, gastos e ingresos de toda la cartera, y la salud financiera de cada obra.</p>
             </div>
             <span className="text-xs text-indigo-400 font-semibold mt-4 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
               Ir al panel →
@@ -126,12 +126,12 @@ export default function Home() {
           <div className="relative pl-8">
             <span className="absolute left-0 top-0 w-6 h-6 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-bold flex items-center justify-center">3</span>
             <h4 className="text-slate-200 font-semibold text-xs mb-1">Comprueba la Reactividad</h4>
-            <p className="text-[11px] text-slate-500 leading-relaxed">Elimina cualquier gasto o ingreso en sus respectivas tablas y regresa al <strong>Dashboard</strong> para observar cómo se recalculan los totales al instante.</p>
+            <p className="text-[11px] text-slate-500 leading-relaxed">Elimina cualquier gasto o ingreso en sus respectivas tablas y regresa al <strong>Análisis Financiero</strong> para observar cómo se recalculan los totales al instante.</p>
           </div>
           <div className="relative pl-8">
             <span className="absolute left-0 top-0 w-6 h-6 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-bold flex items-center justify-center">4</span>
             <h4 className="text-slate-200 font-semibold text-xs mb-1">Exporta un Presupuesto a PDF</h4>
-            <p className="text-[11px] text-slate-500 leading-relaxed">Entra en un <strong>Presupuesto</strong> y pulsa <strong>Imprimir</strong>: se abre el documento listo para guardar como PDF desde el navegador.</p>
+            <p className="text-[11px] text-slate-500 leading-relaxed">Entra en un <strong>Presupuesto</strong> y pulsa <strong>Imprimir Presupuesto</strong>: se abre el documento listo para guardar como PDF desde el navegador.</p>
           </div>
         </div>
       </div>

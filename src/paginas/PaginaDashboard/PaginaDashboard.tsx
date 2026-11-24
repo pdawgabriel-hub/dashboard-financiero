@@ -65,8 +65,8 @@ export default function PaginaDashboard() {
   return (
     <div className="flex flex-col gap-8 max-w-7xl mx-auto py-6 px-4">
       <div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-100">Dashboard de Control</h1>
-        <p className="text-slate-400 text-sm mt-1">Visión consolidada y analíticas avanzadas de tu cartera de proyectos.</p>
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-100">Análisis Financiero</h1>
+        <p className="text-slate-400 text-sm mt-1">Salud financiera de toda la cartera de obras: lo cobrado, lo gastado y el beneficio real.</p>
       </div>
 
       {/* KPIs Principales */}
@@ -85,25 +85,25 @@ export default function PaginaDashboard() {
         </div>
 
         <div className="border border-slate-800 bg-slate-900/40 rounded-xl p-6 flex flex-col justify-between">
-          <h2 className="text-lg font-semibold text-slate-200 mb-4">Salud de la Cartera</h2>
+          <h2 className="text-lg font-semibold text-slate-200 mb-4">Salud de las Obras</h2>
           <GraficoPastelEstados data={datosPastel} />
         </div>
       </div>
 
-      {/* Flujo Temporal */}
+      {/* Evolución mensual */}
       <div className="border border-slate-800 bg-slate-900/40 rounded-xl p-6">
-        <h2 className="text-lg font-semibold text-slate-200 mb-4">Flujo Temporal de Gastos</h2>
+        <h2 className="text-lg font-semibold text-slate-200 mb-4">Evolución Mensual de Gastos</h2>
         <GraficoLineaGastos data={datosTendencia} />
       </div>
 
       {/* Listados de Detalle */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Últimas Transacciones */}
+        {/* Últimos gastos imputados */}
         <div className="border border-slate-800 bg-slate-900/40 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-slate-200 mb-4">Últimas Transacciones</h2>
+          <h2 className="text-lg font-semibold text-slate-200 mb-4">Últimos Gastos Imputados</h2>
           <div className="flex flex-col gap-3">
             {ultimosGastos.length === 0 ? (
-              <p className="text-sm text-slate-500 py-4 text-center">No hay transacciones registradas.</p>
+              <p className="text-sm text-slate-500 py-4 text-center">No hay gastos registrados.</p>
             ) : (
               ultimosGastos.map((movimiento) => {
                 return (

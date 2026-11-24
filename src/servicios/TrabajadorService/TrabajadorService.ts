@@ -3,7 +3,7 @@ import { crearCrudService } from "../CrudService/CrudService";
 import { TRABAJADORES_MOCK } from "../../mocks/trabajadoresMock/trabajadoresMock";
 import type { Trabajador } from "../../types/Trabajador/Trabajador";
 
-export const trabajadorService = crearCrudService<Trabajador>('trabajadores', TRABAJADORES_MOCK, 'TRAB')
+export const trabajadorService = crearCrudService<Trabajador>('trabajadores', TRABAJADORES_MOCK, 'TRB')
 
 /**
  * Equivalente a _compute_display_name de gestion.trabajadores:

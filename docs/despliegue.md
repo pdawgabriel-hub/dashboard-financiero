@@ -14,7 +14,7 @@ La demo está en **[dashboard-financiero-kappa-blue.vercel.app](https://dashboar
 }
 ```
 
-Es necesaria porque la app es una SPA: las rutas (`/consultar/obras`, `/consultar/presupuestos/imprimir/PRES-001`…) no existen como ficheros, las resuelve React Router en el navegador. Sin el *rewrite*, abrir directamente una ruta profunda o recargar en ella daba un 404 de Vercel. Afectaba sobre todo a los documentos imprimibles, que se abren en una pestaña nueva con su propia URL.
+Es necesaria porque la app es una SPA: las rutas (`/consultar/obras`, `/consultar/presupuestos/imprimir/PREP0001`…) no existen como ficheros, las resuelve React Router en el navegador. Sin el *rewrite*, abrir directamente una ruta profunda o recargar en ella daba un 404 de Vercel. Afectaba sobre todo a los documentos imprimibles, que se abren en una pestaña nueva con su propia URL.
 
 ## Esta guía, en GitHub Pages
 

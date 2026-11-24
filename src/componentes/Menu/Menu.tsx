@@ -24,7 +24,7 @@ export default function Menu() {
         {/* Fila del Logo (en móvil comparte espacio con el avatar para ahorrar espacio vertical) */}
         <div className="flex items-center justify-between sm:justify-start">
           <div className="text-lg md:text-xl font-black text-emerald-400 tracking-wider">
-            Construcción
+            Gestión de Obras
           </div>
           
           {/* Este avatar solo se muestra aquí en pantallas pequeñas (móviles) */}

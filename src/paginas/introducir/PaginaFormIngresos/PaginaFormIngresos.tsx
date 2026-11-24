@@ -65,7 +65,7 @@ export default function PaginaFormIngresos() {
     return (
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-100">Nuevo Ingreso</h1>
+            <h1 className="text-2xl font-bold text-slate-100">Nuevo ingreso</h1>
             <p className="text-slate-400 mt-1">Registra un cobro recibido, vinculado a una obra y a un cliente.</p>
           </div>
 
@@ -73,7 +73,7 @@ export default function PaginaFormIngresos() {
             schema={ingresoSchema}
             campos={CAMPOS}
             onSubmit={handleSubmit}
-            textoBoton="Guardar Ingreso"
+            textoBoton="Guardar ingreso"
           />
         </div>
     );

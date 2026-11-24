@@ -17,10 +17,10 @@ export default function TarjetasKpi({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {/* Total Ingresos */}
+      {/* Ingresos cobrados */}
       <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center justify-between">
         <div>
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Ingresos</p>
+          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Ingresos Cobrados</p>
           <h3 className="text-2xl font-bold text-slate-100 mt-1">{totalIngresos.toLocaleString('es-ES')} €</h3>
         </div>
         <div className="p-3 bg-emerald-950/50 border border-emerald-800 rounded-lg text-emerald-400">
@@ -28,10 +28,10 @@ export default function TarjetasKpi({
         </div>
       </div>
 
-      {/* Total Gastos */}
+      {/* Gastos totales */}
       <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center justify-between">
         <div>
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Gastos</p>
+          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Gastos Totales</p>
           <h3 className="text-2xl font-bold text-slate-100 mt-1">{totalGastos.toLocaleString('es-ES')} €</h3>
         </div>
         <div className="p-3 bg-rose-950/50 border border-rose-800 rounded-lg text-rose-400">
@@ -39,10 +39,10 @@ export default function TarjetasKpi({
         </div>
       </div>
 
-      {/* Resultado Neto */}
+      {/* Beneficio real (caja) */}
       <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center justify-between">
         <div>
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Resultado Neto</p>
+          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Beneficio Real</p>
           <h3 className={`text-2xl font-bold mt-1 ${esPositivo ? 'text-emerald-400' : 'text-rose-400'}`}>
             {beneficioNeto.toLocaleString('es-ES')} €
           </h3>
@@ -52,10 +52,10 @@ export default function TarjetasKpi({
         </div>
       </div>
 
-      {/* Margen de Utilidad */}
+      {/* Margen sobre lo cobrado */}
       <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center justify-between">
         <div>
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Margen de Utilidad</p>
+          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Margen de Beneficio</p>
           <h3 className="text-2xl font-bold text-slate-100 mt-1">{margenBeneficio}%</h3>
         </div>
         <div className="p-3 bg-blue-950/50 border border-blue-800 rounded-lg text-blue-400">

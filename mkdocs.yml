@@ -1,8 +1,8 @@
-# Guía técnica de ERP Construcción: mkdocs serve (en local) · se publica en GitHub
+# Guía técnica de ERP Construcción - Dashboard Financiero: mkdocs serve (en local) · se publica en GitHub
 # Pages con .github/workflows/docs.yml. Las páginas están en docs/; las imágenes,
 # en docs/img/ (las mismas que usan los README).
-site_name: ERP Construcción · Guía técnica
-site_description: Cómo está construido ERP Construcción, un ERP para constructoras hecho solo con frontend (React, TypeScript y localStorage)
+site_name: ERP Construcción - Dashboard Financiero · Guía técnica
+site_description: Cómo está construida la versión 100% frontend (React, TypeScript y localStorage) de mi ERP a Medida para Construcción y Reformas
 site_author: Gabriel Iborra Vicente
 site_url: https://pdawgabriel-hub.github.io/dashboard-financiero/
 repo_url: https://github.com/pdawgabriel-hub/dashboard-financiero
@@ -47,7 +47,7 @@ nav:
   - Modelo de datos: modelo-datos.md
   - Reglas de negocio: reglas-negocio.md
   - Recorrido por el código: codigo.md
-  - Dashboard, calendario e informes: dashboard.md
+  - Análisis Financiero, calendario e informes: dashboard.md
   - Desarrollo local: desarrollo-local.md
   - Calidad: calidad.md
   - Despliegue: despliegue.md

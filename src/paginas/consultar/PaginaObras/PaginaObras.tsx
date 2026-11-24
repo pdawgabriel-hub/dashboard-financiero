@@ -22,11 +22,11 @@ export default function PaginaObras() {
             textoBusqueda: `${o.id} ${o.descripcion} ${o.direccion} ${o.cliente_id}`,
             campos: [
                 {etiqueta: 'Descripción', valor: o.descripcion},
-                {etiqueta: 'Direccion', valor: o.direccion},
+                {etiqueta: 'Dirección', valor: o.direccion},
                 {etiqueta: 'Fecha Inicio', valor: o.fecha_inicio},
                 {etiqueta: 'Fecha Fin Prevista', valor: o.fecha_fin_prevista},
                 {etiqueta: 'Cliente', valor: o.cliente_id},
-                {etiqueta: 'Total', valor: `${getObraTotal(o).toFixed(2)}€`},
+                {etiqueta: 'Total Presupuesto', valor: `${getObraTotal(o).toFixed(2)}€`},
                 {etiqueta: 'Horas totales', valor: `${getObraHorasTotales(o)}h`},
                 {etiqueta: 'Estado de pago', valor: getObraEstadoPago(o)},
                 {etiqueta: 'Salud', valor: salud},

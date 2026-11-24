@@ -10,7 +10,7 @@ const CLAVE_VERSION_DATOS = '__version_datos__';
 // hay guardado, se limpia todo el localStorage y se resiembra desde cero:
 // evita que un visitante con datos de una versión anterior de la app (guardados
 // en su navegador) se encuentre con una app rota por un "shape" incompatible.
-const VERSION_DATOS_ACTUAL = '2';
+const VERSION_DATOS_ACTUAL = '3';
 
 function comprobarVersionDatos() {
   if (typeof localStorage === 'undefined') return;
@@ -62,7 +62,8 @@ export function crearCrudService<T extends ConId>(
 
     create(datos: Omit<T, 'id'>): T {
       const items = leerTodo();
-      const prefijoBusqueda = `${prefijoId}-`;
+      // Mismo formato que el ERP en Odoo: prefijo + 4 dígitos (OBR0001, CLI0001…)
+      const prefijoBusqueda = prefijoId;
 
       // 1. Buscamos el número secuencial más alto
       const ultimoNumero = items.reduce((max, item) => {
@@ -81,7 +82,7 @@ export function crearCrudService<T extends ConId>(
       }, 0);
 
       const siguienteNumero = ultimoNumero + 1;
-      const nuevoId = `${prefijoBusqueda}${String(siguienteNumero).padStart(3, '0')}`;
+      const nuevoId = `${prefijoBusqueda}${String(siguienteNumero).padStart(4, '0')}`;
 
       const nuevo = { ...datos, id: nuevoId } as T;
       guardarTodo([...items, nuevo]);

@@ -2,7 +2,7 @@ import type { Cliente } from '../../types/Cliente/Cliente';
 
 export const CLIENTES_MOCK: Cliente[] = [
   {
-    id: 'CLI-0001',
+    id: 'CLI0001',
     nombre: 'María',
     apellidos: 'González Ruiz',
     nif: '12345678A',
@@ -11,7 +11,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '600111222',
   },
   {
-    id: 'CLI-0002',
+    id: 'CLI0002',
     nombre: 'Antonio',
     apellidos: 'López Díaz',
     nif: '87654321B',
@@ -20,7 +20,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '600333444',
   },
   {
-    id: 'CLI-0003',
+    id: 'CLI0003',
     nombre: 'Laura',
     apellidos: 'Martín Pérez',
     nif: '11223344C',
@@ -29,7 +29,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '600555666',
   },
   {
-    id: 'CLI-0004',
+    id: 'CLI0004',
     nombre: 'Francisco Javier',
     apellidos: 'García Solís',
     nif: '44556677D',
@@ -38,7 +38,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '611222333',
   },
   {
-    id: 'CLI-0005',
+    id: 'CLI0005',
     nombre: 'Carmen',
     apellidos: 'Fernández Cobo',
     nif: '99887766E',
@@ -47,7 +47,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '622333444',
   },
   {
-    id: 'CLI-0006',
+    id: 'CLI0006',
     nombre: 'José Manuel',
     apellidos: 'Rodríguez Benítez',
     nif: '55443322F',
@@ -56,7 +56,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '633444555',
   },
   {
-    id: 'CLI-0007',
+    id: 'CLI0007',
     nombre: 'Ana Belén',
     apellidos: 'Sánchez Ortiz',
     nif: '66778899G',
@@ -65,7 +65,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '644555666',
   },
   {
-    id: 'CLI-0008',
+    id: 'CLI0008',
     nombre: 'Daniel',
     apellidos: 'Muñoz Vargas',
     nif: '33221100H',
@@ -74,7 +74,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '655666777',
   },
   {
-    id: 'CLI-0009',
+    id: 'CLI0009',
     nombre: 'Isabel',
     apellidos: 'Gómez Herrera',
     nif: '77665544K',
@@ -83,7 +83,7 @@ export const CLIENTES_MOCK: Cliente[] = [
     telefono: '666777888',
   },
   {
-    id: 'CLI-0010',
+    id: 'CLI0010',
     nombre: 'Alejandro',
     apellidos: 'Pinto Castro',
     nif: '22334455L',

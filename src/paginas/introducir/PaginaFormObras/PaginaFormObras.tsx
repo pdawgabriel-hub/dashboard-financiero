@@ -12,12 +12,12 @@ export default function PaginaFormObras() {
 
     const CAMPOS: CampoFormulario[] = [
         { nombre: 'descripcion', etiqueta: 'Descripción', tipo: 'textarea', requerido: true },
-        { nombre: 'direccion', etiqueta: 'Direccion', requerido: true },
+        { nombre: 'direccion', etiqueta: 'Dirección', requerido: true },
         { nombre: 'fecha_inicio', etiqueta: 'Fecha Inicio', requerido: true },
         { nombre: 'fecha_fin_prevista', etiqueta: 'Fecha Fin Prevista', requerido: true },
         {
             nombre: 'cliente_id',
-            etiqueta: 'Cliente Asignado (ID)',
+            etiqueta: 'Cliente',
             tipo: 'select' as const,
             buscable: true,
             opciones: clientesRegistrados.map(c => ({ valor: c.id, etiqueta: getClienteDisplayName(c) })),
@@ -30,15 +30,15 @@ export default function PaginaFormObras() {
 
     function handleSubmit(datos: ObraFormValues) {
       obraService.create(datos);
-      mostrarToast('Obra creado correctamente');
+      mostrarToast('Obra creada correctamente');
       navigate('/consultar/obras');
     }
 
     return (
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">Nuevo obra</h1>
-          <p className="text-slate-400 mt-1">Rellena los datos para dar de alta un obra.</p>
+          <h1 className="text-2xl font-bold text-slate-100">Nueva obra</h1>
+          <p className="text-slate-400 mt-1">Rellena los datos para dar de alta una obra.</p>
         </div>
 
         <FormularioCRUD
